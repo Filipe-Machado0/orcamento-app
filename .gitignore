@@ -1,0 +1,10 @@
+# Logs e caches
+node_modules/
+.DS_Store
+Thumbs.db
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp

@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/orcamento/:token", "destination": "/index.html?token=:token" }
+  ]
+}

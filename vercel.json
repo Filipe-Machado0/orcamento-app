@@ -1,0 +1,7 @@
+{
+  "outputDirectory": "public",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/orcamento/:token", "destination": "/index.html?token=:token" }
+  ]
+}

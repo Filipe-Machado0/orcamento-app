@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1e40af">
+  <title>Orçamento Relâmpago ⚡</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body style="background-color: var(--gray-50); padding-bottom: 90px;">
+
+  <!-- Navbar -->
+  <nav class="admin-navbar">
+    <a href="painel.html" class="admin-nav-brand">
+      <span style="font-size: 1.2rem;">←</span>
+      <span>Orçamento Relâmpago ⚡</span>
+    </a>
+    <div class="admin-nav-actions">
+      <button id="btn-clone-last" class="btn-secondary" style="font-size: 0.75rem; padding: 6px 10px;" title="Copiar itens do último orçamento criado">
+        📋 Clonar Último
+      </button>
+    </div>
+  </nav>
+
+  <main class="admin-container">
+
+    <!-- Card 1: Seleção de Cliente -->
+    <div class="card" style="margin: 0 0 var(--space-4); padding: var(--space-4);">
+      <div class="quick-section-title">
+        <span>👤 Cliente</span>
+        <button id="btn-toggle-new-client" class="btn-secondary" style="font-size: 0.7rem; padding: 4px 8px; border-radius: 9999px;">
+          + Cadastrar Novo
+        </button>
+      </div>
+
+      <!-- Select de clientes existentes -->
+      <div id="select-client-wrapper" class="form-group" style="margin-bottom: 0;">
+        <select id="client-select" class="form-select">
+          <option value="">Selecione um cliente...</option>
+        </select>
+      </div>
+
+      <!-- Formulário inline para novo cliente rápido -->
+      <div id="new-client-form" class="hidden" style="background: var(--gray-50); padding: var(--space-3); border-radius: var(--radius-md); border: 1px dashed var(--primary-500); margin-top: var(--space-2);">
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-800); margin-bottom: 8px;">
+          Novo Cliente Rápido
+        </div>
+        <div class="form-group">
+          <input type="text" id="new-client-name" class="form-input" placeholder="Nome completo do cliente" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 8px;">
+          <input type="tel" id="new-client-phone" class="form-input" placeholder="WhatsApp / Telefone (ex: 11999998888)" required>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" id="btn-save-inline-client" class="btn-primary" style="padding: 6px 12px; font-size: 0.8rem;">
+            Salvar Cliente
+          </button>
+          <button type="button" id="btn-cancel-inline-client" class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Pacotes Relâmpago (1 Toque) -->
+    <div style="margin-bottom: var(--space-3);">
+      <div class="quick-section-title">
+        <span>⚡ 1 Toque: Pacotes Relâmpago</span>
+        <span style="font-size: 0.7rem; font-weight: normal; color: var(--gray-400);">Combos prontos</span>
+      </div>
+      <div id="packages-list" class="packages-scroll">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </div>
+
+    <!-- Card 3: Favoritos / Catálogo Frequente -->
+    <div style="margin-bottom: var(--space-3);">
+      <div class="quick-section-title">
+        <span>⭐ Favoritos & Peças Frequentes</span>
+      </div>
+      <div id="favorites-chips" class="favorites-chips">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </div>
+
+    <!-- Card 4: Itens do Orçamento -->
+    <div class="card" style="margin: 0 0 var(--space-4);">
+      <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="font-size: 0.95rem;">🛒 Itens do Orçamento (<span id="items-count-badge">0</span>)</h2>
+        <button id="btn-add-manual-item" class="btn-secondary" style="font-size: 0.72rem; padding: 4px 8px;">
+          + Item Manual
+        </button>
+      </div>
+
+      <div id="draft-items-list" style="padding: var(--space-3);">
+        <!-- Itens adicionados aqui -->
+        <div id="empty-items-placeholder" style="text-align: center; padding: 24px 12px; color: var(--gray-400); font-size: 0.85rem;">
+          Toque em um <strong>Pacote ⚡</strong> ou <strong>Favorito ⭐</strong> acima para adicionar itens em segundos.
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5: Detalhes & Validade -->
+    <div class="card" style="margin: 0 0 var(--space-4); padding: var(--space-4);">
+      <div class="form-group">
+        <label class="form-label" for="budget-validity">Prazo de Validade</label>
+        <select id="budget-validity" class="form-select">
+          <option value="3">3 dias</option>
+          <option value="7" selected>7 dias (Recomendado)</option>
+          <option value="15">15 dias</option>
+          <option value="30">30 dias</option>
+        </select>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 0;">
+        <label class="form-label" for="budget-notes-input">Observações para o Cliente</label>
+        <textarea id="budget-notes-input" class="form-textarea" rows="2" placeholder="Ex: Peças com garantia de 3 meses. Pagamento facilitado em até 3x no cartão."></textarea>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Barra Fixa de Ação e Total -->
+  <div class="draft-bottom-bar">
+    <div class="draft-bottom-content">
+      <div>
+        <div style="font-size: 0.7rem; color: var(--gray-500); text-transform: uppercase; font-weight: 600;">Total</div>
+        <div id="draft-total-display" style="font-size: 1.25rem; font-weight: 800; color: var(--primary-700);">R$ 0,00</div>
+      </div>
+
+      <div style="display: flex; gap: 8px;">
+        <button id="btn-save-draft" class="btn-secondary" style="padding: 10px 14px; font-weight: 600;" type="button">
+          💾 Salvar
+        </button>
+        <button id="btn-save-and-send-wa" class="btn-approve" style="padding: 10px 16px; font-size: 0.95rem; animation: none; background: #25d366;" type="button">
+          📱 Gerar e WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/novo-orcamento.js"></script>
+</body>
+</html>

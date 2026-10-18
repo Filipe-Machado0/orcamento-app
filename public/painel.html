@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1e40af">
+  <title>Painel do Prestador — Orçamentos e OS</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body style="background-color: var(--gray-50);">
+
+  <!-- Navbar -->
+  <nav class="admin-navbar">
+    <a href="painel.html" class="admin-nav-brand">
+      <span style="font-size: 1.4rem;">⚡</span>
+      <span>Orçamento & OS</span>
+    </a>
+    <div class="admin-nav-actions">
+      <a href="novo-orcamento.html" class="btn-primary" style="padding: 6px 12px; font-size: 0.85rem; border-radius: 9999px; text-decoration: none;">
+        + Novo Orçamento
+      </a>
+      <button id="btn-logout" class="btn-secondary" style="padding: 6px 10px; font-size: 0.8rem;" title="Sair / Reiniciar">
+        🚪 Sair
+      </button>
+    </div>
+  </nav>
+
+  <!-- Banner Demonstrativo -->
+  <div class="demo-banner">
+    ⚡ <strong>Modo Prestador:</strong> Crie orçamentos em segundos, mande pro WhatsApp e acompanhe aprovações em tempo real.
+  </div>
+
+  <main class="admin-container">
+    
+    <!-- Seção de Métricas (KPIs) -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">⏳ Pendentes</span>
+        <span id="kpi-pending-count" class="kpi-value">0</span>
+        <span id="kpi-pending-total" class="kpi-subtext">R$ 0,00</span>
+      </div>
+      <div class="kpi-card" style="border-left: 4px solid var(--success-500);">
+        <span class="kpi-label">✅ Aprovados</span>
+        <span id="kpi-approved-count" class="kpi-value" style="color: var(--success-700);">0</span>
+        <span id="kpi-approved-total" class="kpi-subtext">R$ 0,00</span>
+      </div>
+      <div class="kpi-card" style="border-left: 4px solid var(--primary-500);">
+        <span class="kpi-label">🔧 Em Andamento</span>
+        <span id="kpi-progress-count" class="kpi-value" style="color: var(--primary-700);">0</span>
+        <span id="kpi-progress-total" class="kpi-subtext">R$ 0,00</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">🏁 Concluídos</span>
+        <span id="kpi-done-count" class="kpi-value">0</span>
+        <span id="kpi-done-total" class="kpi-subtext">R$ 0,00</span>
+      </div>
+    </div>
+
+    <!-- Filtros de Status -->
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="todos">Todos (<span id="count-todos">0</span>)</button>
+      <button class="filter-tab" data-filter="pendente">⏳ Pendentes (<span id="count-pendente">0</span>)</button>
+      <button class="filter-tab" data-filter="aprovado">✅ Aprovados (<span id="count-aprovado">0</span>)</button>
+      <button class="filter-tab" data-filter="em_andamento">🔧 Em Andamento (<span id="count-em_andamento">0</span>)</button>
+      <button class="filter-tab" data-filter="concluido">🏁 Concluídos (<span id="count-concluido">0</span>)</button>
+    </div>
+
+    <!-- Lista de Orçamentos -->
+    <div id="budgets-feed">
+      <div style="text-align: center; padding: 40px; color: var(--gray-400);">
+        <div class="spinner" style="margin: 0 auto 12px;"></div>
+        Carregando orçamentos...
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Botão Flutuante para Mobile -->
+  <a href="novo-orcamento.html" class="fab-create">
+    <span style="font-size: 1.2rem;">⚡</span>
+    <span>Orçamento Rápido</span>
+  </a>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/painel.js"></script>
+</body>
+</html>

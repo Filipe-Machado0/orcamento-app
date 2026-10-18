@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1e40af">
+  <meta name="description" content="Visualize e aprove seu orçamento de serviço">
+  <title>Orçamento</title>
+
+  <!-- Favicon placeholder -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==================== LOADING ==================== -->
+  <div id="screen-loading" class="screen">
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Carregando orçamento...</p>
+    </div>
+  </div>
+
+  <!-- ==================== ERRO ==================== -->
+  <div id="screen-error" class="screen hidden">
+    <div class="error-container">
+      <div class="error-icon">😕</div>
+      <h2>Ops!</h2>
+      <p id="error-message">Não foi possível carregar o orçamento.</p>
+      <p class="error-hint">Verifique se o link está correto ou entre em contato com o prestador.</p>
+    </div>
+  </div>
+
+  <!-- ==================== CONTEÚDO DO ORÇAMENTO ==================== -->
+  <div id="screen-budget" class="screen hidden">
+
+    <!-- Header / Marca do Prestador -->
+    <header class="provider-header">
+      <div class="provider-logo-wrapper">
+        <img id="provider-logo" src="" alt="Logo" class="provider-logo hidden">
+        <div id="provider-logo-placeholder" class="provider-logo-placeholder">🏢</div>
+      </div>
+      <h1 id="provider-name" class="provider-name"></h1>
+      <p id="provider-phone" class="provider-phone"></p>
+    </header>
+
+    <!-- Banner modo demo -->
+    <div id="demo-banner" class="demo-banner hidden">
+      ⚡ Modo demonstração — dados fictícios
+    </div>
+
+    <!-- Status Badge -->
+    <div class="status-wrapper">
+      <span id="status-badge" class="status-badge"></span>
+    </div>
+
+    <!-- Info do Orçamento -->
+    <section class="card budget-info">
+      <div class="card-header">
+        <h2>📋 Orçamento <span id="budget-number"></span></h2>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Data de emissão</span>
+          <span id="budget-date" class="info-value"></span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Válido até</span>
+          <span id="budget-valid-until" class="info-value"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Info do Cliente -->
+    <section class="card client-info">
+      <div class="card-header">
+        <h2>👤 Cliente</h2>
+      </div>
+      <p id="client-name" class="client-name"></p>
+      <p id="client-phone" class="client-detail"></p>
+      <p id="client-email" class="client-detail"></p>
+    </section>
+
+    <!-- Itens do Orçamento -->
+    <section class="card items-section">
+      <div class="card-header">
+        <h2>🔧 Itens</h2>
+      </div>
+      <div id="items-list" class="items-list">
+        <!-- Items rendered by JS -->
+      </div>
+      <div class="total-bar">
+        <span class="total-label">Total</span>
+        <span id="total-amount" class="total-value"></span>
+      </div>
+    </section>
+
+    <!-- Observações -->
+    <section id="notes-section" class="card hidden">
+      <div class="card-header">
+        <h2>📝 Observações</h2>
+      </div>
+      <p id="budget-notes" class="budget-notes"></p>
+    </section>
+
+    <!-- Assinatura (exibida após aprovação) -->
+    <section id="signature-section" class="card hidden">
+      <div class="card-header">
+        <h2>✍️ Assinatura Digital</h2>
+      </div>
+      <img id="signature-image" src="" alt="Assinatura do cliente" class="signature-image">
+      <p id="approved-at-text" class="approved-at-text"></p>
+    </section>
+
+    <!-- Botão de Ação -->
+    <div id="action-area" class="action-area hidden">
+      <button id="btn-approve" class="btn-approve" type="button">
+        ✅ Aprovar Orçamento
+      </button>
+    </div>
+
+    <!-- Mensagem para orçamentos não-pendentes -->
+    <div id="status-message" class="status-message hidden">
+      <p id="status-message-text"></p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="page-footer">
+      <p>Documento gerado digitalmente</p>
+    </footer>
+  </div>
+
+  <!-- ==================== MODAL DE ASSINATURA ==================== -->
+  <div id="signature-modal" class="modal hidden">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>✍️ Assine para aprovar</h3>
+        <p>Use o dedo ou mouse para assinar abaixo</p>
+      </div>
+      <div class="signature-pad-wrapper">
+        <canvas id="signature-pad"></canvas>
+      </div>
+      <div class="modal-actions">
+        <button id="btn-clear" class="btn-secondary" type="button">🗑️ Limpar</button>
+        <button id="btn-cancel" class="btn-secondary" type="button">Cancelar</button>
+        <button id="btn-confirm" class="btn-primary" type="button">✅ Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== TELA DE SUCESSO ==================== -->
+  <div id="screen-success" class="screen hidden">
+    <div class="success-container">
+      <div class="success-animation">
+        <div class="success-checkmark">✅</div>
+      </div>
+      <h2>Orçamento Aprovado!</h2>
+      <p class="success-subtitle">Sua aprovação e assinatura foram registradas com sucesso.</p>
+      <div class="success-details">
+        <p>📋 Orçamento <strong id="success-budget-number"></strong></p>
+        <p>💰 Total: <strong id="success-total"></strong></p>
+        <p>📅 Aprovado em: <strong id="success-date"></strong></p>
+      </div>
+      <p class="success-hint">O prestador será notificado da sua aprovação.</p>
+    </div>
+  </div>
+
+  <!-- ==================== SCRIPTS ==================== -->
+  <!-- Signature Pad - biblioteca leve para captura de assinatura -->
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- App -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>
