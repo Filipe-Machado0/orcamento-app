@@ -126,6 +126,32 @@ function getDefaultMockData() {
           { description: 'Diagnóstico Eletrônico Scanner', quantity: 1, unit_price: 120.00, total_price: 120.00 }
         ]
       }
+    ],
+    contracts: [
+      {
+        id: 'ctr-demo-01',
+        contract_number: 'CTR-2026/042',
+        title: 'Contrato de Prestação de Serviços Mecânicos e Fornecimento de Peças',
+        provider_name: 'Auto Center Silva Ltda',
+        provider_cnpj: '12.345.678/0001-90',
+        provider_phone: '(11) 91234-5678',
+        provider_address: 'Rua das Oficinas, 123 - Vila Mecânica, São Paulo/SP',
+        client_name: 'João Carlos de Oliveira',
+        client_doc: '123.456.789-00',
+        client_phone: '(11) 98765-4321',
+        client_address: 'Av. Brasil, 456 - Centro, São Paulo/SP',
+        service_description: 'Revisão completa do sistema de freios dianteiros, substituição de pastilhas e discos, troca do fluido DOT4, alinhamento 3D e sangria geral.',
+        total_amount: 1250.00,
+        payment_terms: 'Entrada de R$ 625,00 no ato da assinatura e saldo de R$ 625,00 na entrega do veículo.',
+        warranty_days: 90,
+        deadline_days: 2,
+        status: 'pendente', // 'pendente' ou 'assinado'
+        signed_at: null,
+        signature_data: null,
+        signature_ip: null,
+        signature_hash: null,
+        created_at: new Date(Date.now() - 3600000 * 2).toISOString()
+      }
     ]
   };
 }
@@ -147,6 +173,13 @@ class Store {
   initMock() {
     if (!localStorage.getItem(MOCK_STORAGE_KEY)) {
       localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(getDefaultMockData()));
+    } else {
+      // Garantir que a chave contracts exista mesmo em storage antigo
+      const data = this.getMock();
+      if (!data.contracts) {
+        data.contracts = getDefaultMockData().contracts;
+        this.saveMock(data);
+      }
     }
   }
 
@@ -162,26 +195,17 @@ class Store {
     localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(data));
   }
 
+  // Modo público irrestrito para demonstração sem exigência de login
   isDemoMode() {
-    return !this.isSupabase || localStorage.getItem('force_demo_mode') === 'true';
+    return true;
   }
 
   async getSession() {
-    if (this.isDemoMode()) {
-      return { user: { id: '00000000-0000-0000-0000-000000000001', email: 'prestador@autocenter.com' } };
-    }
-    const { data: { session } } = await this.supabase.auth.getSession();
-    return session;
+    return { user: { id: '00000000-0000-0000-0000-000000000001', email: 'demo@autocenter.com' } };
   }
 
   async logout() {
-    if (this.isDemoMode()) {
-      localStorage.removeItem('demo_logged_in');
-      window.location.href = 'login.html';
-      return;
-    }
-    await this.supabase.auth.signOut();
-    window.location.href = 'login.html';
+    window.location.href = 'painel.html';
   }
 
   async getBudgets() {
@@ -336,12 +360,41 @@ class Store {
       total_amount: payload.items.reduce((acc, cur) => acc + (cur.quantity * cur.unit_price), 0)
     };
   }
+
+  // Métodos de Contrato de Demonstração
+  async getContracts() {
+    return this.getMock().contracts || [];
+  }
+
+  async getContractById(id) {
+    const list = await this.getContracts();
+    return list.find(c => c.id === id) || list[0] || null;
+  }
+
+  async signContract(id, signatureData, ip = '189.120.45.10') {
+    const mock = this.getMock();
+    const contract = (mock.contracts || []).find(c => c.id === id);
+    if (!contract) throw new Error('Contrato não encontrado');
+
+    const now = new Date();
+    // Gerar um código hash de autenticidade demonstrativa
+    const hashHex = 'DOC-' + Math.random().toString(36).substring(2, 8).toUpperCase() + '-' + now.getTime().toString(36).toUpperCase();
+
+    contract.status = 'assinado';
+    contract.signed_at = now.toISOString();
+    contract.signature_data = signatureData;
+    contract.signature_ip = ip;
+    contract.signature_hash = hashHex;
+
+    this.saveMock(mock);
+    return contract;
+  }
 }
 
 // Instância única global
 window.AppStore = new Store();
 
-// Helper para montagem de link do WhatsApp
+// Helper para montagem de link do WhatsApp (Orçamento)
 window.generateWhatsAppLink = function(phone, budgetNumber, total, validUntil, token) {
   const cleanPhone = (phone || '').replace(/\D/g, '');
   const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '') + '/index.html';
@@ -349,6 +402,18 @@ window.generateWhatsAppLink = function(phone, budgetNumber, total, validUntil, t
   
   const formattedTotal = Number(total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   const text = `Olá! Segue seu orçamento da oficina:\n\n📋 *Orçamento #${String(budgetNumber).padStart(3, '0')}*\n💰 *Total:* ${formattedTotal}\n📅 *Válido até:* ${validUntil || '7 dias'}\n\n👉 *Confira os detalhes e aprove com assinatura digital aqui:*\n${approvalUrl}`;
+
+  const destPhone = cleanPhone.length >= 10 ? (cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone) : '';
+  return `https://wa.me/${destPhone}?text=${encodeURIComponent(text)}`;
+};
+
+// Helper para montagem de link do WhatsApp (Contrato)
+window.generateContractWhatsAppLink = function(phone, contractNumber, clientName, contractId) {
+  const cleanPhone = (phone || '').replace(/\D/g, '');
+  const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '') + '/contrato.html';
+  const contractUrl = `${baseUrl}?id=${contractId || 'ctr-demo-01'}`;
+  
+  const text = `Olá, *${clientName || 'Cliente'}*!\n\nSegue o seu *Contrato de Prestação de Serviços (${contractNumber})* pronto para conferência e assinatura digital pelo celular:\n\n👉 *Acesse e assine aqui:*\n${contractUrl}\n\nQualquer dúvida estamos à disposição!`;
 
   const destPhone = cleanPhone.length >= 10 ? (cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone) : '';
   return `https://wa.me/${destPhone}?text=${encodeURIComponent(text)}`;

@@ -57,28 +57,10 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="js/auth.js"></script>
   <script>
-    document.getElementById('login-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value;
-      const pass = document.getElementById('login-password').value;
-      const store = window.AppStore;
-
-      if (store.isSupabase) {
-        const { error } = await store.supabase.auth.signInWithPassword({ email, password: pass });
-        if (error) {
-          alert('Erro no login: ' + error.message);
-          return;
-        }
-      }
-      window.location.href = 'painel.html';
-    });
-
-    document.getElementById('btn-enter-demo').addEventListener('click', () => {
-      localStorage.setItem('force_demo_mode', 'true');
-      window.location.href = 'painel.html';
-    });
+    // Acesso 100% público e direto para demonstração
+    localStorage.setItem('force_demo_mode', 'true');
+    window.location.replace('painel.html');
   </script>
 </body>
 </html>
