@@ -3,140 +3,236 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#1e40af">
-  <title>Orçamentos, OS & Contratos — Demonstração All-in-One</title>
+  <meta name="theme-color" content="#0f172a">
+  <title>Sistema de Gestão de Orçamentos, OS e Contratos</title>
 
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230f172a%22/><path d=%22M30 50L45 65L75 35%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 fill=%22none%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/admin.css">
 
   <style>
-    /* Estilos do Contrato embutido */
-    .contract-doc {
-      background: white;
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-lg);
-      padding: var(--space-5);
-      box-shadow: var(--shadow-sm);
-      margin-bottom: var(--space-5);
-      line-height: 1.6;
-    }
-    .contract-header-bar {
-      border-bottom: 2px solid var(--primary-600);
-      padding-bottom: var(--space-3);
-      margin-bottom: var(--space-4);
+    /* Estilos Corporativos Refinados */
+    .app-brand-bar {
+      background: #0f172a;
+      color: white;
+      padding: 12px 16px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: var(--space-2);
+      border-bottom: 1px solid #1e293b;
     }
-    .contract-title {
-      font-size: var(--font-size-base);
-      font-weight: 800;
-      color: var(--gray-900);
-      text-transform: uppercase;
-    }
-    .contract-parties {
-      background: var(--gray-50);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius-md);
-      padding: var(--space-3);
-      margin-bottom: var(--space-4);
-      font-size: var(--font-size-xs);
-    }
-    .contract-clause { margin-bottom: var(--space-4); }
-    .clause-title {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--primary-800);
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .clause-text { font-size: 0.85rem; color: var(--gray-700); text-align: justify; }
-    .signature-certificate {
-      background: linear-gradient(180deg, var(--success-50) 0%, white 100%);
-      border: 2px solid var(--success-500);
-      border-radius: var(--radius-lg);
-      padding: var(--space-4);
-      margin-top: var(--space-4);
-      text-align: center;
-    }
-    .cert-seal {
+
+    .whitelabel-header-tag {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--success-600);
-      color: white;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 9999px;
-      text-transform: uppercase;
+      font-size: 0.72rem;
+      color: #94a3b8;
+      background: #1e293b;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 500;
     }
-    .cert-image {
-      max-width: 240px;
-      margin: 8px auto;
+
+    /* Topbar do Contrato Oficial */
+    .contract-doc {
+      background: #ffffff;
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--space-5);
+      line-height: 1.65;
+    }
+
+    .contract-header-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
       border-bottom: 2px solid var(--gray-800);
-      padding: 4px;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
     }
+
+    @media (min-width: 600px) {
+      .contract-header-grid {
+        grid-template-columns: auto 1fr;
+        align-items: center;
+      }
+    }
+
+    .contract-title-h1 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--gray-900);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+
+    .contract-parties-box {
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 18px;
+      font-size: 0.8rem;
+    }
+
+    .clause-num-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gray-900);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+
+    .clause-body-text {
+      font-size: 0.85rem;
+      color: var(--gray-600);
+      text-align: justify;
+      margin-bottom: 14px;
+    }
+
+    /* Selo de Assinatura Corporativa (Padrão DocuSign/AdobeSign) */
+    .corporate-seal-box {
+      background: #f8fafc;
+      border: 1.5px solid #0f172a;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .seal-badge-header {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0f172a;
+      border-bottom: 1px solid #cbd5e1;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    .seal-img-wrapper img {
+      max-width: 220px;
+      margin: 8px auto;
+      border-bottom: 1px solid #94a3b8;
+      padding-bottom: 4px;
+    }
+
+    .seal-audit-trail {
+      font-size: 0.72rem;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* Botões profissionais */
+    .btn-corp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 8px 14px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-corp-primary {
+      background: #0f172a;
+      color: white;
+    }
+    .btn-corp-primary:hover { background: #1e293b; }
+
+    .btn-corp-secondary {
+      background: white;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+    .btn-corp-secondary:hover { background: #f8fafc; }
+
+    .btn-corp-wa {
+      background: #15803d;
+      color: white;
+    }
+    .btn-corp-wa:hover { background: #166534; }
   </style>
 </head>
-<body class="single-page-body" style="background-color: var(--gray-50);">
+<body class="single-page-body" style="background-color: #f8fafc;">
 
-  <!-- Barra de Navegação All-in-One (Tabs no topo no PC / fixa no rodapé no celular) -->
+  <!-- Barra Superior Institucional (White-label) -->
+  <header class="app-brand-bar">
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="brand-logo-slot" style="background: #1e293b; border-color: #334155; padding: 4px 12px; min-height: 40px;">
+        <span class="brand-logo-text" style="color: #f1f5f9; font-size: 0.7rem;">SUA LOGO AQUI</span>
+      </div>
+      <div>
+        <div style="font-weight: 700; font-size: 0.85rem; letter-spacing: -0.01em;">Sistema de Ordens de Serviço</div>
+        <div style="font-size: 0.7rem; color: #94a3b8;">Gestão Comercial e Contratual</div>
+      </div>
+    </div>
+    <div class="whitelabel-header-tag">
+      <span>Versão Personalizada</span>
+    </div>
+  </header>
+
+  <!-- Navegação All-in-One em Abas (Sóbria e Profissional) -->
   <nav class="app-nav-bar">
     <button type="button" class="nav-tab-btn active" data-tab="pane-painel">
-      <span class="tab-icon">📊</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
       <span>Painel</span>
     </button>
     <button type="button" class="nav-tab-btn" data-tab="pane-novo-orcamento">
-      <span class="tab-icon">⚡</span>
-      <span>Criar Orçamento</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      <span>Novo Orçamento</span>
     </button>
     <button type="button" class="nav-tab-btn" data-tab="pane-contrato">
-      <span class="tab-icon">📄</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
       <span>Contrato</span>
     </button>
     <button type="button" class="nav-tab-btn" data-tab="pane-cliente">
-      <span class="tab-icon">📱</span>
-      <span>Visão Cliente</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+      <span>Visão do Cliente</span>
     </button>
   </nav>
 
-  <!-- Banner Superior de Demonstração -->
-  <div class="demo-banner">
-    ✨ <strong>MVP Demonstrativo All-in-One:</strong> Tudo em uma tela só para apresentar a sócios e clientes.
-  </div>
-
   <!-- ============================================================
-       ABA 1: PAINEL DO PRESTADOR / GERENTE
+       ABA 1: PAINEL DE GESTÃO / DASHBOARD
        ============================================================ -->
   <section id="pane-painel" class="tab-content-pane active admin-container">
     
-    <!-- Seção de Métricas (KPIs) -->
-    <div class="kpi-grid">
+    <!-- Painel de KPIs Corporativo -->
+    <div class="kpi-grid" style="margin-top: 16px;">
       <div class="kpi-card">
-        <span class="kpi-label">⏳ Pendentes</span>
+        <span class="kpi-label"><span class="status-dot pendente"></span>Pendentes</span>
         <span id="kpi-pending-count" class="kpi-value">0</span>
         <span id="kpi-pending-total" class="kpi-subtext">R$ 0,00</span>
       </div>
-      <div class="kpi-card" style="border-left: 4px solid var(--success-500);">
-        <span class="kpi-label">✅ Aprovados</span>
-        <span id="kpi-approved-count" class="kpi-value" style="color: var(--success-700);">0</span>
+      <div class="kpi-card" style="border-left: 3px solid #16a34a;">
+        <span class="kpi-label"><span class="status-dot aprovado"></span>Aprovados</span>
+        <span id="kpi-approved-count" class="kpi-value" style="color: #166534;">0</span>
         <span id="kpi-approved-total" class="kpi-subtext">R$ 0,00</span>
       </div>
-      <div class="kpi-card" style="border-left: 4px solid var(--primary-500);">
-        <span class="kpi-label">🔧 Em Andamento</span>
-        <span id="kpi-progress-count" class="kpi-value" style="color: var(--primary-700);">0</span>
+      <div class="kpi-card" style="border-left: 3px solid #0284c7;">
+        <span class="kpi-label"><span class="status-dot em_andamento"></span>Em Execução</span>
+        <span id="kpi-progress-count" class="kpi-value" style="color: #075985;">0</span>
         <span id="kpi-progress-total" class="kpi-subtext">R$ 0,00</span>
       </div>
-      <div class="kpi-card">
-        <span class="kpi-label">🏁 Concluídos</span>
+      <div class="kpi-card" style="border-left: 3px solid #475569;">
+        <span class="kpi-label"><span class="status-dot concluido"></span>Concluídos</span>
         <span id="kpi-done-count" class="kpi-value">0</span>
         <span id="kpi-done-total" class="kpi-subtext">R$ 0,00</span>
       </div>
@@ -145,28 +241,28 @@
     <!-- Filtros de Status -->
     <div class="filter-tabs">
       <button class="filter-tab active" data-filter="todos">Todos (<span id="count-todos">0</span>)</button>
-      <button class="filter-tab" data-filter="pendente">⏳ Pendentes (<span id="count-pendente">0</span>)</button>
-      <button class="filter-tab" data-filter="aprovado">✅ Aprovados (<span id="count-aprovado">0</span>)</button>
-      <button class="filter-tab" data-filter="em_andamento">🔧 Em Andamento (<span id="count-em_andamento">0</span>)</button>
-      <button class="filter-tab" data-filter="concluido">🏁 Concluídos (<span id="count-concluido">0</span>)</button>
+      <button class="filter-tab" data-filter="pendente">Pendentes (<span id="count-pendente">0</span>)</button>
+      <button class="filter-tab" data-filter="aprovado">Aprovados (<span id="count-aprovado">0</span>)</button>
+      <button class="filter-tab" data-filter="em_andamento">Em Execução (<span id="count-em_andamento">0</span>)</button>
+      <button class="filter-tab" data-filter="concluido">Concluídos (<span id="count-concluido">0</span>)</button>
     </div>
 
     <!-- Lista de Orçamentos -->
     <div id="budgets-feed">
-      <!-- Renderizado via JS -->
+      <!-- Inserido dinamicamente via JS -->
     </div>
   </section>
 
   <!-- ============================================================
-       ABA 2: CRIAR ORÇAMENTO RELÂMPAGO
+       ABA 2: NOVO ORÇAMENTO EXECUTIVO
        ============================================================ -->
   <section id="pane-novo-orcamento" class="tab-content-pane admin-container">
     
-    <!-- Card 1: Seleção de Cliente -->
-    <div class="card" style="margin: 0 0 var(--space-4); padding: var(--space-4);">
+    <!-- Seleção de Cliente -->
+    <div class="card" style="margin: 16px 0 var(--space-4); padding: var(--space-4);">
       <div class="quick-section-title">
-        <span>👤 Cliente</span>
-        <button id="btn-toggle-new-client" class="btn-secondary" style="font-size: 0.7rem; padding: 4px 8px; border-radius: 9999px;">
+        <span>Dados do Cliente</span>
+        <button id="btn-toggle-new-client" class="btn-corp btn-corp-secondary" style="font-size: 0.72rem; padding: 3px 8px;">
           + Cadastrar Novo
         </button>
       </div>
@@ -177,96 +273,96 @@
         </select>
       </div>
 
-      <div id="new-client-form" class="hidden" style="background: var(--gray-50); padding: var(--space-3); border-radius: var(--radius-md); border: 1px dashed var(--primary-500); margin-top: var(--space-2);">
-        <div style="font-size: 0.8rem; font-weight: 700; color: var(--primary-800); margin-bottom: 8px;">
-          Novo Cliente Rápido
+      <div id="new-client-form" class="hidden" style="background: var(--gray-50); padding: var(--space-3); border-radius: var(--radius-md); border: 1px solid var(--gray-300); margin-top: var(--space-2);">
+        <div style="font-size: 0.8rem; font-weight: 700; color: var(--gray-800); margin-bottom: 8px;">
+          Cadastro Rápido de Cliente
         </div>
         <div class="form-group">
           <input type="text" id="new-client-name" class="form-input" placeholder="Nome completo do cliente">
         </div>
         <div class="form-group" style="margin-bottom: 8px;">
-          <input type="tel" id="new-client-phone" class="form-input" placeholder="WhatsApp / Telefone">
+          <input type="tel" id="new-client-phone" class="form-input" placeholder="Telefone de Contato (WhatsApp)">
         </div>
         <div style="display: flex; gap: 8px;">
-          <button type="button" id="btn-save-inline-client" class="btn-primary" style="padding: 6px 12px; font-size: 0.8rem;">
-            Salvar Cliente
+          <button type="button" id="btn-save-inline-client" class="btn-corp btn-corp-primary" style="font-size: 0.75rem;">
+            Salvar
           </button>
-          <button type="button" id="btn-cancel-inline-client" class="btn-secondary" style="padding: 6px 12px; font-size: 0.8rem;">
+          <button type="button" id="btn-cancel-inline-client" class="btn-corp btn-corp-secondary" style="font-size: 0.75rem;">
             Cancelar
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Card 2: Pacotes Relâmpago (1 Toque) -->
+    <!-- Pacotes de Serviços Predefinidos -->
     <div style="margin-bottom: var(--space-3);">
       <div class="quick-section-title">
-        <span>⚡ 1 Toque: Pacotes Relâmpago</span>
-        <span style="font-size: 0.7rem; font-weight: normal; color: var(--gray-400);">Combos prontos</span>
+        <span>Pacotes Pré-configurados</span>
+        <span style="font-size: 0.72rem; font-weight: normal; color: var(--gray-500);">Inserção em 1 clique</span>
       </div>
       <div id="packages-list" class="packages-scroll"></div>
     </div>
 
-    <!-- Card 3: Favoritos / Catálogo Frequente -->
+    <!-- Catálogo de Itens Frequentes -->
     <div style="margin-bottom: var(--space-3);">
       <div class="quick-section-title">
-        <span>⭐ Favoritos & Peças Frequentes</span>
+        <span>Itens e Peças Frequentes</span>
       </div>
       <div id="favorites-chips" class="favorites-chips"></div>
     </div>
 
-    <!-- Card 4: Itens do Orçamento -->
+    <!-- Relação de Itens da Ordem de Serviço -->
     <div class="card" style="margin: 0 0 var(--space-4);">
       <div class="card-header" style="display: flex; justify-content: space-between; align-items: center;">
-        <h2 style="font-size: 0.95rem;">🛒 Itens (<span id="items-count-badge">0</span>)</h2>
+        <h2 style="font-size: 0.9rem; font-weight: 700;">Itens da Ordem de Serviço (<span id="items-count-badge">0</span>)</h2>
         <div style="display: flex; gap: 6px;">
-          <button id="btn-clone-last" class="btn-secondary" style="font-size: 0.72rem; padding: 4px 8px;">
-            📋 Clonar Último
+          <button id="btn-clone-last" class="btn-corp btn-corp-secondary" style="font-size: 0.72rem; padding: 4px 8px;">
+            Clonar Último
           </button>
-          <button id="btn-add-manual-item" class="btn-secondary" style="font-size: 0.72rem; padding: 4px 8px;">
-            + Item Manual
+          <button id="btn-add-manual-item" class="btn-corp btn-corp-secondary" style="font-size: 0.72rem; padding: 4px 8px;">
+            + Item Avulso
           </button>
         </div>
       </div>
 
       <div id="draft-items-list" style="padding: var(--space-3);">
         <div id="empty-items-placeholder" style="text-align: center; padding: 24px 12px; color: var(--gray-400); font-size: 0.85rem;">
-          Toque em um <strong>Pacote ⚡</strong> ou <strong>Favorito ⭐</strong> acima para adicionar itens em segundos.
+          Selecione um pacote ou peça acima para compor a ordem de serviço.
         </div>
       </div>
     </div>
 
-    <!-- Card 5: Validade e Observações -->
+    <!-- Prazos e Observações -->
     <div class="card" style="margin: 0 0 var(--space-4); padding: var(--space-4);">
       <div class="form-group">
-        <label class="form-label" for="budget-validity">Prazo de Validade</label>
+        <label class="form-label" for="budget-validity">Prazo de Validade da Proposta</label>
         <select id="budget-validity" class="form-select">
           <option value="3">3 dias</option>
-          <option value="7" selected>7 dias (Recomendado)</option>
+          <option value="7" selected>7 dias (Padrão)</option>
           <option value="15">15 dias</option>
           <option value="30">30 dias</option>
         </select>
       </div>
 
       <div class="form-group" style="margin-bottom: 0;">
-        <label class="form-label" for="budget-notes-input">Observações</label>
-        <textarea id="budget-notes-input" class="form-textarea" rows="2" placeholder="Garantia de 3 meses. Pagamento facilitado."></textarea>
+        <label class="form-label" for="budget-notes-input">Observações e Condições Comerciais</label>
+        <textarea id="budget-notes-input" class="form-textarea" rows="2" placeholder="Garantia legal de 90 dias. Condições de faturamento e formas de pagamento."></textarea>
       </div>
     </div>
 
-    <!-- Barra de Total e Ação da Criação -->
-    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-lg); padding: var(--space-4); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); margin-bottom: var(--space-6);">
+    <!-- Barra de Conclusão e Envio -->
+    <div style="background: white; border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: var(--space-4); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); margin-bottom: var(--space-6);">
       <div>
-        <div style="font-size: 0.7rem; color: var(--gray-500); text-transform: uppercase; font-weight: 600;">Total Calculado</div>
-        <div id="draft-total-display" style="font-size: 1.3rem; font-weight: 800; color: var(--primary-700);">R$ 0,00</div>
+        <div style="font-size: 0.7rem; color: var(--gray-500); text-transform: uppercase; font-weight: 700;">Valor Total da OS</div>
+        <div id="draft-total-display" style="font-size: 1.25rem; font-weight: 800; color: #0f172a;">R$ 0,00</div>
       </div>
 
       <div style="display: flex; gap: 8px;">
-        <button id="btn-save-draft" class="btn-secondary" style="padding: 10px 14px; font-weight: 600;" type="button">
-          💾 Salvar
+        <button id="btn-save-draft" class="btn-corp btn-corp-secondary" type="button">
+          Salvar
         </button>
-        <button id="btn-save-and-send-wa" class="btn-approve" style="padding: 10px 16px; font-size: 0.9rem; animation: none; background: #25d366;" type="button">
-          📱 Gerar e WhatsApp
+        <button id="btn-save-and-send-wa" class="btn-corp btn-corp-wa" type="button">
+          Gerar e Enviar via WhatsApp
         </button>
       </div>
     </div>
@@ -274,89 +370,93 @@
   </section>
 
   <!-- ============================================================
-       ABA 3: CONTRATO DE PRESTAÇÃO DE SERVIÇOS
+       ABA 3: CONTRATO DE PRESTAÇÃO DE SERVIÇOS (WHITE-LABEL)
        ============================================================ -->
   <section id="pane-contrato" class="tab-content-pane admin-container">
-    <div class="contract-doc">
+    <div class="contract-doc" style="margin-top: 16px;">
       
-      <div class="contract-header-bar">
+      <!-- Cabeçalho do Contrato com Espaço Oficial de Logotipo -->
+      <div class="contract-header-grid">
+        <div class="brand-logo-slot large">
+          <span class="brand-logo-text">SUA LOGO AQUI</span>
+          <span class="brand-logo-sub">Identidade Visual da Empresa</span>
+        </div>
         <div>
-          <h1 class="contract-title">Instrumento Particular de Prestação de Serviços</h1>
+          <h1 class="contract-title-h1">Contrato de Prestação de Serviços Mecânicos</h1>
           <div style="font-size: 0.75rem; color: var(--gray-500); margin-top: 2px;">
-            Documento de Validação e Execução de Orçamento
+            Identificação: <span id="contract-number-badge" style="font-weight: 700; color: var(--gray-800);">CTR-2026/042</span>
           </div>
         </div>
-        <span class="contract-code-badge" id="contract-number-badge">CTR-2026/042</span>
       </div>
 
-      <div class="contract-parties">
+      <div class="contract-parties-box">
         <div style="margin-bottom: 8px;">
-          <strong>CONTRATADA (PRESTADOR):</strong> <span id="c-provider-name">Auto Center Silva Ltda</span><br>
-          <span style="color: var(--gray-600); font-size: 0.75rem;">
-            CNPJ: <span id="c-provider-cnpj">12.345.678/0001-90</span> · Fone: <span id="c-provider-phone">(11) 91234-5678</span>
+          <strong>CONTRATADA:</strong> <span id="c-provider-name">Auto Center Silva Ltda</span><br>
+          <span style="color: var(--gray-500); font-size: 0.75rem;">
+            CNPJ: <span id="c-provider-cnpj">12.345.678/0001-90</span> · Telefone: <span id="c-provider-phone">(11) 91234-5678</span>
           </span>
         </div>
         <div>
-          <strong>CONTRATANTE (CLIENTE):</strong> <span id="c-client-name">João Carlos de Oliveira</span><br>
-          <span style="color: var(--gray-600); font-size: 0.75rem;">
-            Documento: <span id="c-client-doc">123.456.789-00</span> · Fone: <span id="c-client-phone">(11) 98765-4321</span>
+          <strong>CONTRATANTE:</strong> <span id="c-client-name">João Carlos de Oliveira</span><br>
+          <span style="color: var(--gray-500); font-size: 0.75rem;">
+            CPF/Doc: <span id="c-client-doc">123.456.789-00</span> · Telefone: <span id="c-client-phone">(11) 98765-4321</span>
           </span>
         </div>
       </div>
 
       <div class="contract-clause">
-        <div class="clause-title">CLÁUSULA 1ª — DO OBJETO E ESCOPO</div>
-        <p class="clause-text">
-          O presente contrato tem como objeto a realização dos serviços especificados no Orçamento correspondente, compreendendo: 
-          <strong id="c-service-desc">Revisão completa do sistema de freios dianteiros, substituição de pastilhas cerâmicas e discos, sangria com fluido DOT4 e alinhamento 3D.</strong> Todas as peças atendem às normas originais de segurança.
+        <div class="clause-num-title">Cláusula 1ª — Do Objeto e Escopo Operacional</div>
+        <p class="clause-body-text">
+          O presente instrumento tem por objeto a execução técnica especializada dos serviços especificados na Proposta de Serviço vinculada, compreendendo: 
+          <strong id="c-service-desc">Revisão completa do sistema de freios dianteiros, substituição de pastilhas cerâmicas e discos, sangria técnica com fluido sintético DOT4 e alinhamento de direção computadorizado.</strong> Todas as peças e insumos empregados atendem rigorosamente aos padrões normativos de segurança veicular.
         </p>
       </div>
 
       <div class="contract-clause">
-        <div class="clause-title">CLÁUSULA 2ª — DO VALOR E FORMA DE PAGAMENTO</div>
-        <p class="clause-text">
-          Pela execução integral dos serviços e peças, o CONTRATANTE pagará à CONTRATADA o valor total de <strong id="c-total-amount" style="color: var(--primary-800);">R$ 1.250,00</strong>: <span id="c-payment-terms">Entrada de R$ 625,00 no ato da assinatura e saldo de R$ 625,00 na entrega do veículo.</span>
+        <div class="clause-num-title">Cláusula 2ª — Do Valor e Condições de Faturamento</div>
+        <p class="clause-body-text">
+          Pelos serviços executados e peças instaladas, o CONTRATANTE pagará o valor líquido total de <strong id="c-total-amount" style="color: #0f172a;">R$ 1.250,00</strong>, com a seguinte pactuação: <span id="c-payment-terms">Entrada de 50% na aprovação da proposta e saldo de 50% no momento da liberação do veículo.</span>
         </p>
       </div>
 
       <div class="contract-clause">
-        <div class="clause-title">CLÁUSULA 3ª — DO PRAZO E ENTREGA</div>
-        <p class="clause-text">
-          Prazo estimado de <strong id="c-deadline-days">2 dias úteis</strong> para conclusão após a assinatura deste instrumento.
+        <div class="clause-num-title">Cláusula 3ª — Do Prazo e Entrega</div>
+        <p class="clause-body-text">
+          O prazo estimado para a conclusão e testes de rodagem é de <strong id="c-deadline-days">2 dias úteis</strong> contados da assinatura deste instrumento.
         </p>
       </div>
 
       <div class="contract-clause">
-        <div class="clause-title">CLÁUSULA 4ª — DA GARANTIA LEGAL</div>
-        <p class="clause-text">
-          Garantia de <strong id="c-warranty-days">90 (noventa) dias</strong> para serviços e peças, conforme o Código de Defesa do Consumidor.
+        <div class="clause-num-title">Cláusula 4ª — Da Garantia Legal e Assistência</div>
+        <p class="clause-body-text">
+          A CONTRATADA assegura a garantia de <strong id="c-warranty-days">90 (noventa) dias</strong> para todos os serviços e peças substituídas, consoante as disposições do Artigo 26 do Código de Defesa do Consumidor.
         </p>
       </div>
 
-      <!-- Área de Assinatura do Contrato -->
-      <div id="contract-pending-box" style="margin-top: var(--space-5); text-align: center; border-top: 1px dashed var(--gray-300); padding-top: var(--space-4);">
-        <button type="button" id="btn-open-sign-modal" class="btn-approve" style="max-width: 320px; margin: 0 auto; font-size: 0.95rem; padding: 12px 20px;">
-          ✍️ Assinar Contrato Agora
+      <!-- Área de Coleta de Assinatura -->
+      <div id="contract-pending-box" style="margin-top: 24px; text-align: center; border-top: 1px dashed var(--gray-300); padding-top: 20px;">
+        <button type="button" id="btn-open-sign-modal" class="btn-corp btn-corp-primary" style="padding: 12px 24px; font-size: 0.95rem;">
+          Assinar Contrato Eletronicamente
         </button>
-        <p style="font-size: 0.75rem; color: var(--gray-400); margin-top: 8px;">
-          Assinatura colhida com o dedo na tela ou mouse.
+        <p style="font-size: 0.72rem; color: var(--gray-400); margin-top: 8px;">
+          Assinatura com validade formal colhida via tela de dispositivo móvel ou cursor.
         </p>
       </div>
 
-      <!-- Certificado quando assinado -->
-      <div id="contract-signed-box" class="signature-certificate hidden">
-        <div class="cert-seal">🛡️ Contrato Assinado Digitalmente</div>
-        <div>
-          <img id="cert-signature-img" src="" alt="Assinatura" class="cert-image">
-          <div style="font-weight: 700; color: var(--gray-900); font-size: 0.85rem;" id="cert-signer-name">João Carlos de Oliveira</div>
+      <!-- Selo de Assinatura Corporativo (Padrão Oficial) -->
+      <div id="contract-signed-box" class="corporate-seal-box hidden">
+        <div class="seal-badge-header">Documento Autenticado Eletronicamente</div>
+        <div class="seal-img-wrapper">
+          <img id="cert-signature-img" src="" alt="Assinatura Digital">
+          <div style="font-weight: 700; color: #0f172a; font-size: 0.85rem;" id="cert-signer-name">João Carlos de Oliveira</div>
         </div>
-        <div style="font-size: 0.75rem; color: var(--gray-600); margin-top: 8px;">
-          <div>📅 Aceite em: <strong id="cert-timestamp">--</strong></div>
-          <div>🔐 Código Verificador: <span id="cert-hash" style="font-family: monospace; font-weight: bold; color: var(--primary-800);">--</span></div>
+        <div class="seal-audit-trail" style="margin-top: 10px;">
+          <div>Data e Hora da Assinatura: <strong id="cert-timestamp">--</strong></div>
+          <div>Código Verificador de Autenticidade: <span id="cert-hash" style="font-family: monospace; font-weight: bold; color: #0f172a;">--</span></div>
         </div>
-        <div style="margin-top: 12px; display: flex; justify-content: center; gap: 8px;">
-          <button type="button" class="btn-secondary" onclick="window.print()" style="font-size: 0.75rem; padding: 5px 12px;">🖨️ Imprimir</button>
-          <button type="button" id="btn-share-contract-wa" class="btn-primary" style="font-size: 0.75rem; padding: 5px 12px; background: #25d366;">📱 Enviar WhatsApp</button>
+        <div style="margin-top: 14px; display: flex; justify-content: center; gap: 8px;">
+          <button type="button" class="btn-corp btn-corp-secondary" onclick="window.print()" style="font-size: 0.75rem;">Imprimir</button>
+          <button type="button" id="btn-share-contract-wa" class="btn-corp btn-corp-wa" style="font-size: 0.75rem;">Compartilhar no WhatsApp</button>
         </div>
       </div>
 
@@ -364,32 +464,38 @@
   </section>
 
   <!-- ============================================================
-       ABA 4: VISÃO DO CLIENTE (APROVAÇÃO DO ORÇAMENTO)
+       ABA 4: VISÃO DO CLIENTE (ORÇAMENTO PERSONALIZADO)
        ============================================================ -->
   <section id="pane-cliente" class="tab-content-pane">
-    <div style="max-width: 540px; margin: 0 auto;">
+    <div style="max-width: 520px; margin: 16px auto 0;">
       
-      <header class="provider-header" style="border-radius: var(--radius-lg) var(--radius-lg) 0 0; margin: var(--space-4) var(--space-4) 0;">
-        <div class="provider-logo-placeholder" style="margin: 0 auto 8px; width: 56px; height: 56px; font-size: 1.5rem;">🏢</div>
-        <h1 id="cli-provider-name" class="provider-name" style="font-size: 1.2rem;">Auto Center Silva</h1>
-        <p id="cli-provider-phone" class="provider-phone" style="font-size: 0.8rem;">📞 (11) 91234-5678</p>
-      </header>
+      <!-- Header do Orçamento Whitelabel -->
+      <div class="card" style="margin: 0 var(--space-4) var(--space-3); padding: var(--space-4); text-align: center; border-top: 3px solid #0f172a;">
+        <div class="brand-logo-slot large" style="margin-bottom: 12px; width: 100%; max-width: 260px;">
+          <span class="brand-logo-text">SUA LOGO AQUI</span>
+          <span class="brand-logo-sub">Marca Personalizada da Empresa</span>
+        </div>
+        <h1 id="cli-provider-name" style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin-bottom: 2px;">Auto Center Silva</h1>
+        <p id="cli-provider-phone" style="font-size: 0.8rem; color: var(--gray-500);">Telefone Comercial: (11) 91234-5678</p>
+      </div>
 
-      <div class="status-wrapper">
-        <span id="cli-status-badge" class="status-badge status-badge--pendente">⏳ Pendente</span>
+      <div style="text-align: center; margin-bottom: 14px;">
+        <span id="cli-status-badge" class="status-badge" style="background: white; border: 1px solid var(--gray-300); color: var(--gray-700); font-weight: 600; font-size: 0.75rem;">
+          <span class="status-dot pendente"></span>Proposta Pendente
+        </span>
       </div>
 
       <section class="card budget-info">
         <div class="card-header">
-          <h2>📋 Orçamento <span id="cli-budget-number">#042</span></h2>
+          <h2 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Proposta Comercial <span id="cli-budget-number">#042</span></h2>
         </div>
         <div class="info-grid">
           <div class="info-item">
-            <span class="info-label">Emissão</span>
+            <span class="info-label">Data de Emissão</span>
             <span id="cli-budget-date" class="info-value">19/10/2026</span>
           </div>
           <div class="info-item">
-            <span class="info-label">Válido até</span>
+            <span class="info-label">Validade da Proposta</span>
             <span id="cli-budget-valid" class="info-value">26/10/2026</span>
           </div>
         </div>
@@ -397,55 +503,55 @@
 
       <section class="card client-info">
         <div class="card-header">
-          <h2>👤 Cliente</h2>
+          <h2 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Destinatário</h2>
         </div>
-        <p id="cli-client-name" class="client-name">João Carlos de Oliveira</p>
-        <p id="cli-client-phone" class="client-detail">📞 (11) 98765-4321</p>
+        <p id="cli-client-name" class="client-name" style="font-size: 0.95rem;">João Carlos de Oliveira</p>
+        <p id="cli-client-phone" class="client-detail">Contato: (11) 98765-4321</p>
       </section>
 
       <section class="card items-section">
         <div class="card-header">
-          <h2>🔧 Itens do Serviço</h2>
+          <h2 style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Discriminação de Peças e Serviços</h2>
         </div>
         <div id="cli-items-list" class="items-list"></div>
-        <div class="total-bar">
-          <span class="total-label">Total</span>
-          <span id="cli-total-amount" class="total-value">R$ 1.250,00</span>
+        <div class="total-bar" style="background: var(--gray-50); border-top: 1px solid var(--gray-200);">
+          <span class="total-label" style="font-size: 0.9rem; font-weight: 700; color: var(--gray-700);">Total Geral</span>
+          <span id="cli-total-amount" class="total-value" style="color: #0f172a; font-size: 1.25rem;">R$ 1.250,00</span>
         </div>
       </section>
 
-      <div id="cli-action-area" class="action-area">
-        <button id="cli-btn-approve" class="btn-approve" type="button">
-          ✅ Aprovar Orçamento Agora
+      <div id="cli-action-area" class="action-area" style="padding-top: 0;">
+        <button id="cli-btn-approve" class="btn-corp btn-corp-primary" style="width: 100%; padding: 14px; font-size: 0.95rem;" type="button">
+          Aprovar Proposta e Assinar
         </button>
       </div>
 
-      <div id="cli-signature-view" class="card hidden">
-        <div class="card-header">
-          <h2>✍️ Assinatura do Cliente</h2>
+      <div id="cli-signature-view" class="card hidden" style="padding: var(--space-4); text-align: center;">
+        <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: #166534; margin-bottom: 8px;">
+          Proposta Aprovada com Assinatura Eletrônica
         </div>
         <img id="cli-signature-img" src="" alt="Assinatura" class="signature-image">
-        <p id="cli-approved-text" class="approved-at-text"></p>
+        <p id="cli-approved-text" class="approved-at-text" style="font-size: 0.75rem; color: var(--gray-500);"></p>
       </div>
 
     </div>
   </section>
 
-  <!-- ==================== MODAL DE ASSINATURA COMPARTILHADO ==================== -->
+  <!-- ==================== MODAL DE ASSINATURA CORPORATIVO ==================== -->
   <div id="signature-modal" class="modal hidden">
     <div class="modal-overlay"></div>
     <div class="modal-content">
       <div class="modal-header">
-        <h3 id="modal-sign-title">✍️ Assine na tela</h3>
-        <p>Use o dedo ou mouse para assinar no campo abaixo</p>
+        <h3 id="modal-sign-title" style="font-size: 1rem; font-weight: 700; color: #0f172a;">Assinatura Digital</h3>
+        <p style="font-size: 0.8rem; color: var(--gray-500);">Aponha sua assinatura no espaço abaixo para validar o documento</p>
       </div>
-      <div class="signature-pad-wrapper">
+      <div class="signature-pad-wrapper" style="border: 1px solid #cbd5e1; background: white;">
         <canvas id="signature-pad"></canvas>
       </div>
       <div class="modal-actions">
-        <button id="btn-clear-sig" class="btn-secondary" type="button">🗑️ Limpar</button>
-        <button id="btn-cancel-sig" class="btn-secondary" type="button">Cancelar</button>
-        <button id="btn-confirm-sig" class="btn-primary" type="button">✅ Confirmar</button>
+        <button id="btn-clear-sig" class="btn-corp btn-corp-secondary" type="button">Limpar</button>
+        <button id="btn-cancel-sig" class="btn-corp btn-corp-secondary" type="button">Cancelar</button>
+        <button id="btn-confirm-sig" class="btn-corp btn-corp-primary" type="button">Confirmar Assinatura</button>
       </div>
     </div>
   </div>

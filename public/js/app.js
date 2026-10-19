@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         await store.signContract(currentContract.id, signatureData);
         modal.classList.add('hidden');
         await loadContract();
-        alert('✅ Contrato assinado digitalmente com sucesso!');
+        alert('Contrato assinado eletronicamente com sucesso.');
       } else if (signContext === 'budget') {
         await store.updateBudgetStatus(activeBudgetForClient.id, 'aprovado');
         activeBudgetForClient.status = 'aprovado';
@@ -130,14 +130,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         modal.classList.add('hidden');
         renderClientView();
-        alert('✅ Orçamento aprovado com assinatura registrada!');
+        alert('Proposta aprovada com assinatura eletrônica registrada.');
       }
     } catch (err) {
       console.error(err);
       alert('Erro ao confirmar assinatura.');
     } finally {
       btnConfirmSig.disabled = false;
-      btnConfirmSig.textContent = '✅ Confirmar';
+      btnConfirmSig.textContent = 'Confirmar Assinatura';
     }
   });
 
@@ -210,11 +210,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     if (filtered.length === 0) {
       container.innerHTML = `
-        <div style="background: white; border-radius: var(--radius-lg); border: 1px dashed var(--gray-300); padding: 36px 16px; text-align: center; color: var(--gray-500);">
-          <div style="font-size: 2rem; margin-bottom: 6px;">📭</div>
-          <p style="font-weight: 600; font-size: 0.9rem;">Nenhum orçamento encontrado.</p>
-          <button type="button" class="btn-primary" style="margin-top: 12px; border-radius: 9999px; padding: 6px 16px; font-size: 0.85rem;" onclick="document.querySelector('[data-tab=pane-novo-orcamento]').click()">
-            + Criar Novo Orçamento
+        <div style="background: white; border-radius: var(--radius-md); border: 1px dashed var(--gray-300); padding: 36px 16px; text-align: center; color: var(--gray-500);">
+          <p style="font-weight: 600; font-size: 0.9rem; color: var(--gray-700);">Nenhuma ordem de serviço localizada neste filtro.</p>
+          <button type="button" class="btn-corp btn-corp-primary" style="margin-top: 12px; font-size: 0.8rem;" onclick="document.querySelector('[data-tab=pane-novo-orcamento]').click()">
+            + Cadastrar Nova Proposta
           </button>
         </div>
       `;
@@ -225,53 +224,61 @@ document.addEventListener('DOMContentLoaded', async () => {
       const card = document.createElement('div');
       card.className = 'budget-feed-card';
 
-      const itemsText = (b.items || []).map(i => `${i.quantity}x ${i.description}`).join(' · ') || 'Sem itens';
+      const itemsText = (b.items || []).map(i => `${i.quantity}x ${i.description}`).join(' · ') || 'Sem itens discriminados';
       const fmtTotal = Number(b.total_amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
       const numFmt = '#' + String(b.budget_number || 0).padStart(3, '0');
       const waLink = window.generateWhatsAppLink(b.client_phone, b.budget_number, b.total_amount, b.valid_until, b.link_token);
+
+      const statusLabels = {
+        'pendente': 'Pendente',
+        'aprovado': 'Aprovado',
+        'em_andamento': 'Em Execução',
+        'concluido': 'Concluído',
+        'cancelado': 'Cancelado'
+      };
 
       card.innerHTML = `
         <div class="budget-feed-header">
           <div>
             <span class="budget-num-title">${numFmt}</span>
-            <span style="font-size: 0.72rem; color: var(--gray-400); margin-left: 6px;">
+            <span style="font-size: 0.72rem; color: var(--gray-500); margin-left: 8px;">
               ${new Date(b.created_at).toLocaleDateString('pt-BR')}
             </span>
           </div>
-          <span class="status-badge status-badge--${b.status}" style="font-size: 0.7rem; padding: 2px 8px;">
-            ${b.status}
+          <span class="status-badge" style="font-size: 0.72rem; padding: 2px 8px; border: 1px solid var(--gray-300); background: var(--gray-50); color: var(--gray-800);">
+            <span class="status-dot ${b.status}"></span>${statusLabels[b.status] || b.status}
           </span>
         </div>
 
-        <div class="budget-client-name">
-          👤 ${escapeHtml(b.client_name || 'Cliente')} 
-          ${b.client_phone ? `<span style="font-weight: normal; color: var(--gray-500); font-size: 0.8rem;">(${b.client_phone})</span>` : ''}
+        <div class="budget-client-name" style="font-size: 0.9rem;">
+          ${escapeHtml(b.client_name || 'Cliente')} 
+          ${b.client_phone ? `<span style="font-weight: normal; color: var(--gray-500); font-size: 0.8rem;">· ${b.client_phone}</span>` : ''}
         </div>
 
-        <div class="budget-items-summary">
-          🔧 ${escapeHtml(itemsText)}
+        <div class="budget-items-summary" style="color: var(--gray-600); font-size: 0.78rem;">
+          ${escapeHtml(itemsText)}
         </div>
 
         <div class="budget-feed-footer">
           <div>
-            <div style="font-size: 0.65rem; color: var(--gray-400); text-transform: uppercase; font-weight: 600;">Total</div>
-            <div class="budget-feed-total">${fmtTotal}</div>
+            <div style="font-size: 0.65rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Valor Total</div>
+            <div class="budget-feed-total" style="color: #0f172a; font-size: 1.1rem;">${fmtTotal}</div>
           </div>
 
           <div class="budget-feed-actions">
-            <select class="select-status-quick" data-id="${b.id}">
-              <option value="pendente" ${b.status === 'pendente' ? 'selected' : ''}>⏳ Pendente</option>
-              <option value="aprovado" ${b.status === 'aprovado' ? 'selected' : ''}>✅ Aprovado</option>
-              <option value="em_andamento" ${b.status === 'em_andamento' ? 'selected' : ''}>🔧 Em Andamento</option>
-              <option value="concluido" ${b.status === 'concluido' ? 'selected' : ''}>🏁 Concluído</option>
-              <option value="cancelado" ${b.status === 'cancelado' ? 'selected' : ''}>❌ Cancelado</option>
+            <select class="select-status-quick" data-id="${b.id}" style="font-size: 0.75rem; padding: 4px 6px;">
+              <option value="pendente" ${b.status === 'pendente' ? 'selected' : ''}>Pendente</option>
+              <option value="aprovado" ${b.status === 'aprovado' ? 'selected' : ''}>Aprovado</option>
+              <option value="em_andamento" ${b.status === 'em_andamento' ? 'selected' : ''}>Em Execução</option>
+              <option value="concluido" ${b.status === 'concluido' ? 'selected' : ''}>Concluído</option>
+              <option value="cancelado" ${b.status === 'cancelado' ? 'selected' : ''}>Cancelado</option>
             </select>
 
-            <a href="${waLink}" target="_blank" class="btn-feed-action btn-whatsapp-action" title="WhatsApp">
-              <span>📱</span> Zap
+            <a href="${waLink}" target="_blank" class="btn-corp btn-corp-wa" style="font-size: 0.75rem; padding: 5px 10px;" title="Enviar pelo WhatsApp">
+              WhatsApp
             </a>
-            <button type="button" class="btn-feed-action btn-view-action btn-inspect-client" data-id="${b.id}">
-              <span>👁️</span> Ver
+            <button type="button" class="btn-corp btn-corp-secondary btn-inspect-client" style="font-size: 0.75rem; padding: 5px 10px;" data-id="${b.id}">
+              Visualizar
             </button>
           </div>
         </div>
@@ -372,11 +379,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       const fmtTotal = Number(totalPkg).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
       card.innerHTML = `
-        <span class="package-add-badge">+ 1 Toque</span>
-        <div class="package-icon">${pkg.icon || '⚡'}</div>
-        <div class="package-name">${escapeHtml(pkg.name)}</div>
-        <div class="package-desc">${escapeHtml(pkg.description || '')}</div>
-        <div class="package-price">${fmtTotal}</div>
+        <span class="package-add-badge" style="background: #0f172a; font-size: 0.65rem;">+ Adicionar</span>
+        <div class="package-name" style="font-size: 0.85rem; font-weight: 700; color: #0f172a;">${escapeHtml(pkg.name)}</div>
+        <div class="package-desc" style="font-size: 0.72rem; color: var(--gray-500); margin: 6px 0;">${escapeHtml(pkg.description || '')}</div>
+        <div class="package-price" style="font-size: 0.85rem; font-weight: 800; color: #0284c7;">${fmtTotal}</div>
       `;
       card.addEventListener('click', () => {
         (pkg.items || []).forEach(it => addItemToDraft(it.description, it.quantity, it.unit_price));
@@ -392,7 +398,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       btn.type = 'button';
       btn.className = 'chip-btn';
       const fmtPrice = Number(item.unit_price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      btn.innerHTML = `<span>+</span> <span>${escapeHtml(item.name)}</span> <span style="color: var(--gray-400);">${fmtPrice}</span>`;
+      btn.innerHTML = `<span style="font-weight: bold; color: var(--gray-400);">+</span> <span style="font-weight: 600;">${escapeHtml(item.name)}</span> <span style="color: var(--gray-500); font-size: 0.75rem;">(${fmtPrice})</span>`;
       btn.addEventListener('click', () => addItemToDraft(item.name, 1, item.unit_price));
       favoritesChips.appendChild(btn);
     });
@@ -554,7 +560,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   btnOpenSignModal.addEventListener('click', () => {
-    openSignaturePad('contract', '✍️ Assinar Contrato de Serviços');
+    openSignaturePad('contract', 'Assinatura Eletrônica do Contrato');
   });
 
   if (btnShareContractWa) {
@@ -583,13 +589,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('cli-budget-date').textContent = new Date(b.created_at || Date.now()).toLocaleDateString('pt-BR');
     document.getElementById('cli-budget-valid').textContent = b.valid_until ? new Date(b.valid_until).toLocaleDateString('pt-BR') : '7 dias';
     document.getElementById('cli-client-name').textContent = b.client_name || 'Cliente';
-    document.getElementById('cli-client-phone').textContent = b.client_phone ? `📞 ${b.client_phone}` : '';
+    document.getElementById('cli-client-phone').textContent = b.client_phone ? `Contato: ${b.client_phone}` : '';
     document.getElementById('cli-total-amount').textContent = Number(b.total_amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
-    // Status Badge
+    // Status Badge Corporativo
     const badge = document.getElementById('cli-status-badge');
-    badge.textContent = b.status === 'aprovado' ? '✅ Aprovado' : '⏳ Pendente';
-    badge.className = `status-badge status-badge--${b.status}`;
+    const isApproved = b.status === 'aprovado';
+    badge.innerHTML = `<span class="status-dot ${b.status}"></span>${isApproved ? 'Proposta Aprovada' : 'Proposta Pendente'}`;
 
     // Lista de Itens
     const itemsList = document.getElementById('cli-items-list');

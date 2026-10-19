@@ -37,9 +37,9 @@ function getDefaultMockData() {
     packages: [
       {
         id: 'pkg1',
-        name: 'Revisão Básica',
-        icon: '🔧',
-        description: 'Troca de óleo, filtro e diagnóstico eletrônico completo',
+        name: 'Revisão Básica e Troca de Óleo',
+        icon: '',
+        description: 'Substituição de óleo lubrificante, filtro do motor e varredura diagnóstica',
         items: [
           { description: 'Troca de Óleo + Filtro Motor', quantity: 1, unit_price: 220.00 },
           { description: 'Diagnóstico Eletrônico Scanner', quantity: 1, unit_price: 120.00 }
@@ -47,9 +47,9 @@ function getDefaultMockData() {
       },
       {
         id: 'pkg2',
-        name: 'Freio Completo Dianteiro',
-        icon: '🛞',
-        description: 'Pastilhas cerâmicas, discos dianteiros e fluido novo',
+        name: 'Manutenção de Freios Dianteiros',
+        icon: '',
+        description: 'Pastilhas cerâmicas, discos dianteiros ventilados e sangria com fluido DOT4',
         items: [
           { description: 'Pastilha de freio dianteira (par)', quantity: 1, unit_price: 189.90 },
           { description: 'Disco de freio dianteiro', quantity: 2, unit_price: 245.00 },
@@ -59,9 +59,9 @@ function getDefaultMockData() {
       },
       {
         id: 'pkg3',
-        name: 'Alinhamento + Diagnóstico',
-        icon: '⚡',
-        description: 'Alinhamento 3D de precisão com varredura eletrônica',
+        name: 'Alinhamento 3D e Diagnóstico',
+        icon: '',
+        description: 'Geometria de suspensão 3D com checagem de parâmetros eletrônicos',
         items: [
           { description: 'Alinhamento 3D e balanceamento', quantity: 1, unit_price: 175.10 },
           { description: 'Diagnóstico Eletrônico Scanner', quantity: 1, unit_price: 120.00 }
