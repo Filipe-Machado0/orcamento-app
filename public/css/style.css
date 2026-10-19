@@ -775,3 +775,121 @@ img {
     height: 250px;
   }
 }
+
+/* ============================================================
+   NAVEGAÇÃO ALL-IN-ONE (SINGLE PAGE APP TABS)
+   ============================================================ */
+.tab-content-pane {
+  display: none;
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+.tab-content-pane.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Barra de Abas Fixa (App Style) */
+.app-nav-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid var(--gray-200);
+  display: flex;
+  justify-content: space-around;
+  padding: 6px 4px 8px;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06);
+  z-index: 1000;
+}
+
+.nav-tab-btn {
+  background: none;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--gray-500);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  transition: all 0.15s ease;
+  flex: 1;
+  max-width: 120px;
+}
+
+.nav-tab-btn .tab-icon {
+  font-size: 1.25rem;
+  transition: transform 0.15s ease;
+}
+
+.nav-tab-btn:hover {
+  color: var(--primary-600);
+}
+
+.nav-tab-btn.active {
+  color: var(--primary-700);
+}
+
+.nav-tab-btn.active .tab-icon {
+  transform: scale(1.15);
+}
+
+.nav-tab-btn.active::after {
+  content: '';
+  width: 16px;
+  height: 3px;
+  background: var(--primary-600);
+  border-radius: 9999px;
+  margin-top: 2px;
+}
+
+/* Espaço extra no rodapé para não cobrir o conteúdo */
+.single-page-body {
+  padding-bottom: 84px !important;
+}
+
+@media (min-width: 640px) {
+  .app-nav-bar {
+    top: 0;
+    bottom: auto;
+    border-top: none;
+    border-bottom: 1px solid var(--gray-200);
+    padding: 8px 16px;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .nav-tab-btn {
+    flex-direction: row;
+    gap: 8px;
+    font-size: 0.85rem;
+    padding: 6px 14px;
+    border-radius: 9999px;
+  }
+
+  .nav-tab-btn.active {
+    background: var(--primary-50);
+    color: var(--primary-800);
+  }
+
+  .nav-tab-btn.active::after {
+    display: none;
+  }
+
+  .single-page-body {
+    padding-top: 70px !important;
+    padding-bottom: 40px !important;
+  }
+}
+
