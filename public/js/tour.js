@@ -249,9 +249,47 @@
     }
   }
 
+  const VISIT_COUNT_KEY = 'orcamento_tour_visit_count';
+
+  function getVisitCount() {
+    return parseInt(localStorage.getItem(VISIT_COUNT_KEY) || '0', 10);
+  }
+
+  function registerVisit() {
+    const count = getVisitCount() + 1;
+    localStorage.setItem(VISIT_COUNT_KEY, count.toString());
+    return count;
+  }
+
   function startTour(force = false) {
     createTourElements();
     isTourRunning = true;
+
+    // Registra a visita na inicialização automática
+    if (!force) {
+      registerVisit();
+    }
+
+    const visits = getVisitCount();
+    const isRecurring = visits > 1;
+
+    // Aplica maior ênfase visual ao botão "Pular Tour" da 2ª vez em diante
+    const btnSkip = document.getElementById('tour-btn-skip');
+    if (btnSkip) {
+      if (isRecurring) {
+        btnSkip.classList.add('prominent');
+        btnSkip.innerHTML = `
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+          <span>Pular Tour</span>
+        `;
+      } else {
+        btnSkip.classList.remove('prominent');
+        btnSkip.innerHTML = '<span>Pular Tour</span>';
+      }
+    }
 
     backdropEl.classList.add('active');
     cardEl.classList.add('active');
@@ -269,11 +307,6 @@
     if (backdropEl) backdropEl.classList.remove('active');
     if (spotlightEl) spotlightEl.classList.remove('active');
     if (cardEl) cardEl.classList.remove('active');
-
-    // Salva preferência no navegador
-    if (isCompleted) {
-      localStorage.setItem(STORAGE_KEY, 'true');
-    }
 
     // Retorna para a aba principal (Painel)
     ensureTab('pane-painel');
@@ -294,13 +327,10 @@
       });
     }
 
-    // Inicia automaticamente apenas na primeira visita após breve delay para carregamento da interface
-    const hasSeenTour = localStorage.getItem(STORAGE_KEY);
-    if (!hasSeenTour) {
-      setTimeout(() => {
-        startTour(false);
-      }, 700);
-    }
+    // Inicia SEMPRE toda vez que a página é carregada / recarregada
+    setTimeout(() => {
+      startTour(false);
+    }, 700);
   });
 
   // Exporta para escopo global para acionamento externo

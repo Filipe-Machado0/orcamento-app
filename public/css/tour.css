@@ -172,12 +172,44 @@
   padding: 8px 12px;
   border-radius: 9999px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .tour-btn-skip:hover {
   color: #cbd5e1;
   background: rgba(30, 41, 59, 0.5);
+}
+
+/* Ênfase Destacada no Botão Pular Tour (Da 2ª vez em diante) */
+.tour-btn-skip.prominent {
+  background: rgba(56, 189, 248, 0.16);
+  border: 1.5px solid #38bdf8;
+  color: #38bdf8;
+  font-weight: 700;
+  padding: 8px 16px;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+  animation: pulseSkip 2.2s infinite ease-in-out;
+}
+
+@keyframes pulseSkip {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+    border-color: #38bdf8;
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(56, 189, 248, 0.6);
+    border-color: #7dd3fc;
+  }
+}
+
+.tour-btn-skip.prominent:hover {
+  background: rgba(56, 189, 248, 0.28);
+  color: #ffffff;
+  border-color: #7dd3fc;
+  transform: translateY(-1px);
 }
 
 .tour-card-actions-right {
