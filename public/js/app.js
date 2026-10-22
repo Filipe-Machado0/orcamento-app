@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       setTimeout(() => toast.remove(), 250);
     }, duration);
   }
+  window.showAppToast = showToast;
 
   // ============================================================
   // NAVEGAÇÃO ENTRE ABAS
@@ -60,6 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       renderClientView();
     }
   }
+  window.switchAppTab = switchTab;
 
   tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {

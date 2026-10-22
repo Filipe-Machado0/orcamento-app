@@ -1,0 +1,273 @@
+/* ============================================================
+   TOUR GUIADO / MANUAL DE UTILIZAÇÃO INTERATIVO
+   Estética Executiva Dark Slate & Sky Blue
+   ============================================================ */
+
+/* Fundo Escurecido com Desfoque */
+.tour-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+  pointer-events: auto;
+}
+
+.tour-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Moldura de Holofote no Elemento Destacado */
+.tour-spotlight {
+  position: fixed;
+  z-index: 9999;
+  border-radius: 14px;
+  border: 2px solid #38bdf8;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.75), 0 0 20px rgba(56, 189, 248, 0.45);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.tour-spotlight.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Cartão do Passo a Passo */
+.tour-card {
+  position: fixed;
+  z-index: 10001;
+  width: calc(100% - 28px);
+  max-width: 410px;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 20px;
+  padding: 18px 20px 16px;
+  color: #ffffff;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.06);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(12px) scale(0.97);
+}
+
+.tour-card.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+/* Topo do Cartão com Badge e Fechar */
+.tour-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.tour-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 9999px;
+}
+
+.tour-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+
+.tour-close-btn:hover {
+  color: #ffffff;
+  background: #1e293b;
+}
+
+/* Conteúdo de Texto */
+.tour-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.01em;
+}
+
+.tour-description {
+  font-size: 0.84rem;
+  color: #94a3b8;
+  line-height: 1.55;
+  margin: 0 0 16px 0;
+}
+
+/* Barra de Progresso em Pontos */
+.tour-dots-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.tour-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #334155;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tour-dot.active {
+  width: 22px;
+  background: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+}
+
+.tour-dot.completed {
+  background: #64748b;
+}
+
+/* Ações Inferiores */
+.tour-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tour-btn-skip {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tour-btn-skip:hover {
+  color: #cbd5e1;
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.tour-card-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tour-btn-prev {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tour-btn-prev:hover {
+  background: #273549;
+  color: #ffffff;
+}
+
+.tour-btn-next {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+  border: 1px solid #38bdf8;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.35);
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tour-btn-next:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
+}
+
+.tour-btn-next:active {
+  transform: scale(0.96);
+}
+
+/* Botão de Ajuda / Iniciar Tour no Top Header */
+.tour-header-btn {
+  background: #1e293b;
+  color: #38bdf8;
+  border: 1px solid #334155;
+  border-radius: 9999px;
+  padding: 5px 11px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.tour-header-btn:hover {
+  background: #273549;
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
+.tour-header-btn:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 480px) {
+  .tour-card {
+    padding: 16px 16px 14px;
+    border-radius: 18px;
+  }
+  .tour-title {
+    font-size: 0.98rem;
+  }
+  .tour-description {
+    font-size: 0.8rem;
+    margin-bottom: 12px;
+  }
+  .tour-header-btn span {
+    display: none;
+  }
+  .tour-header-btn {
+    padding: 5px 8px;
+  }
+}
