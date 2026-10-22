@@ -4,35 +4,27 @@
    ============================================================ */
 
 (() => {
-  const STORAGE_KEY = 'orcamento_tour_completed_v1';
+  const STORAGE_KEY = 'orcamento_tour_completed_v2';
 
   const TOUR_STEPS = [
     {
-      targetSelector: '#niche-selector',
-      fallbackSelector: '.brand-bar-right',
-      tab: 'pane-painel',
-      badge: 'Passo 1 de 6',
-      title: 'Segmento Comercial & Marca',
-      text: 'Selecione o nicho da sua empresa (Universal, Marcenaria, Mecânica, Climatização, etc.) para adaptar termos técnicos, itens rápidos e modelos contratuais.'
-    },
-    {
       targetSelector: '.app-nav-bar',
       tab: 'pane-painel',
-      badge: 'Passo 2 de 6',
+      badge: 'Passo 1 de 5',
       title: 'Navegação Rápida em Abas',
       text: 'Acesse em 1 toque as 4 áreas do sistema: o Painel de controle, a criação de Novo Orçamento, os Contratos jurídicos e a tela de visualização do Cliente.'
     },
     {
       targetSelector: '.kpi-grid',
       tab: 'pane-painel',
-      badge: 'Passo 3 de 6',
+      badge: 'Passo 2 de 5',
       title: 'Métricas & Painel Financeiro',
       text: 'Acompanhe em tempo real a quantidade e os valores acumulados em propostas Pendentes, Aprovadas, Em Execução e Concluídas.'
     },
     {
       targetSelector: '.filter-tabs',
       tab: 'pane-painel',
-      badge: 'Passo 4 de 6',
+      badge: 'Passo 3 de 5',
       title: 'Filtros Rápidos por Status',
       text: 'Organize e localize qualquer ordem de serviço ou orçamento em segundos, filtrando de acordo com a situação comercial.'
     },
@@ -40,7 +32,7 @@
       targetSelector: '#pane-novo-orcamento .card:first-child',
       fallbackSelector: '#pane-novo-orcamento',
       tab: 'pane-novo-orcamento',
-      badge: 'Passo 5 de 6',
+      badge: 'Passo 4 de 5',
       title: 'Criação Rápida de Orçamento',
       text: 'Cadastre novos clientes na hora ou escolha um existente. Depois, adicione itens, mão de obra, descontos e prazos de validade com total praticidade.'
     },
@@ -48,7 +40,7 @@
       targetSelector: '#pane-contrato .contract-doc',
       fallbackSelector: '#pane-contrato',
       tab: 'pane-contrato',
-      badge: 'Passo 6 de 6',
+      badge: 'Passo 5 de 5',
       title: 'Contrato & Assinatura Digital',
       text: 'Gere contratos formais com validade jurídica e colha a assinatura do cliente diretamente na tela do celular ou envie o link via WhatsApp!'
     }
@@ -136,6 +128,9 @@
 
   // Posiciona o holofote e o cartão com base no elemento alvo
   function positionStep(step) {
+    // Remove classe de destaque do elemento anterior
+    document.querySelectorAll('.tour-highlighted-target').forEach(el => el.classList.remove('tour-highlighted-target'));
+
     let target = document.querySelector(step.targetSelector);
     if (!target && step.fallbackSelector) {
       target = document.querySelector(step.fallbackSelector);
@@ -150,6 +145,9 @@
       cardEl.style.transform = 'translate(-50%, -50%)';
       return;
     }
+
+    // Eleva o elemento para ficar 100% nítido, sem nenhum filtro ou borrado
+    target.classList.add('tour-highlighted-target');
 
     // Rolagem suave até o elemento
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -264,6 +262,9 @@
   function endTour(isCompleted = true) {
     if (!isTourRunning) return;
     isTourRunning = false;
+
+    // Remove qualquer destaque de nitidez
+    document.querySelectorAll('.tour-highlighted-target').forEach(el => el.classList.remove('tour-highlighted-target'));
 
     if (backdropEl) backdropEl.classList.remove('active');
     if (spotlightEl) spotlightEl.classList.remove('active');

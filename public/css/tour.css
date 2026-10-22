@@ -3,17 +3,14 @@
    Estética Executiva Dark Slate & Sky Blue
    ============================================================ */
 
-/* Fundo Escurecido com Desfoque */
+/* Fundo Invisível para Captura de Clique Externo (Sem Nenhum Borrado) */
 .tour-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.72);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: transparent;
   z-index: 9998;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
   pointer-events: auto;
 }
 
@@ -22,13 +19,14 @@
   visibility: visible;
 }
 
-/* Moldura de Holofote no Elemento Destacado */
+/* Moldura de Holofote no Elemento Destacado (Corte 100% Nítido e Cristalino) */
 .tour-spotlight {
   position: fixed;
   z-index: 9999;
   border-radius: 14px;
   border: 2px solid #38bdf8;
-  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.75), 0 0 20px rgba(56, 189, 248, 0.45);
+  background: transparent !important;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.78), 0 0 20px rgba(56, 189, 248, 0.45);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
   opacity: 0;
@@ -38,6 +36,15 @@
 .tour-spotlight.active {
   opacity: 1;
   visibility: visible;
+}
+
+/* Elemento Alvo Ativo Elevado com 100% de Nitidez e Legibilidade */
+.tour-highlighted-target {
+  position: relative !important;
+  z-index: 10000 !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+  opacity: 1 !important;
 }
 
 /* Cartão do Passo a Passo */
