@@ -175,17 +175,29 @@
 
   <!-- Barra Superior Institucional (White-label) -->
   <header class="app-brand-bar">
-    <div style="display: flex; align-items: center; gap: 12px;">
+    <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
       <div class="brand-logo-slot" style="background: #1e293b; border-color: #334155; padding: 4px 12px; min-height: 40px;">
         <span class="brand-logo-text" style="color: #f1f5f9; font-size: 0.7rem;">SUA LOGO AQUI</span>
       </div>
       <div>
-        <div style="font-weight: 700; font-size: 0.85rem; letter-spacing: -0.01em;">Sistema de Ordens de Serviço</div>
-        <div style="font-size: 0.7rem; color: #94a3b8;">Gestão Comercial e Contratual</div>
+        <div id="top-company-title" style="font-weight: 700; font-size: 0.85rem; letter-spacing: -0.01em;">Sistema de Ordens de Serviço</div>
+        <div id="top-company-sub" style="font-size: 0.7rem; color: #94a3b8;">Gestão Comercial e Contratual</div>
       </div>
     </div>
-    <div class="whitelabel-header-tag">
-      <span>Versão Personalizada</span>
+    
+    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 6px;">
+        <label for="niche-selector" style="font-size: 0.72rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em;">Segmento:</label>
+        <select id="niche-selector" class="select-status-quick" style="background: #1e293b; color: #f1f5f9; border: 1px solid #334155; font-size: 0.78rem; font-weight: 600; border-radius: 4px; padding: 5px 10px; cursor: pointer; outline: none;">
+          <option value="marcenaria">Marcenaria & Móveis Planejados</option>
+          <option value="celular">Assistência Técnica & Celulares</option>
+          <option value="mecanica">Oficina Mecânica & Auto Center</option>
+          <option value="climatizacao">Climatização & Refrigeração</option>
+        </select>
+      </div>
+      <div class="whitelabel-header-tag">
+        <span>Versão White-Label</span>
+      </div>
     </div>
   </header>
 
@@ -382,7 +394,7 @@
           <span class="brand-logo-sub">Identidade Visual da Empresa</span>
         </div>
         <div>
-          <h1 class="contract-title-h1">Contrato de Prestação de Serviços Mecânicos</h1>
+          <h1 id="contract-title-heading" class="contract-title-h1">Contrato de Prestação de Serviços</h1>
           <div style="font-size: 0.75rem; color: var(--gray-500); margin-top: 2px;">
             Identificação: <span id="contract-number-badge" style="font-weight: 700; color: var(--gray-800);">CTR-2026/042</span>
           </div>

@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function openSignaturePad(context, title) {
     signContext = context;
-    document.getElementById('modal-sign-title').textContent = title || '✍️ Assine na tela';
+    document.getElementById('modal-sign-title').textContent = title || 'Assine na tela';
     modal.classList.remove('hidden');
     resizeCanvas();
 
@@ -455,7 +455,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       row.innerHTML = `
         <div class="draft-item-top">
           <input type="text" class="draft-item-input-desc" value="${escapeHtml(item.description)}">
-          <button type="button" class="btn-remove-item">🗑️</button>
+          <button type="button" class="btn-remove-item" title="Remover item" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </button>
         </div>
         <div class="draft-item-bottom">
           <div class="qty-control">
@@ -532,6 +534,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     currentContract = await store.getContractById('ctr-demo-01');
     if (!currentContract) return;
 
+    const headingEl = document.getElementById('contract-title-heading');
+    if (headingEl && currentContract.title) headingEl.textContent = currentContract.title;
+
     document.getElementById('contract-number-badge').textContent = currentContract.contract_number;
     document.getElementById('c-provider-name').textContent = currentContract.provider_name;
     document.getElementById('c-provider-cnpj').textContent = currentContract.provider_cnpj;
@@ -542,6 +547,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('c-service-desc').textContent = currentContract.service_description;
     document.getElementById('c-total-amount').textContent = Number(currentContract.total_amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     document.getElementById('c-payment-terms').textContent = currentContract.payment_terms;
+
+    const deadEl = document.getElementById('c-deadline-days');
+    if (deadEl && currentContract.deadline_days) deadEl.textContent = `${currentContract.deadline_days} dia(s) úteis`;
+
+    const warEl = document.getElementById('c-warranty-days');
+    if (warEl && currentContract.warranty_days) warEl.textContent = `${currentContract.warranty_days} dias`;
 
     const pBox = document.getElementById('contract-pending-box');
     const sBox = document.getElementById('contract-signed-box');
@@ -585,6 +596,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!b) return;
 
     activeBudgetForClient = b;
+    const mockProfile = (store.getMock() && store.getMock().profile) || {};
+    const provNameEl = document.getElementById('cli-provider-name');
+    if (provNameEl && mockProfile.company_name) provNameEl.textContent = mockProfile.company_name;
+    const provPhoneEl = document.getElementById('cli-provider-phone');
+    if (provPhoneEl && mockProfile.phone) provPhoneEl.textContent = `Contato Comercial: ${mockProfile.phone}`;
+
     document.getElementById('cli-budget-number').textContent = '#' + String(b.budget_number).padStart(3, '0');
     document.getElementById('cli-budget-date').textContent = new Date(b.created_at || Date.now()).toLocaleDateString('pt-BR');
     document.getElementById('cli-budget-valid').textContent = b.valid_until ? new Date(b.valid_until).toLocaleDateString('pt-BR') : '7 dias';
@@ -628,7 +645,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   cliBtnApprove.addEventListener('click', () => {
-    openSignaturePad('budget', '✍️ Assinar e Aprovar Orçamento');
+    openSignaturePad('budget', 'Assinar e Aprovar Orçamento');
   });
 
   function escapeHtml(text) {
@@ -638,18 +655,69 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // ============================================================
-  // INICIALIZAÇÃO GERAL
+  // SELETOR DINÂMICO DE NICHOS / SEGMENTOS DE PROSPECÇÃO
   // ============================================================
+  const nicheSelector = document.getElementById('niche-selector');
+  const topCompanyTitle = document.getElementById('top-company-title');
+
+  function updateNicheUI(nicheKey) {
+    if (nicheSelector) nicheSelector.value = nicheKey;
+    const currentMock = store.getMock();
+    if (topCompanyTitle && currentMock.profile?.company_name) {
+      topCompanyTitle.textContent = currentMock.profile.company_name;
+    }
+  }
+
+  async function applyNicheChange(nicheKey, updateUrl = true) {
+    store.setNiche(nicheKey);
+    updateNicheUI(nicheKey);
+
+    if (updateUrl && typeof window !== 'undefined' && window.history) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('nicho', nicheKey);
+      window.history.replaceState(null, '', url.pathname + url.search);
+    }
+
+    draftItems = [];
+    activeBudgetForClient = null;
+    await Promise.all([
+      renderPainel(),
+      loadNovoOrcamentoData(),
+      loadContract()
+    ]);
+
+    if (activeTab === 'pane-cliente') {
+      renderClientView();
+    }
+  }
+
+  if (nicheSelector) {
+    nicheSelector.addEventListener('change', (e) => {
+      applyNicheChange(e.target.value, true);
+    });
+  }
+
+  // ============================================================
+  // INICIALIZAÇÃO GERAL E SINCRONIZAÇÃO DE URL
+  // ============================================================
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialNiche = urlParams.get('nicho') || urlParams.get('segmento') || store.getNiche();
+  if (initialNiche) {
+    store.setNiche(initialNiche);
+    updateNicheUI(initialNiche);
+  }
+
   await Promise.all([
     renderPainel(),
     loadNovoOrcamentoData(),
     loadContract()
   ]);
 
-  // Se a URL tiver ?tab=..., abre direto nela
-  const urlParams = new URLSearchParams(window.location.search);
+  // Se a URL tiver token ou tab especificada
   const requestedTab = urlParams.get('tab');
   if (requestedTab && document.getElementById(requestedTab)) {
     switchTab(requestedTab);
+  } else if (urlParams.get('token')) {
+    switchTab('pane-cliente');
   }
 });
