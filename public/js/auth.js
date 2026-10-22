@@ -8,6 +8,8 @@ const CONFIG = {
   SUPABASE_ANON_KEY: 'sb_publishable__GowN5kG9iUUCjk0XlIMGQ_QMfFdCVr'
 };
 
+const MOCK_STORAGE_KEY = 'orcamento_mock_data';
+
 // Dicionário dos 4 Nichos de Demonstração
 const NICHES_DATA = {
   marcenaria: {
