@@ -10,8 +10,140 @@ const CONFIG = {
 
 const MOCK_STORAGE_KEY = 'orcamento_mock_data';
 
-// Dicionário dos 4 Nichos de Demonstração
+// Dicionário dos Segmentos de Demonstração (Incluindo Modelo Universal / Genérico)
 const NICHES_DATA = {
+  generico: {
+    key: 'generico',
+    name: 'Prestação de Serviços em Geral (Universal)',
+    company_name: 'Prestadora de Serviços & Soluções',
+    phone: '(11) 91234-5678',
+    address: 'Av. Paulista, 1500 - Bela Vista, São Paulo/SP',
+    clients: [
+      { id: 'c1', name: 'Empresa Soluções Comerciais Ltda', phone: '(11) 98765-4321', email: 'contato@solucoes.com' },
+      { id: 'c2', name: 'Grupo Delta Gestão & Condomínios', phone: '(11) 97654-3210', email: 'adm@grupodelta.com' },
+      { id: 'c3', name: 'Dr. Marcos Vinícius Consultoria', phone: '(11) 93456-7890', email: 'marcos@consultoria.com' },
+      { id: 'c4', name: 'Juliana Fernandes Imóveis', phone: '(11) 99123-4567', email: 'juliana@imoveis.com' }
+    ],
+    catalog: [
+      { id: 'p1', name: 'Execução de Serviço Especializado / Mão de Obra', type: 'service', unit_price: 450.00, unit: 'dia' },
+      { id: 'p2', name: 'Consultoria e Avaliação Técnica Presencial', type: 'service', unit_price: 250.00, unit: 'hr' },
+      { id: 'p3', name: 'Manutenção Preventiva e Calibração Operacional', type: 'service', unit_price: 320.00, unit: 'un' },
+      { id: 'p4', name: 'Fornecimento de Peças e Insumos de Reposição', type: 'product', unit_price: 180.00, unit: 'un' },
+      { id: 'p5', name: 'Taxa de Visita Técnica e Diagnóstico Preliminar', type: 'service', unit_price: 120.00, unit: 'un' },
+      { id: 'p6', name: 'Suporte Técnico e Relatório de Conformidade', type: 'service', unit_price: 190.00, unit: 'un' }
+    ],
+    packages: [
+      {
+        id: 'pkg_g1',
+        name: 'Diagnóstico Preliminar e Manutenção Padrão',
+        description: 'Visita técnica no local, laudo diagnóstico e execução de reparo preventivo',
+        items: [
+          { description: 'Taxa de Visita Técnica e Diagnóstico Preliminar', quantity: 1, unit_price: 120.00 },
+          { description: 'Manutenção Preventiva e Calibração Operacional', quantity: 1, unit_price: 320.00 }
+        ]
+      },
+      {
+        id: 'pkg_g2',
+        name: 'Serviço Completo com Fornecimento de Insumos',
+        description: 'Execução técnica integral de serviço com peças e insumos homologados inclusos',
+        items: [
+          { description: 'Execução de Serviço Especializado / Mão de Obra', quantity: 1, unit_price: 450.00 },
+          { description: 'Fornecimento de Peças e Insumos de Reposição', quantity: 1, unit_price: 180.00 }
+        ]
+      }
+    ],
+    budgets: [
+      {
+        id: 'bg1',
+        budget_number: 101,
+        client_name: 'Empresa Soluções Comerciais Ltda',
+        client_phone: '(11) 98765-4321',
+        status: 'pendente',
+        total_amount: 750.00,
+        notes: 'Prestação de serviços técnicos especializados conforme especificações do escopo acordado.',
+        link_token: 'b1-generico-token',
+        valid_until: '2026-10-30',
+        created_at: new Date(Date.now() - 3600000 * 3).toISOString(),
+        items: [
+          { description: 'Taxa de Visita Técnica e Diagnóstico Preliminar', quantity: 1, unit_price: 120.00, total_price: 120.00 },
+          { description: 'Execução de Serviço Especializado / Mão de Obra', quantity: 1, unit_price: 450.00, total_price: 450.00 },
+          { description: 'Fornecimento de Peças e Insumos de Reposição', quantity: 1, unit_price: 180.00, total_price: 180.00 }
+        ]
+      },
+      {
+        id: 'bg2',
+        budget_number: 102,
+        client_name: 'Grupo Delta Gestão & Condomínios',
+        client_phone: '(11) 97654-3210',
+        status: 'aprovado',
+        total_amount: 1220.00,
+        notes: 'Manutenção preventiva periódica e atendimento operacional com fornecimento de peças.',
+        link_token: 'b2-generico-token',
+        valid_until: '2026-10-25',
+        created_at: new Date(Date.now() - 3600000 * 18).toISOString(),
+        approved_at: new Date(Date.now() - 3600000 * 15).toISOString(),
+        signature_data: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="70"><path d="M 12 40 Q 60 10, 110 32 T 205 28" stroke="%230f172a" stroke-width="2.5" fill="none"/></svg>',
+        items: [
+          { description: 'Execução de Serviço Especializado / Mão de Obra', quantity: 2, unit_price: 450.00, total_price: 900.00 },
+          { description: 'Manutenção Preventiva e Calibração Operacional', quantity: 1, unit_price: 320.00, total_price: 320.00 }
+        ]
+      },
+      {
+        id: 'bg3',
+        budget_number: 103,
+        client_name: 'Dr. Marcos Vinícius Consultoria',
+        client_phone: '(11) 93456-7890',
+        status: 'em_andamento',
+        total_amount: 750.00,
+        notes: 'Consultoria e adequação técnica no local com emissão de parecer.',
+        link_token: 'b3-generico-token',
+        valid_until: '2026-10-22',
+        created_at: new Date(Date.now() - 3600000 * 30).toISOString(),
+        items: [
+          { description: 'Consultoria e Avaliação Técnica Presencial', quantity: 3, unit_price: 250.00, total_price: 750.00 }
+        ]
+      },
+      {
+        id: 'bg4',
+        budget_number: 104,
+        client_name: 'Juliana Fernandes Imóveis',
+        client_phone: '(11) 99123-4567',
+        status: 'concluido',
+        total_amount: 640.00,
+        notes: 'Serviço técnico concluído com emissão de termo de entrega e garantia.',
+        link_token: 'b4-generico-token',
+        valid_until: '2026-10-15',
+        created_at: new Date(Date.now() - 3600000 * 75).toISOString(),
+        items: [
+          { description: 'Execução de Serviço Especializado / Mão de Obra', quantity: 1, unit_price: 450.00, total_price: 450.00 },
+          { description: 'Suporte Técnico e Relatório de Conformidade', quantity: 1, unit_price: 190.00, total_price: 190.00 }
+        ]
+      }
+    ],
+    contract: {
+      id: 'ctr-demo-01',
+      contract_number: 'CTR-SERV/2026-101',
+      title: 'Contrato de Prestação de Serviços Técnicos e Fornecimento',
+      provider_name: 'Prestadora de Serviços & Soluções Ltda',
+      provider_cnpj: '10.987.654/0001-20',
+      provider_phone: '(11) 91234-5678',
+      provider_address: 'Av. Paulista, 1500 - Bela Vista, São Paulo/SP',
+      client_name: 'Empresa Soluções Comerciais Ltda',
+      client_doc: '18.765.432/0001-99',
+      client_phone: '(11) 98765-4321',
+      client_address: 'Rua do Comércio, 500 - Centro, São Paulo/SP',
+      service_description: 'Execução técnica de serviços especializados, suporte operacional, manutenção e fornecimento de insumos conforme discriminado na Proposta Comercial vinculada.',
+      total_amount: 750.00,
+      payment_terms: 'Entrada de 50% na contratação e saldo de 50% na entrega e homologação dos serviços.',
+      warranty_days: 90,
+      deadline_days: 5,
+      status: 'pendente',
+      signed_at: null,
+      signature_data: null,
+      created_at: new Date(Date.now() - 3600000 * 2).toISOString()
+    }
+  },
+
   marcenaria: {
     key: 'marcenaria',
     name: 'Marcenaria & Móveis Planejados',
@@ -554,8 +686,9 @@ const NICHES_DATA = {
   }
 };
 
-function getDefaultMockData(nicheKey = 'marcenaria') {
-  const chosen = NICHES_DATA[nicheKey] || NICHES_DATA.marcenaria;
+function getDefaultMockData(nicheKey = 'generico') {
+  if (nicheKey === 'geral' || nicheKey === 'padrao' || nicheKey === 'universal') nicheKey = 'generico';
+  const chosen = NICHES_DATA[nicheKey] || NICHES_DATA.generico || NICHES_DATA.marcenaria;
   return {
     current_niche: chosen.key,
     profile: {
@@ -593,17 +726,18 @@ class Store {
       if (typeof window !== 'undefined' && window.location) {
         const params = new URLSearchParams(window.location.search);
         urlNiche = params.get('nicho') || params.get('segmento');
+        if (urlNiche === 'geral' || urlNiche === 'padrao') urlNiche = 'generico';
       }
     } catch (e) {}
 
-    const MOCK_VERSION = 'v4_rich_multiniche_full_data';
+    const MOCK_VERSION = 'v5_universal_generico_and_niches';
     const storedVersion = localStorage.getItem('orcamento_mock_ver');
     const existing = localStorage.getItem(MOCK_STORAGE_KEY);
 
     // Se for uma versão anterior de mock, força a atualização para carregar os clientes e ordens demonstrativas
     if (!existing || storedVersion !== MOCK_VERSION) {
       localStorage.setItem('orcamento_mock_ver', MOCK_VERSION);
-      localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(getDefaultMockData(urlNiche || 'marcenaria')));
+      localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(getDefaultMockData(urlNiche || 'generico')));
       return;
     }
 
@@ -611,15 +745,16 @@ class Store {
     if (urlNiche && NICHES_DATA[urlNiche] && data.current_niche !== urlNiche) {
       this.saveMock(getDefaultMockData(urlNiche));
     } else if (!data.budgets || data.budgets.length <= 1 || !data.clients || data.clients.length <= 1) {
-      this.saveMock(getDefaultMockData(data.current_niche || urlNiche || 'marcenaria'));
+      this.saveMock(getDefaultMockData(data.current_niche || urlNiche || 'generico'));
     }
   }
 
   getNiche() {
-    return this.getMock().current_niche || 'marcenaria';
+    return this.getMock().current_niche || 'generico';
   }
 
   setNiche(key) {
+    if (key === 'geral' || key === 'padrao') key = 'generico';
     if (!NICHES_DATA[key]) return this.getMock();
     const data = getDefaultMockData(key);
     this.saveMock(data);

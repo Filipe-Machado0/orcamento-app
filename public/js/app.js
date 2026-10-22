@@ -701,7 +701,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   // INICIALIZAÇÃO GERAL E SINCRONIZAÇÃO DE URL
   // ============================================================
   const urlParams = new URLSearchParams(window.location.search);
-  const initialNiche = urlParams.get('nicho') || urlParams.get('segmento') || store.getNiche();
+  let initialNiche = urlParams.get('nicho') || urlParams.get('segmento') || store.getNiche();
+  if (initialNiche === 'geral' || initialNiche === 'padrao') initialNiche = 'generico';
   if (initialNiche) {
     store.setNiche(initialNiche);
     updateNicheUI(initialNiche);
