@@ -19,7 +19,8 @@ const NICHES_DATA = {
     clients: [
       { id: 'c1', name: 'Juliana Mendes Arquitetura', phone: '(11) 98765-4321', email: 'juliana@arquiteta.com' },
       { id: 'c2', name: 'Condomínio Reserva dos Ipês', phone: '(11) 97654-3210', email: 'contato@reservaipes.com' },
-      { id: 'c3', name: 'Lucas Pinheiro Residencial', phone: '(11) 93456-7890', email: 'lucas@email.com' }
+      { id: 'c3', name: 'Lucas Pinheiro Residencial', phone: '(11) 93456-7890', email: 'lucas@email.com' },
+      { id: 'c4', name: 'Espaço Gourmet Buffet & Eventos', phone: '(11) 99123-4567', email: 'gourmet@eventos.com' }
     ],
     catalog: [
       { id: 'p1', name: 'Painel Ripado em MDF Freijó 18mm (m²)', type: 'product', unit_price: 380.00, unit: 'm²' },
@@ -67,6 +68,57 @@ const NICHES_DATA = {
           { description: 'Instalação de Fita LED Embutida com Perfil Alumínio', quantity: 2, unit_price: 160.00, total_price: 320.00 },
           { description: 'Mão de Obra de Marcenaria e Montagem Fina', quantity: 1, unit_price: 450.00, total_price: 450.00 }
         ]
+      },
+      {
+        id: 'bm2',
+        budget_number: 103,
+        client_name: 'Condomínio Reserva dos Ipês',
+        client_phone: '(11) 97654-3210',
+        status: 'aprovado',
+        total_amount: 3850.00,
+        notes: 'Armário sob medida para guarita e área de apoio com portas de correr.',
+        link_token: 'b2-marcenaria-token',
+        valid_until: '2026-10-25',
+        created_at: new Date(Date.now() - 3600000 * 20).toISOString(),
+        approved_at: new Date(Date.now() - 3600000 * 18).toISOString(),
+        signature_data: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="70"><path d="M 10 35 Q 50 5, 100 30 T 200 25" stroke="%230f172a" stroke-width="2.5" fill="none"/></svg>',
+        items: [
+          { description: 'Armário em MDF Ultra Naval com Portas Deslizantes', quantity: 1, unit_price: 2600.00, total_price: 2600.00 },
+          { description: 'Corrediça Telescópica Oculta com Amortecedor', quantity: 8, unit_price: 75.00, total_price: 600.00 },
+          { description: 'Mão de Obra de Marcenaria e Montagem Fina', quantity: 1.5, unit_price: 450.00, total_price: 650.00 }
+        ]
+      },
+      {
+        id: 'bm3',
+        budget_number: 102,
+        client_name: 'Lucas Pinheiro Residencial',
+        client_phone: '(11) 93456-7890',
+        status: 'em_andamento',
+        total_amount: 2450.00,
+        notes: 'Gabinete de cozinha e balcão de ilha central em acabamento grafite.',
+        link_token: 'b3-marcenaria-token',
+        valid_until: '2026-10-20',
+        created_at: new Date(Date.now() - 3600000 * 48).toISOString(),
+        items: [
+          { description: 'Bancada em MDF Ultra com Divisórias Internas', quantity: 1, unit_price: 1550.00, total_price: 1550.00 },
+          { description: 'Mão de Obra de Marcenaria e Montagem Fina', quantity: 2, unit_price: 450.00, total_price: 900.00 }
+        ]
+      },
+      {
+        id: 'bm4',
+        budget_number: 101,
+        client_name: 'Espaço Gourmet Buffet & Eventos',
+        client_phone: '(11) 99123-4567',
+        status: 'concluido',
+        total_amount: 4200.00,
+        notes: 'Fabricação e montagem de prateleiras aéreas e balcão buffet.',
+        link_token: 'b4-marcenaria-token',
+        valid_until: '2026-10-15',
+        created_at: new Date(Date.now() - 3600000 * 96).toISOString(),
+        items: [
+          { description: 'Prateleiras Aéreas Estruturadas em Madeira Freijó', quantity: 4, unit_price: 600.00, total_price: 2400.00 },
+          { description: 'Mão de Obra de Marcenaria e Montagem Fina', quantity: 4, unit_price: 450.00, total_price: 1800.00 }
+        ]
       }
     ],
     contract: {
@@ -101,8 +153,9 @@ const NICHES_DATA = {
     address: 'Rua da Tecnologia, 80 - Centro, São Paulo/SP',
     clients: [
       { id: 'c1', name: 'Fernanda Oliveira (iPhone 14 Pro)', phone: '(11) 98765-4321', email: 'fernanda@email.com' },
-      { id: 'c2', name: 'Empresa Alpha Logística (Frotas)', phone: '(11) 97654-3210', email: 'frota@alphalog.com' },
-      { id: 'c3', name: 'Marcelo Santos (Galaxy S23)', phone: '(11) 93456-7890', email: 'marcelo@email.com' }
+      { id: 'c2', name: 'Marcelo Santos (Galaxy S23)', phone: '(11) 93456-7890', email: 'marcelo@email.com' },
+      { id: 'c3', name: 'Empresa Alpha Logística (Frotas)', phone: '(11) 97654-3210', email: 'frota@alphalog.com' },
+      { id: 'c4', name: 'Camila Rodrigues (iPhone 12)', phone: '(11) 98234-5678', email: 'camila@email.com' }
     ],
     catalog: [
       { id: 'p1', name: 'Display Frontal Original OLED (Substituição)', type: 'product', unit_price: 680.00, unit: 'un' },
@@ -147,6 +200,57 @@ const NICHES_DATA = {
           { description: 'Display Frontal Original OLED (Substituição)', quantity: 1, unit_price: 680.00, total_price: 680.00 },
           { description: 'Substituição de Conector de Carga Flex Tipo-C', quantity: 1, unit_price: 150.00, total_price: 150.00 }
         ]
+      },
+      {
+        id: 'bc2',
+        budget_number: 307,
+        client_name: 'Marcelo Santos (Galaxy S23)',
+        client_phone: '(11) 93456-7890',
+        status: 'aprovado',
+        total_amount: 420.00,
+        notes: 'Troca de bateria com desoxidação de placa após contato com líquido.',
+        link_token: 'b2-celular-token',
+        valid_until: '2026-10-25',
+        created_at: new Date(Date.now() - 3600000 * 18).toISOString(),
+        approved_at: new Date(Date.now() - 3600000 * 16).toISOString(),
+        signature_data: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="70"><path d="M 12 40 Q 60 10, 110 35 T 200 30" stroke="%230f172a" stroke-width="2.5" fill="none"/></svg>',
+        items: [
+          { description: 'Bateria Homologada Alta Capacidade com Garantia', quantity: 1, unit_price: 240.00, total_price: 240.00 },
+          { description: 'Desoxidação e Banho Ultrassônico em Placa-Mãe', quantity: 1, unit_price: 180.00, total_price: 180.00 }
+        ]
+      },
+      {
+        id: 'bc3',
+        budget_number: 306,
+        client_name: 'Empresa Alpha Logística (Frotas)',
+        client_phone: '(11) 97654-3210',
+        status: 'em_andamento',
+        total_amount: 1280.00,
+        notes: 'Lote de 4 coletores e smartphones com falha em CI de carga e conectores USB-C.',
+        link_token: 'b3-celular-token',
+        valid_until: '2026-10-22',
+        created_at: new Date(Date.now() - 3600000 * 36).toISOString(),
+        items: [
+          { description: 'Reparo Avançado em Linha de Carga / Micro-solda', quantity: 2, unit_price: 320.00, total_price: 640.00 },
+          { description: 'Substituição de Conector de Carga Flex Tipo-C', quantity: 4, unit_price: 150.00, total_price: 600.00 },
+          { description: 'Limpeza e Testes de Bateria', quantity: 1, unit_price: 40.00, total_price: 40.00 }
+        ]
+      },
+      {
+        id: 'bc4',
+        budget_number: 305,
+        client_name: 'Camila Rodrigues (iPhone 12)',
+        client_phone: '(11) 98234-5678',
+        status: 'concluido',
+        total_amount: 390.00,
+        notes: 'Substituição de módulo de alto-falante auricular e limpeza de chassi.',
+        link_token: 'b4-celular-token',
+        valid_until: '2026-10-18',
+        created_at: new Date(Date.now() - 3600000 * 72).toISOString(),
+        items: [
+          { description: 'Substituição de Módulo Auricular + Sensor Proximidade', quantity: 1, unit_price: 250.00, total_price: 250.00 },
+          { description: 'Desoxidação e Banho Ultrassônico em Placa-Mãe', quantity: 1, unit_price: 140.00, total_price: 140.00 }
+        ]
       }
     ],
     contract: {
@@ -180,9 +284,10 @@ const NICHES_DATA = {
     phone: '(11) 91234-5678',
     address: 'Rua das Oficinas, 123 - São Paulo/SP',
     clients: [
-      { id: 'c1', name: 'João Carlos de Oliveira', phone: '(11) 98765-4321', email: 'joao@email.com' },
-      { id: 'c2', name: 'Maria Fernanda Santos', phone: '(11) 97654-3210', email: 'maria@email.com' },
-      { id: 'c3', name: 'Roberto Lima Frotas', phone: '(11) 93456-7890', email: 'roberto@email.com' }
+      { id: 'c1', name: 'João Carlos de Oliveira (Civic 2021)', phone: '(11) 98765-4321', email: 'joao@email.com' },
+      { id: 'c2', name: 'Maria Fernanda Santos (Compass Diesel)', phone: '(11) 97654-3210', email: 'maria@email.com' },
+      { id: 'c3', name: 'Roberto Lima Frotas (Strada Working)', phone: '(11) 93456-7890', email: 'roberto@email.com' },
+      { id: 'c4', name: 'Guilherme Antunes (Corolla 2020)', phone: '(11) 99876-1234', email: 'guilherme@email.com' }
     ],
     catalog: [
       { id: 'p1', name: 'Pastilha de freio dianteira cerâmica (par)', type: 'product', unit_price: 189.90, unit: 'un' },
@@ -232,6 +337,60 @@ const NICHES_DATA = {
           { description: 'Mão de obra técnica de freios e sangria', quantity: 1, unit_price: 350.00, total_price: 350.00 },
           { description: 'Fluido de freio sintético DOT4 (500ml)', quantity: 1, unit_price: 45.00, total_price: 45.00 }
         ]
+      },
+      {
+        id: 'b2',
+        budget_number: 41,
+        client_name: 'Maria Fernanda Santos',
+        client_phone: '(11) 97654-3210',
+        status: 'aprovado',
+        total_amount: 560.00,
+        notes: 'Troca periódica de lubrificante sintético 5W30 com higienização de ar e alinhamento.',
+        link_token: 'b2-mecanica-token',
+        valid_until: '2026-10-26',
+        created_at: new Date(Date.now() - 3600000 * 16).toISOString(),
+        approved_at: new Date(Date.now() - 3600000 * 14).toISOString(),
+        signature_data: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="70"><path d="M 10 38 Q 70 8, 120 32 T 205 28" stroke="%230f172a" stroke-width="2.5" fill="none"/></svg>',
+        items: [
+          { description: 'Troca de Óleo 5W30 Sintético + Filtro', quantity: 1, unit_price: 220.00, total_price: 220.00 },
+          { description: 'Filtro de Ar Condicionado + Oxi-sanitização', quantity: 1, unit_price: 165.00, total_price: 165.00 },
+          { description: 'Geometria de direção e alinhamento 3D', quantity: 1, unit_price: 175.00, total_price: 175.00 }
+        ]
+      },
+      {
+        id: 'b3',
+        budget_number: 40,
+        client_name: 'Roberto Lima Frotas',
+        client_phone: '(11) 93456-7890',
+        status: 'em_andamento',
+        total_amount: 1480.00,
+        notes: 'Substituição preventiva de correia dentada, bomba d\'água e arrefecimento.',
+        link_token: 'b3-mecanica-token',
+        valid_until: '2026-10-21',
+        created_at: new Date(Date.now() - 3600000 * 32).toISOString(),
+        items: [
+          { description: 'Kit Correia Dentada e Tensor Original', quantity: 1, unit_price: 480.00, total_price: 480.00 },
+          { description: 'Bomba d\'Água Original Pressurizada', quantity: 1, unit_price: 360.00, total_price: 360.00 },
+          { description: 'Líquido de Arrefecimento Sintético + Limpeza', quantity: 4, unit_price: 60.00, total_price: 240.00 },
+          { description: 'Mão de obra de desmontagem e sincronismo motor', quantity: 1, unit_price: 400.00, total_price: 400.00 }
+        ]
+      },
+      {
+        id: 'b4',
+        budget_number: 39,
+        client_name: 'Guilherme Antunes',
+        client_phone: '(11) 99876-1234',
+        status: 'concluido',
+        total_amount: 890.00,
+        notes: 'Suspensão dianteira revisada e entregue com laudo técnico.',
+        link_token: 'b4-mecanica-token',
+        valid_until: '2026-10-14',
+        created_at: new Date(Date.now() - 3600000 * 80).toISOString(),
+        items: [
+          { description: 'Par de Bieletas e Buchas de Barra Estabilizadora', quantity: 1, unit_price: 290.00, total_price: 290.00 },
+          { description: 'Amortecedores Dianteiros Pressurizados (Par)', quantity: 1, unit_price: 420.00, total_price: 420.00 },
+          { description: 'Geometria de suspensão e alinhamento 3D', quantity: 1, unit_price: 180.00, total_price: 180.00 }
+        ]
       }
     ],
     contract: {
@@ -267,7 +426,8 @@ const NICHES_DATA = {
     clients: [
       { id: 'c1', name: 'Clínica Odontológica Sorriso', phone: '(11) 98765-4321', email: 'contato@clinicasorriso.com' },
       { id: 'c2', name: 'Restaurante Sabor & Arte', phone: '(11) 97654-3210', email: 'adm@restaurantesabor.com' },
-      { id: 'c3', name: 'Carlos Eduardo Residencial', phone: '(11) 93456-7890', email: 'carlos@email.com' }
+      { id: 'c3', name: 'Carlos Eduardo Residencial', phone: '(11) 93456-7890', email: 'carlos@email.com' },
+      { id: 'c4', name: 'Advocacia Castro & Associados', phone: '(11) 98112-3344', email: 'adm@castroadv.com' }
     ],
     catalog: [
       { id: 'p1', name: 'Instalação de Ar Split 9.000 a 12.000 BTUs', type: 'service', unit_price: 550.00, unit: 'un' },
@@ -311,6 +471,59 @@ const NICHES_DATA = {
         items: [
           { description: 'Instalação de Ar Split 9.000 a 12.000 BTUs', quantity: 1, unit_price: 550.00, total_price: 550.00 },
           { description: 'Suporte de Condensadora Reforçado Galvanizado', quantity: 1, unit_price: 85.00, total_price: 85.00 }
+        ]
+      },
+      {
+        id: 'bf2',
+        budget_number: 214,
+        client_name: 'Restaurante Sabor & Arte',
+        client_phone: '(11) 97654-3210',
+        status: 'aprovado',
+        total_amount: 1150.00,
+        notes: 'Higienização periódica de 3 evaporadoras de salão e reposição de fluído térmico.',
+        link_token: 'b2-climatizacao-token',
+        valid_until: '2026-10-24',
+        created_at: new Date(Date.now() - 3600000 * 15).toISOString(),
+        approved_at: new Date(Date.now() - 3600000 * 12).toISOString(),
+        signature_data: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="70"><path d="M 15 42 Q 65 12, 115 36 T 205 32" stroke="%230f172a" stroke-width="2.5" fill="none"/></svg>',
+        items: [
+          { description: 'Higienização Química Completa e Bactericida', quantity: 3, unit_price: 180.00, total_price: 540.00 },
+          { description: 'Carga de Gás Refrigerante Ecológico R410A / R32', quantity: 2, unit_price: 220.00, total_price: 440.00 },
+          { description: 'Troca de Filtros Antimicrobianos', quantity: 3, unit_price: 56.67, total_price: 170.00 }
+        ]
+      },
+      {
+        id: 'bf3',
+        budget_number: 213,
+        client_name: 'Carlos Eduardo Residencial',
+        client_phone: '(11) 93456-7890',
+        status: 'em_andamento',
+        total_amount: 850.00,
+        notes: 'Remanejamento de condensadora externa e extensão de tubulação frigorígena.',
+        link_token: 'b3-climatizacao-token',
+        valid_until: '2026-10-21',
+        created_at: new Date(Date.now() - 3600000 * 28).toISOString(),
+        items: [
+          { description: 'Desinstalação técnica e Remanejamento de Split', quantity: 1, unit_price: 380.00, total_price: 380.00 },
+          { description: 'Tubulação de Cobre com Isolamento Térmico (mt adicional)', quantity: 6, unit_price: 65.00, total_price: 390.00 },
+          { description: 'Teste de Vácuo com Vacuômetro Digital', quantity: 1, unit_price: 80.00, total_price: 80.00 }
+        ]
+      },
+      {
+        id: 'bf4',
+        budget_number: 212,
+        client_name: 'Advocacia Castro & Associados',
+        client_phone: '(11) 98112-3344',
+        status: 'concluido',
+        total_amount: 1780.00,
+        notes: 'Instalação de Multi-Split para 3 salas com pressurização a nitrogênio.',
+        link_token: 'b4-climatizacao-token',
+        valid_until: '2026-10-12',
+        created_at: new Date(Date.now() - 3600000 * 84).toISOString(),
+        items: [
+          { description: 'Instalação de Ar Split 9.000 a 12.000 BTUs', quantity: 2, unit_price: 550.00, total_price: 1100.00 },
+          { description: 'Suporte de Condensadora Reforçado Galvanizado', quantity: 2, unit_price: 85.00, total_price: 170.00 },
+          { description: 'Carga e Teste de Estanqueidade Pressurizado', quantity: 1, unit_price: 510.00, total_price: 510.00 }
         ]
       }
     ],
@@ -381,18 +594,22 @@ class Store {
       }
     } catch (e) {}
 
+    const MOCK_VERSION = 'v4_rich_multiniche_full_data';
+    const storedVersion = localStorage.getItem('orcamento_mock_ver');
     const existing = localStorage.getItem(MOCK_STORAGE_KEY);
-    if (!existing) {
+
+    // Se for uma versão anterior de mock, força a atualização para carregar os clientes e ordens demonstrativas
+    if (!existing || storedVersion !== MOCK_VERSION) {
+      localStorage.setItem('orcamento_mock_ver', MOCK_VERSION);
       localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(getDefaultMockData(urlNiche || 'marcenaria')));
-    } else {
-      const data = this.getMock();
-      if (urlNiche && NICHES_DATA[urlNiche] && data.current_niche !== urlNiche) {
-        this.saveMock(getDefaultMockData(urlNiche));
-      } else if (!data.contracts || !data.current_niche) {
-        data.contracts = data.contracts || getDefaultMockData().contracts;
-        data.current_niche = data.current_niche || 'marcenaria';
-        this.saveMock(data);
-      }
+      return;
+    }
+
+    const data = this.getMock();
+    if (urlNiche && NICHES_DATA[urlNiche] && data.current_niche !== urlNiche) {
+      this.saveMock(getDefaultMockData(urlNiche));
+    } else if (!data.budgets || data.budgets.length <= 1 || !data.clients || data.clients.length <= 1) {
+      this.saveMock(getDefaultMockData(data.current_niche || urlNiche || 'marcenaria'));
     }
   }
 
