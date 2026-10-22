@@ -76,18 +76,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Modal de Assinatura
   btnOpenSignModal.addEventListener('click', () => {
     modal.classList.remove('hidden');
-    resizeCanvas();
 
-    if (!signaturePad) {
-      signaturePad = new SignaturePad(canvas, {
-        backgroundColor: 'rgb(248, 250, 252)',
-        penColor: 'rgb(30, 41, 59)',
-        minWidth: 1.5,
-        maxWidth: 3.5
-      });
-    } else {
-      signaturePad.clear();
-    }
+    requestAnimationFrame(() => {
+      resizeCanvas();
+
+      if (!signaturePad) {
+        signaturePad = new SignaturePad(canvas, {
+          backgroundColor: 'rgb(248, 250, 252)',
+          penColor: 'rgb(30, 41, 59)',
+          minWidth: 1.5,
+          maxWidth: 3.5
+        });
+      } else {
+        signaturePad.clear();
+      }
+    });
   });
 
   btnClear.addEventListener('click', () => {

@@ -18,6 +18,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   let signContext = 'contract'; // 'contract' ou 'budget'
 
   // ============================================================
+  // NOTIFICAÇÕES TOAST (MOBILE-FIRST)
+  // ============================================================
+  const toastContainer = document.getElementById('toast-container');
+
+  function showToast(message, duration = 2500) {
+    if (!toastContainer) return;
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = message;
+    toastContainer.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.animation = 'toastOut 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+      setTimeout(() => toast.remove(), 250);
+    }, duration);
+  }
+
+  // ============================================================
   // NAVEGAÇÃO ENTRE ABAS
   // ============================================================
   const tabButtons = document.querySelectorAll('.nav-tab-btn');
@@ -62,18 +80,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     signContext = context;
     document.getElementById('modal-sign-title').textContent = title || 'Assine na tela';
     modal.classList.remove('hidden');
-    resizeCanvas();
 
-    if (!signaturePad) {
-      signaturePad = new SignaturePad(canvas, {
-        backgroundColor: 'rgb(248, 250, 252)',
-        penColor: 'rgb(30, 41, 59)',
-        minWidth: 1.5,
-        maxWidth: 3.5
-      });
-    } else {
-      signaturePad.clear();
-    }
+    requestAnimationFrame(() => {
+      resizeCanvas();
+
+      if (!signaturePad) {
+        signaturePad = new SignaturePad(canvas, {
+          backgroundColor: 'rgb(248, 250, 252)',
+          penColor: 'rgb(30, 41, 59)',
+          minWidth: 1.5,
+          maxWidth: 3.5
+        });
+      } else {
+        signaturePad.clear();
+      }
+    });
   }
 
   function resizeCanvas() {
@@ -241,32 +262,32 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="budget-feed-header">
           <div>
             <span class="budget-num-title">${numFmt}</span>
-            <span style="font-size: 0.72rem; color: var(--gray-500); margin-left: 8px;">
+            <span class="budget-date-badge">
               ${new Date(b.created_at).toLocaleDateString('pt-BR')}
             </span>
           </div>
-          <span class="status-badge" style="font-size: 0.72rem; padding: 2px 8px; border: 1px solid var(--gray-300); background: var(--gray-50); color: var(--gray-800);">
+          <span class="status-badge" style="font-size: 0.72rem; padding: 3px 10px; border: 1px solid var(--gray-300); background: var(--gray-50); color: var(--gray-800); border-radius: 9999px;">
             <span class="status-dot ${b.status}"></span>${statusLabels[b.status] || b.status}
           </span>
         </div>
 
-        <div class="budget-client-name" style="font-size: 0.9rem;">
+        <div class="budget-client-name">
           ${escapeHtml(b.client_name || 'Cliente')} 
-          ${b.client_phone ? `<span style="font-weight: normal; color: var(--gray-500); font-size: 0.8rem;">· ${b.client_phone}</span>` : ''}
+          ${b.client_phone ? `<span style="font-weight: 500; color: var(--gray-500); font-size: 0.8rem;">· ${b.client_phone}</span>` : ''}
         </div>
 
-        <div class="budget-items-summary" style="color: var(--gray-600); font-size: 0.78rem;">
+        <div class="budget-items-summary">
           ${escapeHtml(itemsText)}
         </div>
 
         <div class="budget-feed-footer">
-          <div>
-            <div style="font-size: 0.65rem; color: var(--gray-400); text-transform: uppercase; font-weight: 700;">Valor Total</div>
-            <div class="budget-feed-total" style="color: #0f172a; font-size: 1.1rem;">${fmtTotal}</div>
+          <div class="budget-feed-total-wrap">
+            <span class="budget-feed-total-label">Total</span>
+            <span class="budget-feed-total">${fmtTotal}</span>
           </div>
 
           <div class="budget-feed-actions">
-            <select class="select-status-quick" data-id="${b.id}" style="font-size: 0.75rem; padding: 4px 6px;">
+            <select class="select-status-quick" data-id="${b.id}">
               <option value="pendente" ${b.status === 'pendente' ? 'selected' : ''}>Pendente</option>
               <option value="aprovado" ${b.status === 'aprovado' ? 'selected' : ''}>Aprovado</option>
               <option value="em_andamento" ${b.status === 'em_andamento' ? 'selected' : ''}>Em Execução</option>
@@ -274,11 +295,12 @@ document.addEventListener('DOMContentLoaded', async () => {
               <option value="cancelado" ${b.status === 'cancelado' ? 'selected' : ''}>Cancelado</option>
             </select>
 
-            <a href="${waLink}" target="_blank" class="btn-corp btn-corp-wa" style="font-size: 0.75rem; padding: 5px 10px;" title="Enviar pelo WhatsApp">
-              WhatsApp
+            <a href="${waLink}" target="_blank" class="btn-feed-action btn-whatsapp-action" title="Enviar pelo WhatsApp">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+              <span>WhatsApp</span>
             </a>
-            <button type="button" class="btn-corp btn-corp-secondary btn-inspect-client" style="font-size: 0.75rem; padding: 5px 10px;" data-id="${b.id}">
-              Visualizar
+            <button type="button" class="btn-feed-action btn-view-action btn-inspect-client" data-id="${b.id}">
+              <span>Ver</span>
             </button>
           </div>
         </div>
@@ -379,13 +401,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       const fmtTotal = Number(totalPkg).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
       card.innerHTML = `
-        <span class="package-add-badge" style="background: #0f172a; font-size: 0.65rem;">+ Adicionar</span>
-        <div class="package-name" style="font-size: 0.85rem; font-weight: 700; color: #0f172a;">${escapeHtml(pkg.name)}</div>
-        <div class="package-desc" style="font-size: 0.72rem; color: var(--gray-500); margin: 6px 0;">${escapeHtml(pkg.description || '')}</div>
-        <div class="package-price" style="font-size: 0.85rem; font-weight: 800; color: #0284c7;">${fmtTotal}</div>
+        <span class="package-add-badge">+ Adicionar</span>
+        <div class="package-icon">${pkg.icon || '⚡'}</div>
+        <div class="package-name">${escapeHtml(pkg.name)}</div>
+        <div class="package-desc">${escapeHtml(pkg.description || '')}</div>
+        <div class="package-price">${fmtTotal}</div>
       `;
       card.addEventListener('click', () => {
         (pkg.items || []).forEach(it => addItemToDraft(it.description, it.quantity, it.unit_price));
+        showToast(`⚡ Pacote <strong>${escapeHtml(pkg.name)}</strong> adicionado!`);
       });
       packagesList.appendChild(card);
     });
@@ -398,8 +422,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       btn.type = 'button';
       btn.className = 'chip-btn';
       const fmtPrice = Number(item.unit_price).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      btn.innerHTML = `<span style="font-weight: bold; color: var(--gray-400);">+</span> <span style="font-weight: 600;">${escapeHtml(item.name)}</span> <span style="color: var(--gray-500); font-size: 0.75rem;">(${fmtPrice})</span>`;
-      btn.addEventListener('click', () => addItemToDraft(item.name, 1, item.unit_price));
+      btn.innerHTML = `<span style="font-weight: 700; color: var(--primary-600);">+</span> <span style="font-weight: 600;">${escapeHtml(item.name)}</span> <span style="color: var(--gray-400); font-size: 0.72rem;">(${fmtPrice})</span>`;
+      btn.addEventListener('click', () => {
+        addItemToDraft(item.name, 1, item.unit_price);
+        showToast(`⭐ Item <strong>${escapeHtml(item.name)}</strong> adicionado!`);
+      });
       favoritesChips.appendChild(btn);
     });
   }
@@ -419,15 +446,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateItemsView();
   }
 
-  btnAddManualItem.addEventListener('click', () => addItemToDraft('Novo Serviço / Peça', 1, 100.00));
+  btnAddManualItem.addEventListener('click', () => {
+    addItemToDraft('Novo Serviço / Peça', 1, 100.00);
+    showToast(`📝 Novo item adicionado ao orçamento`);
+  });
 
   btnCloneLast.addEventListener('click', () => {
     if (allBudgets.length > 0 && allBudgets[0].items) {
       draftItems = allBudgets[0].items.map(i => ({ ...i }));
       if (allBudgets[0].client_id) clientSelect.value = allBudgets[0].client_id;
       updateItemsView();
+      showToast(`📋 Itens do último orçamento clonados com sucesso!`);
     } else {
-      alert('Nenhum orçamento anterior para clonar.');
+      showToast(`⚠️ Nenhum orçamento anterior para clonar.`);
     }
   });
 
@@ -455,8 +486,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       row.innerHTML = `
         <div class="draft-item-top">
           <input type="text" class="draft-item-input-desc" value="${escapeHtml(item.description)}">
-          <button type="button" class="btn-remove-item" title="Remover item" style="background:none; border:none; color:#ef4444; cursor:pointer; padding:4px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          <button type="button" class="btn-remove-item" title="Remover item">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
           </button>
         </div>
         <div class="draft-item-bottom">
@@ -469,7 +500,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             <span>R$</span>
             <input type="number" class="price-input" value="${item.unit_price.toFixed(2)}" step="1">
           </div>
-          <div style="font-weight: 700; font-size: 0.85rem; color: var(--gray-800);">
+          <div style="font-weight: 800; font-size: 0.9rem; color: #0f172a;">
             ${Number(subtotal).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
           </div>
         </div>
@@ -490,8 +521,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function handleSaveBudget(openWa = false) {
     const clientId = clientSelect.value;
-    if (!clientId) { alert('Selecione ou cadastre um cliente'); return; }
-    if (draftItems.length === 0) { alert('Adicione pelo menos 1 item ao orçamento'); return; }
+    if (!clientId) { showToast('⚠️ Selecione ou cadastre um cliente'); return; }
+    if (draftItems.length === 0) { showToast('⚠️ Adicione pelo menos 1 item ao orçamento'); return; }
 
     const selClient = clients.find(c => c.id === clientId);
     const validityDays = parseInt(document.getElementById('budget-validity').value || '7', 10);
@@ -510,6 +541,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const created = await store.createBudget(payload);
     draftItems = [];
     updateItemsView();
+    showToast('✅ Proposta criada com sucesso!');
 
     if (openWa) {
       const waLink = window.generateWhatsAppLink(created.client_phone, created.budget_number, created.total_amount, created.valid_until, created.link_token);
