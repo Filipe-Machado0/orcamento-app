@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const itemsText = (b.items || []).map(i => `${i.quantity}x ${i.description}`).join(' · ') || 'Sem itens discriminados';
       const fmtTotal = Number(b.total_amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
       const numFmt = '#' + String(b.budget_number || 0).padStart(3, '0');
-      const waLink = window.generateWhatsAppLink(b.client_phone, b.budget_number, b.total_amount, b.valid_until, b.link_token);
+      const waLink = window.generateWhatsAppLink(b.client_phone, b.budget_number, b.total_amount, b.valid_until, b.link_token, b.client_name, b.items);
 
       const statusLabels = {
         'pendente': 'Pendente',
@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   btnAddManualItem.addEventListener('click', () => {
     addItemToDraft('Novo Serviço / Peça', 1, 100.00);
-    showToast(`📝 Novo item adicionado ao orçamento`);
+    showToast(`Novo item adicionado ao orçamento`);
   });
 
   btnCloneLast.addEventListener('click', () => {
@@ -458,9 +458,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       draftItems = allBudgets[0].items.map(i => ({ ...i }));
       if (allBudgets[0].client_id) clientSelect.value = allBudgets[0].client_id;
       updateItemsView();
-      showToast(`📋 Itens do último orçamento clonados com sucesso!`);
+      showToast(`Itens do último orçamento clonados com sucesso!`);
     } else {
-      showToast(`⚠️ Nenhum orçamento anterior para clonar.`);
+      showToast(`Nenhum orçamento anterior para clonar.`);
     }
   });
 
@@ -523,8 +523,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function handleSaveBudget(openWa = false) {
     const clientId = clientSelect.value;
-    if (!clientId) { showToast('⚠️ Selecione ou cadastre um cliente'); return; }
-    if (draftItems.length === 0) { showToast('⚠️ Adicione pelo menos 1 item ao orçamento'); return; }
+    if (!clientId) { showToast('Selecione ou cadastre um cliente'); return; }
+    if (draftItems.length === 0) { showToast('Adicione pelo menos 1 item ao orçamento'); return; }
 
     const selClient = clients.find(c => c.id === clientId);
     const validityDays = parseInt(document.getElementById('budget-validity').value || '7', 10);
@@ -546,7 +546,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     showToast('✅ Proposta criada com sucesso!');
 
     if (openWa) {
-      const waLink = window.generateWhatsAppLink(created.client_phone, created.budget_number, created.total_amount, created.valid_until, created.link_token);
+      const waLink = window.generateWhatsAppLink(created.client_phone, created.budget_number, created.total_amount, created.valid_until, created.link_token, created.client_name, created.items);
       window.open(waLink, '_blank');
     }
 
@@ -732,11 +732,58 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   // ============================================================
+  // FUNIL DE CONVERSÃO: LANDING PAGE VS DEMO INTERATIVA
+  // ============================================================
+  const landingView = document.getElementById('landing-page-view');
+  const demoView = document.getElementById('demo-app-view');
+  const btnBackToLanding = document.getElementById('btn-back-to-landing');
+  const demoLaunchBtns = document.querySelectorAll('.btn-launch-demo');
+
+  function showDemoView(targetTab = null) {
+    if (landingView) landingView.classList.add('hidden');
+    if (demoView) demoView.classList.remove('hidden');
+
+    const currentParams = new URLSearchParams(window.location.search);
+    if (!currentParams.get('nicho')) {
+      currentParams.set('nicho', 'celular');
+      const newQuery = currentParams.toString() ? `?${currentParams.toString()}` : '';
+      window.history.pushState({}, '', `${window.location.pathname}${newQuery}`);
+    }
+
+    if (targetTab) {
+      switchTab(targetTab);
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showLandingView() {
+    if (demoView) demoView.classList.add('hidden');
+    if (landingView) landingView.classList.remove('hidden');
+
+    window.history.pushState({}, '', window.location.pathname);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  demoLaunchBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      showDemoView('pane-novo-orcamento');
+    });
+  });
+
+  if (btnBackToLanding) {
+    btnBackToLanding.addEventListener('click', (e) => {
+      e.preventDefault();
+      showLandingView();
+    });
+  }
+
+  // ============================================================
   // INICIALIZAÇÃO GERAL E SINCRONIZAÇÃO DE URL
   // ============================================================
   const urlParams = new URLSearchParams(window.location.search);
   let initialNiche = urlParams.get('nicho') || urlParams.get('segmento') || store.getNiche();
-  if (initialNiche === 'geral' || initialNiche === 'padrao') initialNiche = 'generico';
+  if (initialNiche === 'geral' || initialNiche === 'padrao') initialNiche = 'celular';
   if (initialNiche) {
     store.setNiche(initialNiche);
     updateNicheUI(initialNiche);
@@ -754,5 +801,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     switchTab(requestedTab);
   } else if (urlParams.get('token')) {
     switchTab('pane-cliente');
+  }
+
+  // Decisão de Visão Inicial
+  const hasExplicitDemoParam = urlParams.has('nicho') || urlParams.has('demo') || urlParams.has('tab') || urlParams.has('token') || window.location.hash.includes('demo');
+
+  if (hasExplicitDemoParam) {
+    showDemoView(requestedTab || (urlParams.get('token') ? 'pane-cliente' : 'pane-painel'));
+  } else {
+    showLandingView();
   }
 });
