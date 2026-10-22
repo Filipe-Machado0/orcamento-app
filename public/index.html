@@ -158,6 +158,125 @@
       box-shadow: 0 2px 8px rgba(22, 163, 74, 0.25);
     }
     .btn-corp-wa:hover { background: #15803d; }
+
+    /* Barra Superior Unificada & Abas em Pílula (Estética Dark Slate Executiva) */
+    .app-top-header {
+      position: sticky;
+      top: 0;
+      z-index: 950;
+      background: #0f172a;
+      border-bottom: 1px solid #1e293b;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .app-top-header .app-brand-bar {
+      position: static;
+      background: transparent;
+      border-bottom: none;
+      box-shadow: none;
+      padding: max(8px, var(--safe-top)) 14px 6px;
+    }
+
+    .app-nav-bar {
+      background: #0f172a;
+      padding: 4px 12px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: none;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      margin: 0 auto;
+      max-width: 640px;
+    }
+
+    .app-nav-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-tab-btn {
+      -webkit-appearance: none;
+      appearance: none;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: #94a3b8;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      padding: 7px 12px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      outline: none;
+      white-space: nowrap;
+      flex: 1;
+      max-width: 125px;
+      min-width: 68px;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-tab-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: #94a3b8;
+      flex-shrink: 0;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), stroke 0.2s ease;
+    }
+
+    .nav-tab-btn:hover {
+      background: #273549;
+      color: #f1f5f9;
+      border-color: #475569;
+    }
+
+    .nav-tab-btn:hover svg {
+      stroke: #f1f5f9;
+    }
+
+    .nav-tab-btn:active {
+      transform: scale(0.95);
+    }
+
+    .nav-tab-btn.active {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: #ffffff;
+      border-color: #38bdf8;
+      font-weight: 700;
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.35), 0 2px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .nav-tab-btn.active svg {
+      stroke: #ffffff;
+      transform: scale(1.1);
+    }
+
+    .nav-tab-btn.active::after {
+      display: none !important;
+    }
+
+    @media (max-width: 380px) {
+      .app-nav-bar {
+        padding: 4px 8px 8px;
+        gap: 4px;
+      }
+      .nav-tab-btn {
+        padding: 6px 8px;
+        font-size: 0.74rem;
+        gap: 4px;
+      }
+      .nav-tab-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
   </style>
 </head>
 <body class="single-page-body" style="background-color: #f8fafc;">
@@ -165,53 +284,55 @@
   <!-- Toast Notifications Container -->
   <div id="toast-container" class="toast-container"></div>
 
-  <!-- Barra Superior Institucional (White-label Mobile-First) -->
-  <header class="app-brand-bar">
-    <div class="brand-bar-left">
-      <div class="brand-logo-slot" style="background: #1e293b; border-color: #334155; padding: 3px 10px; min-height: 36px; border-radius: 8px;">
-        <span class="brand-logo-text" style="color: #f1f5f9; font-size: 0.68rem;">SUA LOGO</span>
+  <!-- Top Header Unificado: Brand Bar + Navegação em Abas (Estética Mobile-First Corporativa) -->
+  <header class="app-top-header">
+    <div class="app-brand-bar">
+      <div class="brand-bar-left">
+        <div class="brand-logo-slot" style="background: #1e293b; border-color: #334155; padding: 3px 10px; min-height: 36px; border-radius: 8px;">
+          <span class="brand-logo-text" style="color: #f1f5f9; font-size: 0.68rem;">SUA LOGO</span>
+        </div>
+        <div class="brand-bar-info">
+          <div id="top-company-title">Sistema de Ordens de Serviço</div>
+          <div id="top-company-sub">Gestão Comercial & OS</div>
+        </div>
       </div>
-      <div class="brand-bar-info">
-        <div id="top-company-title">Sistema de Ordens de Serviço</div>
-        <div id="top-company-sub">Gestão Comercial & OS</div>
+      
+      <div class="brand-bar-right">
+        <div class="niche-select-wrapper">
+          <select id="niche-selector" class="niche-select-pill" title="Selecione o Segmento">
+            <option value="generico">Universal (Geral)</option>
+            <option value="marcenaria">Marcenaria</option>
+            <option value="celular">Assistência Técnica</option>
+            <option value="mecanica">Oficina Mecânica</option>
+            <option value="climatizacao">Climatização</option>
+          </select>
+        </div>
+        <div class="whitelabel-header-tag">
+          <span>White-Label</span>
+        </div>
       </div>
     </div>
-    
-    <div class="brand-bar-right">
-      <div class="niche-select-wrapper">
-        <select id="niche-selector" class="niche-select-pill" title="Selecione o Segmento">
-          <option value="generico">Universal (Geral)</option>
-          <option value="marcenaria">Marcenaria</option>
-          <option value="celular">Assistência Técnica</option>
-          <option value="mecanica">Oficina Mecânica</option>
-          <option value="climatizacao">Climatização</option>
-        </select>
-      </div>
-      <div class="whitelabel-header-tag">
-        <span>White-Label</span>
-      </div>
-    </div>
-  </header>
 
-  <!-- Navegação All-in-One em Abas (Sóbria e Profissional no Rodapé do Mobile) -->
-  <nav class="app-nav-bar">
-    <button type="button" class="nav-tab-btn active" data-tab="pane-painel">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-      <span>Painel</span>
-    </button>
-    <button type="button" class="nav-tab-btn" data-tab="pane-novo-orcamento">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-      <span>Novo</span>
-    </button>
-    <button type="button" class="nav-tab-btn" data-tab="pane-contrato">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
-      <span>Contrato</span>
-    </button>
-    <button type="button" class="nav-tab-btn" data-tab="pane-cliente">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
-      <span>Cliente</span>
-    </button>
-  </nav>
+    <!-- Navegação All-in-One em Abas (Sleek Dark Slate Pills) -->
+    <nav class="app-nav-bar">
+      <button type="button" class="nav-tab-btn active" data-tab="pane-painel">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+        <span>Painel</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="pane-novo-orcamento">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Novo</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="pane-contrato">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+        <span>Contrato</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-tab="pane-cliente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+        <span>Cliente</span>
+      </button>
+    </nav>
+  </header>
 
   <!-- ============================================================
        ABA 1: PAINEL DE GESTÃO / DASHBOARD
