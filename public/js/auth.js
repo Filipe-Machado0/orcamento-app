@@ -726,18 +726,18 @@ class Store {
       if (typeof window !== 'undefined' && window.location) {
         const params = new URLSearchParams(window.location.search);
         urlNiche = params.get('nicho') || params.get('segmento');
-        if (urlNiche === 'geral' || urlNiche === 'padrao') urlNiche = 'celular';
+        if (urlNiche === 'geral' || urlNiche === 'padrao') urlNiche = 'generico';
       }
     } catch (e) {}
 
-    const MOCK_VERSION = 'v7_saas_celular_focus';
+    const MOCK_VERSION = 'v5_universal_generico_and_niches';
     const storedVersion = localStorage.getItem('orcamento_mock_ver');
     const existing = localStorage.getItem(MOCK_STORAGE_KEY);
 
     // Se for uma versão anterior de mock, força a atualização para carregar os clientes e ordens demonstrativas
     if (!existing || storedVersion !== MOCK_VERSION) {
       localStorage.setItem('orcamento_mock_ver', MOCK_VERSION);
-      localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(getDefaultMockData(urlNiche || 'celular')));
+      localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(getDefaultMockData(urlNiche || 'generico')));
       return;
     }
 
@@ -976,49 +976,16 @@ class Store {
 // Instância única global
 window.AppStore = new Store();
 
-window.generateWhatsAppLink = function(phone, budgetNumber, total, validUntil, token, clientName, items) {
+// Helper para montagem de link do WhatsApp (Orçamento)
+window.generateWhatsAppLink = function(phone, budgetNumber, total, validUntil, token) {
   const cleanPhone = (phone || '').replace(/\D/g, '');
   const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '') + '/index.html';
-  const approvalUrl = `${baseUrl}?token=${token || 'demo'}&tab=pane-cliente`;
-
-  // Extrair nome e aparelho a partir de clientName ex.: "Fernanda Oliveira (iPhone 13 Pro)"
-  let nome = 'Cliente';
-  let aparelho = 'aparelho';
-  if (clientName) {
-    const match = clientName.match(/^([^\(]+)(?:\(([^\)]+)\))?/);
-    if (match) {
-      nome = match[1].trim();
-      aparelho = match[2] ? match[2].trim() : 'aparelho';
-    } else {
-      nome = clientName.trim();
-    }
-  }
-
-  // Montar lista de itens
-  let itensTexto = '';
-  if (Array.isArray(items) && items.length > 0) {
-    itensTexto = items.map(it => {
-      const q = it.quantity || 1;
-      const sub = Number(it.unit_price * q).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-      return `• ${q}x ${it.description} - ${sub}`;
-    }).join('\n');
-  } else {
-    itensTexto = '• Serviços e peças conforme avaliação técnica';
-  }
-
+  const approvalUrl = `${baseUrl}?token=${token}&tab=pane-cliente`;
+  
+  const mock = window.AppStore ? window.AppStore.getMock() : null;
+  const companyName = mock?.profile?.company_name || 'Nossa Empresa';
   const formattedTotal = Number(total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  const dataValidade = validUntil ? (validUntil.includes('-') ? validUntil.split('-').reverse().join('/') : validUntil) : '7 dias';
-
-  const text = `Olá, ${nome}. Segue o orçamento referente ao seu ${aparelho}.
-
-Serviços e peças:
-${itensTexto}
-
-Valor total: ${formattedTotal}
-Validade: ${dataValidade}
-
-Confira os detalhes e aprove o serviço pelo link:
-${approvalUrl}`;
+  const text = `Olá! Segue a proposta comercial de ${companyName}:\n\n*Orçamento #${String(budgetNumber).padStart(3, '0')}*\n*Valor Total:* ${formattedTotal}\n*Válido até:* ${validUntil || '7 dias'}\n\n*Para conferir os detalhes e formalizar com assinatura digital, acesse:*\n${approvalUrl}`;
 
   const destPhone = cleanPhone.length >= 10 ? (cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone) : '';
   return `https://wa.me/${destPhone}?text=${encodeURIComponent(text)}`;
