@@ -4,7 +4,7 @@
    ============================================================ */
 
 (() => {
-  const STORAGE_KEY = 'orcamento_tour_completed_v4';
+  const STORAGE_KEY = 'orcamento_tour_completed_v5';
 
   const TOUR_STEPS = [
     {
@@ -25,8 +25,8 @@
       targetSelector: '.app-nav-bar',
       tab: 'pane-painel',
       badge: 'Passo 1 de 5',
-      title: 'Gestão de Bancada em 1 Toque',
-      text: 'Navegue com facilidade entre o Painel, Novo Orçamento, Termo de Garantia e Visão do Cliente.'
+      title: 'Navegação Fácil no Rodapé',
+      text: 'Acesse em 1 toque o Painel, Novo Orçamento, Contrato e Visão do Cliente direto no rodapé.'
     },
     {
       type: 'step',
@@ -320,7 +320,10 @@
     }
 
     target.classList.add('tour-highlighted-target');
-    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const isFixed = window.getComputedStyle(target).position === 'fixed';
+    if (!isFixed) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
 
     const applyLayout = () => {
       const rect = target.getBoundingClientRect();
