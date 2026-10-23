@@ -190,12 +190,17 @@
   function positionStep(step) {
     document.querySelectorAll('.tour-highlighted-target').forEach(el => el.classList.remove('tour-highlighted-target'));
 
+    // Remove estilos inline que poderiam sobrepor as classes CSS
+    cardEl.style.left = '';
+    cardEl.style.right = '';
+    cardEl.style.top = '';
+    cardEl.style.bottom = '';
+    cardEl.style.transform = '';
+
     if (step.type === 'intro' || step.type === 'outro' || !step.targetSelector) {
       spotlightEl.classList.remove('active');
-      cardEl.style.top = '50%';
-      cardEl.style.bottom = 'auto';
-      cardEl.style.left = '50%';
-      cardEl.style.transform = 'translate(-50%, -50%)';
+      cardEl.classList.remove('pos-top', 'pos-bottom');
+      cardEl.classList.add('pos-center');
       return;
     }
 
@@ -206,10 +211,8 @@
 
     if (!target) {
       spotlightEl.classList.remove('active');
-      cardEl.style.top = '50%';
-      cardEl.style.bottom = 'auto';
-      cardEl.style.left = '50%';
-      cardEl.style.transform = 'translate(-50%, -50%)';
+      cardEl.classList.remove('pos-top', 'pos-bottom');
+      cardEl.classList.add('pos-center');
       return;
     }
 
@@ -229,16 +232,13 @@
       const windowHeight = window.innerHeight;
       const targetMidY = rect.top + rect.height / 2;
 
-      cardEl.style.left = '50%';
-
+      cardEl.classList.remove('pos-center');
       if (targetMidY < windowHeight * 0.45) {
-        cardEl.style.top = 'auto';
-        cardEl.style.bottom = 'max(16px, var(--safe-bottom, 16px))';
-        cardEl.style.transform = 'translateX(-50%)';
+        cardEl.classList.remove('pos-top');
+        cardEl.classList.add('pos-bottom');
       } else {
-        cardEl.style.bottom = 'auto';
-        cardEl.style.top = 'max(64px, calc(var(--safe-top, 0px) + 64px))';
-        cardEl.style.transform = 'translateX(-50%)';
+        cardEl.classList.remove('pos-bottom');
+        cardEl.classList.add('pos-top');
       }
     }, 180);
   }
