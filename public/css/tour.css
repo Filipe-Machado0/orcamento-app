@@ -291,6 +291,122 @@
   transform: scale(0.95);
 }
 
+/* Botão de Ativação do Sistema no Cabeçalho */
+.activate-header-btn {
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: 1px solid #34d399;
+  color: #ffffff;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
+}
+
+.activate-header-btn:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.5);
+}
+
+.activate-header-btn:active {
+  transform: scale(0.95);
+}
+
+/* Lista de Benefícios no Card do Tour */
+.tour-bullets-box {
+  background: rgba(30, 41, 59, 0.75);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.tour-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.82rem;
+  color: #e2e8f0;
+  line-height: 1.4;
+}
+
+.tour-bullet-icon {
+  color: #10b981;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Botões Customizados de Conversão no Tour */
+.tour-card-cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.tour-cta-btn-primary {
+  width: 100%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border: 1px solid #34d399;
+  color: #ffffff;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 11px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.tour-cta-btn-primary:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.5);
+}
+
+.tour-cta-btn-secondary {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.82rem;
+  padding: 8px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.tour-cta-btn-secondary:hover {
+  background: #1e293b;
+  color: #ffffff;
+}
+
 @media (max-width: 480px) {
   .tour-card {
     padding: 16px 16px 14px;
@@ -303,10 +419,13 @@
     font-size: 0.8rem;
     margin-bottom: 12px;
   }
-  .tour-header-btn span {
+  .tour-header-btn span,
+  .activate-header-btn span {
     display: none;
   }
-  .tour-header-btn {
+  .tour-header-btn,
+  .activate-header-btn {
     padding: 5px 8px;
   }
 }
+

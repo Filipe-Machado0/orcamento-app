@@ -450,7 +450,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   btnAddManualItem.addEventListener('click', () => {
     addItemToDraft('Novo Serviço / Peça', 1, 100.00);
-    showToast(`📝 Novo item adicionado ao orçamento`);
+    showToast(`Novo item adicionado ao orçamento`);
   });
 
   btnCloneLast.addEventListener('click', () => {
@@ -458,9 +458,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       draftItems = allBudgets[0].items.map(i => ({ ...i }));
       if (allBudgets[0].client_id) clientSelect.value = allBudgets[0].client_id;
       updateItemsView();
-      showToast(`📋 Itens do último orçamento clonados com sucesso!`);
+      showToast(`Itens do último orçamento clonados com sucesso!`);
     } else {
-      showToast(`⚠️ Nenhum orçamento anterior para clonar.`);
+      showToast(`Nenhum orçamento anterior para clonar.`);
     }
   });
 
@@ -523,8 +523,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   async function handleSaveBudget(openWa = false) {
     const clientId = clientSelect.value;
-    if (!clientId) { showToast('⚠️ Selecione ou cadastre um cliente'); return; }
-    if (draftItems.length === 0) { showToast('⚠️ Adicione pelo menos 1 item ao orçamento'); return; }
+    if (!clientId) { showToast('Selecione ou cadastre um cliente'); return; }
+    if (draftItems.length === 0) { showToast('Adicione pelo menos 1 item ao orçamento'); return; }
 
     const selClient = clients.find(c => c.id === clientId);
     const validityDays = parseInt(document.getElementById('budget-validity').value || '7', 10);
@@ -543,11 +543,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const created = await store.createBudget(payload);
     draftItems = [];
     updateItemsView();
-    showToast('✅ Proposta criada com sucesso!');
+    showToast('Proposta criada com sucesso!');
 
     if (openWa) {
       const waLink = window.generateWhatsAppLink(created.client_phone, created.budget_number, created.total_amount, created.valid_until, created.link_token);
       window.open(waLink, '_blank');
+      if (window.showAppToast) {
+        setTimeout(() => {
+          window.showAppToast('Orçamento enviado! Quer usar este sistema com a sua própria marca? <a href="javascript:window.openActivationModal()" style="color:#38bdf8; text-decoration:underline; font-weight:700; margin-left:4px;">Ativar Agora</a>', 6000);
+        }, 1200);
+      }
     }
 
     // Alternar para o painel com o orçamento já na lista
@@ -754,5 +759,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     switchTab(requestedTab);
   } else if (urlParams.get('token')) {
     switchTab('pane-cliente');
+  }
+
+  // ============================================================
+  // MODAL DE ATIVAÇÃO COMERCIAL
+  // ============================================================
+  const activationModal = document.getElementById('activation-modal');
+  const btnHeaderActivate = document.getElementById('btn-activate-system');
+  const btnCloseActivation = document.getElementById('btn-close-activation');
+  const overlayActivation = document.getElementById('activation-modal-overlay');
+
+  window.openActivationModal = function() {
+    if (activationModal) activationModal.classList.remove('hidden');
+  };
+
+  window.closeActivationModal = function() {
+    if (activationModal) activationModal.classList.add('hidden');
+  };
+
+  if (btnHeaderActivate) {
+    btnHeaderActivate.addEventListener('click', () => {
+      window.openActivationModal();
+    });
+  }
+
+  if (btnCloseActivation) {
+    btnCloseActivation.addEventListener('click', () => {
+      window.closeActivationModal();
+    });
+  }
+
+  if (overlayActivation) {
+    overlayActivation.addEventListener('click', () => {
+      window.closeActivationModal();
+    });
   }
 });
