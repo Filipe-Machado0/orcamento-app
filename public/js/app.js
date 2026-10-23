@@ -276,6 +276,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="budget-client-name">
           ${escapeHtml(b.client_name || 'Cliente')} 
           ${b.client_phone ? `<span style="font-weight: 500; color: var(--gray-500); font-size: 0.8rem;">· ${b.client_phone}</span>` : ''}
+          ${b.device_info && b.device_info.model ? `<span class="device-tag-chip" style="margin-left: 6px; font-size: 0.68rem; padding: 2px 6px;">${escapeHtml(b.device_info.model)}</span>` : ''}
         </div>
 
         <div class="budget-items-summary">
@@ -521,6 +522,62 @@ document.addEventListener('DOMContentLoaded', async () => {
     draftTotalDisplay.textContent = Number(total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   }
 
+  // Alternância interativa dos chips do checklist de bancada
+  function setupChecklistToggles() {
+    const states = {
+      ligando: [
+        { val: 'ok', label: 'Ligando OK', cls: 'ok' },
+        { val: 'falha', label: 'Não Liga', cls: 'falha' }
+      ],
+      touch: [
+        { val: 'ok', label: 'Touch & Tela OK', cls: 'ok' },
+        { val: 'falha', label: 'Trincada / Falha', cls: 'falha' },
+        { val: 'alerta', label: 'Com Riscos', cls: 'alerta' }
+      ],
+      biometria: [
+        { val: 'ok', label: 'Funcionando', cls: 'ok' },
+        { val: 'falha', label: 'Inoperante', cls: 'falha' }
+      ],
+      cameras: [
+        { val: 'ok', label: 'OK sem trincos', cls: 'ok' },
+        { val: 'alerta', label: 'Lente Riscada', cls: 'alerta' },
+        { val: 'falha', label: 'Com Falha', cls: 'falha' }
+      ],
+      conector: [
+        { val: 'ok', label: 'Carregando OK', cls: 'ok' },
+        { val: 'alerta', label: 'Mau Contato', cls: 'alerta' },
+        { val: 'falha', label: 'Não Carrega', cls: 'falha' }
+      ],
+      carcaca: [
+        { val: 'ok', label: 'Sem Avarias', cls: 'ok' },
+        { val: 'alerta', label: 'Leves Riscos', cls: 'alerta' },
+        { val: 'falha', label: 'Tampa Trincada', cls: 'falha' }
+      ]
+    };
+
+    document.querySelectorAll('.checklist-toggle-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const checkKey = item.getAttribute('data-check');
+        const currentVal = item.getAttribute('data-val') || 'ok';
+        const cycle = states[checkKey] || [
+          { val: 'ok', label: 'OK', cls: 'ok' },
+          { val: 'falha', label: 'Falha', cls: 'falha' }
+        ];
+
+        const currentIndex = cycle.findIndex(s => s.val === currentVal);
+        const nextIndex = (currentIndex + 1) % cycle.length;
+        const nextState = cycle[nextIndex];
+
+        item.setAttribute('data-val', nextState.val);
+        const statusSpan = item.querySelector('.cl-status');
+        if (statusSpan) {
+          statusSpan.className = `cl-status ${nextState.cls}`;
+          statusSpan.textContent = nextState.label;
+        }
+      });
+    });
+  }
+
   async function handleSaveBudget(openWa = false) {
     const clientId = clientSelect.value;
     if (!clientId) { showToast('Selecione ou cadastre um cliente'); return; }
@@ -531,26 +588,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     const validUntilDate = new Date();
     validUntilDate.setDate(validUntilDate.getDate() + validityDays);
 
+    // Captura dados do dispositivo e vistoria de entrada
+    const deviceInfo = {
+      model: document.getElementById('device-model-input')?.value.trim() || 'Celular',
+      color: document.getElementById('device-color-input')?.value.trim() || '',
+      passcode: document.getElementById('device-passcode-input')?.value.trim() || ''
+    };
+
+    const checklist = {};
+    document.querySelectorAll('.checklist-toggle-item').forEach(el => {
+      const k = el.getAttribute('data-check');
+      const v = el.getAttribute('data-val') || 'ok';
+      checklist[k] = v;
+    });
+
     const payload = {
       client_id: clientId,
       client_name: selClient ? selClient.name : 'Cliente',
       client_phone: selClient ? selClient.phone : '',
       items: draftItems,
       notes: document.getElementById('budget-notes-input').value.trim(),
-      valid_until: validUntilDate.toISOString().split('T')[0]
+      valid_until: validUntilDate.toISOString().split('T')[0],
+      device_info: deviceInfo,
+      checklist: checklist
     };
 
     const created = await store.createBudget(payload);
     draftItems = [];
     updateItemsView();
-    showToast('Proposta criada com sucesso!');
+    showToast('Ordem de serviço e orçamento criados com sucesso!');
 
     if (openWa) {
-      const waLink = window.generateWhatsAppLink(created.client_phone, created.budget_number, created.total_amount, created.valid_until, created.link_token);
+      const waLink = window.generateWhatsAppLink(
+        created.client_phone,
+        created.budget_number,
+        created.total_amount,
+        created.valid_until,
+        created.link_token,
+        created.device_info,
+        created.checklist
+      );
       window.open(waLink, '_blank');
       if (window.showAppToast) {
         setTimeout(() => {
-          window.showAppToast('Orçamento enviado! Quer usar este sistema com a sua própria marca? <a href="javascript:window.openActivationModal()" style="color:#38bdf8; text-decoration:underline; font-weight:700; margin-left:4px;">Ativar Agora</a>', 6000);
+          window.showAppToast('Orçamento oficial enviado! Quer ativar o sistema para a sua assistência? <a href="javascript:window.openActivationModal()" style="color:#38bdf8; text-decoration:underline; font-weight:700; margin-left:4px;">Ativar Agora</a>', 6000);
         }, 1200);
       }
     }
@@ -562,6 +643,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   btnSaveDraft.addEventListener('click', () => handleSaveBudget(false));
   btnSaveAndSendWa.addEventListener('click', () => handleSaveBudget(true));
+  setupChecklistToggles();
 
   // ============================================================
   // SEÇÃO 3: CONTRATO DE PRESTAÇÃO DE SERVIÇOS
@@ -647,6 +729,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('cli-client-name').textContent = b.client_name || 'Cliente';
     document.getElementById('cli-client-phone').textContent = b.client_phone ? `Contato: ${b.client_phone}` : '';
     document.getElementById('cli-total-amount').textContent = Number(b.total_amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+    // Renderizar Laudo de Entrada do Aparelho & Checklist
+    const devModelEl = document.getElementById('cli-device-model');
+    const devColorEl = document.getElementById('cli-device-color');
+    const devImeiEl = document.getElementById('cli-device-imei');
+    const clGridEl = document.getElementById('cli-checklist-grid');
+
+    const dev = b.device_info || { model: 'iPhone 14 Pro', color: 'Roxo Profundo', imei: '358291048291823' };
+    if (devModelEl) devModelEl.textContent = dev.model || 'Smartphone';
+    if (devColorEl) devColorEl.textContent = dev.color ? `Cor: ${dev.color}` : 'Entrada de Bancada';
+    if (devImeiEl) devImeiEl.textContent = dev.imei ? `Serial: ${dev.imei}` : (dev.passcode ? `Senha de teste: ${dev.passcode}` : 'Vistoria Concluída');
+
+    if (clGridEl) {
+      clGridEl.innerHTML = '';
+      const cl = b.checklist || { ligando: 'ok', touch: 'falha', biometria: 'ok', cameras: 'ok', conector: 'alerta', carcaca: 'alerta' };
+      const labels = {
+        ligando: 'Aparelho Liga',
+        touch: 'Tela / Touch',
+        biometria: 'Face ID / Biometria',
+        cameras: 'Câmeras',
+        conector: 'Conector de Carga',
+        carcaca: 'Carcaça / Vidro'
+      };
+      const statusLabels = {
+        ok: 'Normal (OK)',
+        falha: 'Avaria / Falha',
+        alerta: 'Atenção / Risco'
+      };
+
+      Object.keys(labels).forEach(key => {
+        const val = cl[key] || 'ok';
+        const itemEl = document.createElement('div');
+        itemEl.className = 'client-cl-item';
+        itemEl.innerHTML = `
+          <span style="font-weight: 600; color: #334155;">${labels[key]}</span>
+          <span class="cl-status ${val}">${statusLabels[val] || val}</span>
+        `;
+        clGridEl.appendChild(itemEl);
+      });
+    }
 
     // Status Badge Corporativo
     const badge = document.getElementById('cli-status-badge');

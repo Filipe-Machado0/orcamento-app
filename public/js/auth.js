@@ -326,10 +326,25 @@ const NICHES_DATA = {
         client_phone: '(11) 98765-4321',
         status: 'pendente',
         total_amount: 830.00,
-        notes: 'Aparelho deu entrada com tela trincada e falha no conector. Todos os componentes testados.',
+        notes: 'Aparelho deu entrada com tela trincada após queda e falha intermitente no conector. Vistoria de entrada realizada no balcão.',
         link_token: 'b1-celular-token',
         valid_until: '2026-10-28',
         created_at: new Date(Date.now() - 3600000 * 2).toISOString(),
+        device_info: {
+          brand: 'Apple',
+          model: 'iPhone 14 Pro',
+          color: 'Roxo Profundo',
+          imei: '358291048291823',
+          passcode: '4829'
+        },
+        checklist: {
+          ligando: 'ok',
+          touch: 'falha',
+          biometria: 'ok',
+          cameras: 'ok',
+          conector: 'alerta',
+          carcaca: 'alerta'
+        },
         items: [
           { description: 'Display Frontal Original OLED (Substituição)', quantity: 1, unit_price: 680.00, total_price: 680.00 },
           { description: 'Substituição de Conector de Carga Flex Tipo-C', quantity: 1, unit_price: 150.00, total_price: 150.00 }
@@ -342,11 +357,26 @@ const NICHES_DATA = {
         client_phone: '(11) 93456-7890',
         status: 'aprovado',
         total_amount: 420.00,
-        notes: 'Troca de bateria com desoxidação de placa após contato com líquido.',
+        notes: 'Troca de bateria com desoxidação ultrassônica em placa-mãe após contato com umidade.',
         link_token: 'b2-celular-token',
         valid_until: '2026-10-25',
         created_at: new Date(Date.now() - 3600000 * 18).toISOString(),
         approved_at: new Date(Date.now() - 3600000 * 16).toISOString(),
+        device_info: {
+          brand: 'Samsung',
+          model: 'Galaxy S23 5G',
+          color: 'Preto Phantom',
+          imei: '354819283719284',
+          passcode: 'Padrão L'
+        },
+        checklist: {
+          ligando: 'ok',
+          touch: 'ok',
+          biometria: 'ok',
+          cameras: 'ok',
+          conector: 'ok',
+          carcaca: 'ok'
+        },
         signature_data: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="70"><path d="M 12 40 Q 60 10, 110 35 T 200 30" stroke="%230f172a" stroke-width="2.5" fill="none"/></svg>',
         items: [
           { description: 'Bateria Homologada Alta Capacidade com Garantia', quantity: 1, unit_price: 240.00, total_price: 240.00 },
@@ -360,10 +390,25 @@ const NICHES_DATA = {
         client_phone: '(11) 97654-3210',
         status: 'em_andamento',
         total_amount: 1280.00,
-        notes: 'Lote de 4 coletores e smartphones com falha em CI de carga e conectores USB-C.',
+        notes: 'Lote corporativo de coletores e smartphones com falha em CI de carga e conectores USB-C.',
         link_token: 'b3-celular-token',
         valid_until: '2026-10-22',
         created_at: new Date(Date.now() - 3600000 * 36).toISOString(),
+        device_info: {
+          brand: 'Motorola',
+          model: 'Moto G84 5G (Lote Frotas)',
+          color: 'Azul Grafite',
+          imei: 'Lote 4 aparelhos',
+          passcode: '0000'
+        },
+        checklist: {
+          ligando: 'alerta',
+          touch: 'ok',
+          biometria: 'ok',
+          cameras: 'ok',
+          conector: 'falha',
+          carcaca: 'alerta'
+        },
         items: [
           { description: 'Reparo Avançado em Linha de Carga / Micro-solda', quantity: 2, unit_price: 320.00, total_price: 640.00 },
           { description: 'Substituição de Conector de Carga Flex Tipo-C', quantity: 4, unit_price: 150.00, total_price: 600.00 },
@@ -381,6 +426,21 @@ const NICHES_DATA = {
         link_token: 'b4-celular-token',
         valid_until: '2026-10-18',
         created_at: new Date(Date.now() - 3600000 * 72).toISOString(),
+        device_info: {
+          brand: 'Apple',
+          model: 'iPhone 12',
+          color: 'Branco',
+          imei: '359182374619283',
+          passcode: '1234'
+        },
+        checklist: {
+          ligando: 'ok',
+          touch: 'ok',
+          biometria: 'ok',
+          cameras: 'ok',
+          conector: 'ok',
+          carcaca: 'ok'
+        },
         items: [
           { description: 'Substituição de Módulo Auricular + Sensor Proximidade', quantity: 1, unit_price: 250.00, total_price: 250.00 },
           { description: 'Desoxidação e Banho Ultrassônico em Placa-Mãe', quantity: 1, unit_price: 140.00, total_price: 140.00 }
@@ -390,8 +450,8 @@ const NICHES_DATA = {
     contract: {
       id: 'ctr-demo-01',
       contract_number: 'OS-TECH/2026-308',
-      title: 'Termo de Ordem de Serviço e Reparação Eletrônica',
-      provider_name: 'Silva Tech Assistência & Celulares Ltda',
+      title: 'Termo de Ordem de Serviço, Vistoria e Reparo de Celular',
+      provider_name: 'Silva Tech Assistência de Celulares Ltda',
       provider_cnpj: '33.123.456/0001-78',
       provider_phone: '(11) 91234-5678',
       provider_address: 'Rua da Tecnologia, 80 - Centro, São Paulo/SP',
@@ -399,9 +459,9 @@ const NICHES_DATA = {
       client_doc: '321.654.987-11',
       client_phone: '(11) 98765-4321',
       client_address: 'Av. Paulista, 1000 - Bela Vista, São Paulo/SP',
-      service_description: 'Substituição do módulo frontal display OLED homologado e troca do conector flex de alimentação com testes laboratoriais de touchscreen, FaceID e condutividade.',
+      service_description: 'Substituição do módulo frontal display OLED e conector de carga Tipo-C no aparelho iPhone 14 Pro conforme Vistoria Prévia de Entrada registrada.',
       total_amount: 830.00,
-      payment_terms: 'Pagamento integral na entrega do aparelho reparado (Cartão em até 3x sem juros ou PIX).',
+      payment_terms: 'Pagamento integral na entrega do aparelho reparado (Cartão em até 3x ou PIX).',
       warranty_days: 90,
       deadline_days: 1,
       status: 'pendente',
@@ -686,9 +746,9 @@ const NICHES_DATA = {
   }
 };
 
-function getDefaultMockData(nicheKey = 'generico') {
+function getDefaultMockData(nicheKey = 'celular') {
   if (nicheKey === 'geral' || nicheKey === 'padrao' || nicheKey === 'universal') nicheKey = 'generico';
-  const chosen = NICHES_DATA[nicheKey] || NICHES_DATA.generico || NICHES_DATA.marcenaria;
+  const chosen = NICHES_DATA[nicheKey] || NICHES_DATA.celular || NICHES_DATA.generico;
   return {
     current_niche: chosen.key,
     profile: {
@@ -730,14 +790,14 @@ class Store {
       }
     } catch (e) {}
 
-    const MOCK_VERSION = 'v5_universal_generico_and_niches';
+    const MOCK_VERSION = 'v6_foco_assistencia_celulares';
     const storedVersion = localStorage.getItem('orcamento_mock_ver');
     const existing = localStorage.getItem(MOCK_STORAGE_KEY);
 
     // Se for uma versão anterior de mock, força a atualização para carregar os clientes e ordens demonstrativas
     if (!existing || storedVersion !== MOCK_VERSION) {
       localStorage.setItem('orcamento_mock_ver', MOCK_VERSION);
-      localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(getDefaultMockData(urlNiche || 'generico')));
+      localStorage.setItem(MOCK_STORAGE_KEY, JSON.stringify(getDefaultMockData(urlNiche || 'celular')));
       return;
     }
 
@@ -745,12 +805,12 @@ class Store {
     if (urlNiche && NICHES_DATA[urlNiche] && data.current_niche !== urlNiche) {
       this.saveMock(getDefaultMockData(urlNiche));
     } else if (!data.budgets || data.budgets.length <= 1 || !data.clients || data.clients.length <= 1) {
-      this.saveMock(getDefaultMockData(data.current_niche || urlNiche || 'generico'));
+      this.saveMock(getDefaultMockData(data.current_niche || urlNiche || 'celular'));
     }
   }
 
   getNiche() {
-    return this.getMock().current_niche || 'generico';
+    return this.getMock().current_niche || 'celular';
   }
 
   setNiche(key) {
@@ -897,6 +957,8 @@ class Store {
         link_token: token,
         valid_until: payload.valid_until,
         created_at: new Date().toISOString(),
+        device_info: payload.device_info || null,
+        checklist: payload.checklist || null,
         items: payload.items.map(it => ({
           ...it,
           total_price: it.quantity * it.unit_price
@@ -977,15 +1039,28 @@ class Store {
 window.AppStore = new Store();
 
 // Helper para montagem de link do WhatsApp (Orçamento)
-window.generateWhatsAppLink = function(phone, budgetNumber, total, validUntil, token) {
+window.generateWhatsAppLink = function(phone, budgetNumber, total, validUntil, token, deviceInfo, checklist) {
   const cleanPhone = (phone || '').replace(/\D/g, '');
   const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '') + '/index.html';
   const approvalUrl = `${baseUrl}?token=${token}&tab=pane-cliente`;
   
   const mock = window.AppStore ? window.AppStore.getMock() : null;
-  const companyName = mock?.profile?.company_name || 'Nossa Empresa';
+  const companyName = mock?.profile?.company_name || 'Silva Tech Assistência de Celulares';
   const formattedTotal = Number(total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  const text = `Olá! Segue a proposta comercial de ${companyName}:\n\n*Orçamento #${String(budgetNumber).padStart(3, '0')}*\n*Valor Total:* ${formattedTotal}\n*Válido até:* ${validUntil || '7 dias'}\n\n*Para conferir os detalhes e formalizar com assinatura digital, acesse:*\n${approvalUrl}`;
+  
+  let deviceSection = '';
+  if (deviceInfo && deviceInfo.model) {
+    deviceSection = `*Aparelho:* ${deviceInfo.model} ${deviceInfo.color ? '(' + deviceInfo.color + ')' : ''}\n`;
+  }
+
+  let checklistText = '';
+  if (checklist) {
+    const isPowerOk = checklist.ligando === 'ok' ? 'Ligando OK' : 'Não Liga';
+    const isTouchOk = checklist.touch === 'ok' ? 'Touch OK' : 'Falha/Trincada';
+    checklistText = `*Vistoria de Balcão:* ${isPowerOk} | Tela: ${isTouchOk}\n`;
+  }
+
+  const text = `Olá! Segue o Laudo Técnico e Orçamento Oficial da *${companyName}*:\n\n*Ordem de Serviço #${String(budgetNumber).padStart(3, '0')}*\n${deviceSection}${checklistText}*Garantia Legal CDC:* 90 dias sobre peças e serviços\n*Valor Total:* ${formattedTotal}\n*Validade:* ${validUntil || '7 dias'}\n\n*Para conferir o laudo de bancada e aprovar com assinatura digital:*\n${approvalUrl}`;
 
   const destPhone = cleanPhone.length >= 10 ? (cleanPhone.startsWith('55') ? cleanPhone : '55' + cleanPhone) : '';
   return `https://wa.me/${destPhone}?text=${encodeURIComponent(text)}`;

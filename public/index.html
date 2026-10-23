@@ -293,17 +293,17 @@
           <span class="brand-logo-text" style="color: #f1f5f9; font-size: 0.68rem;">SUA LOGO</span>
         </div>
         <div class="brand-bar-info">
-          <div id="top-company-title">Sistema de Ordens de Serviço</div>
-          <div id="top-company-sub">Gestão Comercial & OS</div>
+          <div id="top-company-title">TechMobile OS • Bancada de Celulares</div>
+          <div id="top-company-sub">Gestão, Orçamentos & Ordens de Serviço</div>
         </div>
       </div>
       
       <div class="brand-bar-right">
         <div class="niche-select-wrapper">
           <select id="niche-selector" class="niche-select-pill" title="Selecione o Segmento">
+            <option value="celular" selected>Assistência de Celulares</option>
             <option value="generico">Universal (Geral)</option>
             <option value="marcenaria">Marcenaria</option>
-            <option value="celular">Assistência Técnica</option>
             <option value="mecanica">Oficina Mecânica</option>
             <option value="climatizacao">Climatização</option>
           </select>
@@ -325,6 +325,17 @@
           </svg>
           <span>Ativar Sistema</span>
         </button>
+      </div>
+    </div>
+
+    <!-- Faixa Persuasiva de Bancada para Prospecção -->
+    <div class="prospecting-top-banner">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="prospecting-pill-tag">Bancada Profissional</span>
+        <span>Orçamentos em 60s no WhatsApp com <strong>Checklist de Entrada</strong> e <strong>Termo de Garantia CDC</strong></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: #94a3b8;">
+        <span>Fechamento mais rápido • Sem contestações</span>
       </div>
     </div>
 
@@ -430,6 +441,86 @@
           <button type="button" id="btn-cancel-inline-client" class="btn-corp btn-corp-secondary" style="font-size: 0.75rem;">
             Cancelar
           </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Identificação do Dispositivo & Checklist de Entrada de Bancada -->
+    <div id="device-inspection-module" class="card device-check-card" style="margin-bottom: var(--space-4); padding: var(--space-4); border-left: 3px solid #0284c7;">
+      <div class="quick-section-title" style="margin-bottom: 10px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+            <line x1="12" y1="18" x2="12.01" y2="18"></line>
+          </svg>
+          <span style="font-weight: 800; color: #0f172a;">Aparelho & Checklist de Entrada</span>
+        </div>
+        <span class="badge-feature-tag">Bancada Segura</span>
+      </div>
+
+      <!-- Dados do Aparelho -->
+      <div class="form-row-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label-compact">Aparelho (Marca & Modelo)</label>
+          <input type="text" id="device-model-input" class="form-input" placeholder="Ex: iPhone 14 Pro / Galaxy S23" value="iPhone 14 Pro">
+        </div>
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label-compact">Cor / Serial / IMEI</label>
+          <input type="text" id="device-color-input" class="form-input" placeholder="Ex: Roxo Profundo / Serial..." value="Roxo Profundo">
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 12px;">
+        <label class="form-label-compact">Senha de Testes do Cliente (Opcional para bancada)</label>
+        <input type="text" id="device-passcode-input" class="form-input" placeholder="Ex: 4829 ou Padrão L (para testes pós-reparo)" value="4829">
+      </div>
+
+      <!-- Vistoria Rápida em 1 Toque -->
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="font-size: 0.76rem; font-weight: 800; color: #1e293b; text-transform: uppercase; letter-spacing: 0.04em;">Vistoria Prévia de Entrada (Balcão)</span>
+          <span style="font-size: 0.68rem; color: #64748b;">Toque no status para mudar</span>
+        </div>
+        
+        <div class="checklist-chips-grid">
+          <!-- Item 1: Aparelho Liga -->
+          <div class="checklist-toggle-item" data-check="ligando" data-val="ok">
+            <span class="cl-label">Aparelho Liga:</span>
+            <span class="cl-status ok">Ligando OK</span>
+          </div>
+
+          <!-- Item 2: Tela / Touch -->
+          <div class="checklist-toggle-item" data-check="touch" data-val="falha">
+            <span class="cl-label">Tela / Touch:</span>
+            <span class="cl-status falha">Trincada / Falha</span>
+          </div>
+
+          <!-- Item 3: Face ID / Biometria -->
+          <div class="checklist-toggle-item" data-check="biometria" data-val="ok">
+            <span class="cl-label">Face ID / Digital:</span>
+            <span class="cl-status ok">Funcionando</span>
+          </div>
+
+          <!-- Item 4: Câmeras -->
+          <div class="checklist-toggle-item" data-check="cameras" data-val="ok">
+            <span class="cl-label">Câmeras Front/Tras:</span>
+            <span class="cl-status ok">OK sem trincos</span>
+          </div>
+
+          <!-- Item 5: Conector / Carga -->
+          <div class="checklist-toggle-item" data-check="conector" data-val="alerta">
+            <span class="cl-label">Conector de Carga:</span>
+            <span class="cl-status alerta">Mau Contato</span>
+          </div>
+
+          <!-- Item 6: Carcaça / Traseira -->
+          <div class="checklist-toggle-item" data-check="carcaca" data-val="alerta">
+            <span class="cl-label">Carcaça / Vidro Tras:</span>
+            <span class="cl-status alerta">Leves Riscos</span>
+          </div>
+        </div>
+        <div style="font-size: 0.68rem; color: #64748b; margin-top: 6px;">
+          Evita disputas com o cliente ("meu Face ID funcionava antes!"). Salvo na OS e na visão do cliente.
         </div>
       </div>
     </div>
@@ -568,9 +659,16 @@
       </div>
 
       <div class="contract-clause">
-        <div class="clause-num-title">Cláusula 4ª — Da Garantia Legal e Assistência</div>
+        <div class="clause-num-title">Cláusula 4ª — Da Garantia Legal e Assistência Técnica</div>
         <p class="clause-body-text">
-          A CONTRATADA assegura a garantia de <strong id="c-warranty-days">90 (noventa) dias</strong> para todos os serviços e peças substituídas, consoante as disposições do Artigo 26 do Código de Defesa do Consumidor.
+          A CONTRATADA assegura a garantia legal de <strong id="c-warranty-days">90 (noventa) dias</strong> para todos os serviços e peças substituídas, consoante as disposições do Artigo 26 do Código de Defesa do Consumidor (CDC).
+        </p>
+      </div>
+
+      <div class="contract-clause">
+        <div class="clause-num-title">Cláusula 5ª — Da Vistoria, Backup de Dados e Exclusões</div>
+        <p class="clause-body-text">
+          O CONTRATANTE valida a <strong>Vistoria Prévia de Entrada</strong> realizada no balcão e declara estar ciente de que é sua responsabilidade a salvaguarda e backup de dados pessoais. A garantia cobre exclusivamente defeitos de fabricação dos componentes substituídos, cessando sua eficácia em caso de quedas posteriores, trincados no vidro/display, contato com líquidos/oxidação ou remoção do selo de garantia da bancada.
         </p>
       </div>
 
@@ -648,6 +746,22 @@
         </div>
         <p id="cli-client-name" class="client-name" style="font-size: 0.95rem;">João Carlos de Oliveira</p>
         <p id="cli-client-phone" class="client-detail">Contato: (11) 98765-4321</p>
+      </section>
+
+      <!-- Laudo Técnico & Vistoria Prévia de Entrada do Celular -->
+      <section id="cli-device-inspection-card" class="card device-inspection-summary">
+        <div class="device-inspection-title">
+          <span>Laudo Técnico & Vistoria de Bancada</span>
+          <span style="font-size: 0.68rem; color: #0284c7; font-weight: 700;">Entrada Oficial</span>
+        </div>
+        <div class="device-tags-row">
+          <span id="cli-device-model" class="device-tag-chip">iPhone 14 Pro</span>
+          <span id="cli-device-color" class="device-color-chip">Roxo Profundo</span>
+          <span id="cli-device-imei" class="device-color-chip" style="font-family: monospace;">Serial: 358291048291823</span>
+        </div>
+        <div id="cli-checklist-grid" class="client-checklist-grid">
+          <!-- Inserido dinamicamente via JS -->
+        </div>
       </section>
 
       <section class="card items-section">

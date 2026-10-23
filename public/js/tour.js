@@ -9,13 +9,13 @@
   const TOUR_STEPS = [
     {
       type: 'intro',
-      badge: 'Tour Rápido • 1 Minuto',
-      title: 'Mais aprovações no seu WhatsApp',
-      text: 'Passe mais credibilidade e feche orçamentos de celular em poucos toques.',
+      badge: 'Bancada de Celulares • 1 Minuto',
+      title: 'Mais fechamentos no seu WhatsApp',
+      text: 'Passe credibilidade imediata, feche orçamentos de celular em minutos e proteja sua bancada.',
       bullets: [
-        'Propostas com peças e valores em 1 minuto',
-        'Link oficial de aprovação para o cliente',
-        'Termo de garantia com assinatura na tela'
+        'Vistoria prévia do aparelho em 1 toque',
+        'Orçamentos com peças e valores em 1 minuto',
+        'Garantia legal de 90 dias com assinatura na tela'
       ],
       primaryCtaText: 'Ver Demonstração (1 min)',
       secondaryCtaText: 'Pular e Explorar Direto'
@@ -25,25 +25,25 @@
       targetSelector: '.app-nav-bar',
       tab: 'pane-painel',
       badge: 'Passo 1 de 5',
-      title: 'Gestão Comercial em 1 Toque',
-      text: 'Navegue com facilidade entre o Painel, Novo Orçamento, Contrato e a Visão do Cliente.'
+      title: 'Gestão de Bancada em 1 Toque',
+      text: 'Navegue com facilidade entre o Painel, Novo Orçamento, Termo de Garantia e Visão do Cliente.'
     },
     {
       type: 'step',
       targetSelector: '.kpi-grid',
       tab: 'pane-painel',
       badge: 'Passo 2 de 5',
-      title: 'Faturamento em Tempo Real',
-      text: 'Acompanhe valores e ordens em bancada: pendentes, aprovadas e concluídas.'
+      title: 'Faturamento e Ordens de Bancada',
+      text: 'Acompanhe valores e ordens em tempo real: pendentes, aprovadas e em execução.'
     },
     {
       type: 'step',
-      targetSelector: '#pane-novo-orcamento .card:first-child',
+      targetSelector: '#device-inspection-module',
       fallbackSelector: '#pane-novo-orcamento',
       tab: 'pane-novo-orcamento',
       badge: 'Passo 3 de 5',
-      title: 'Orçamento Rápido de Bancada',
-      text: 'Selecione o aparelho e insira peças (tela, bateria, conector) em poucos cliques.'
+      title: 'Vistoria e Checklist de Balcão',
+      text: 'Registre o estado do celular em 10 segundos e evite contestações (Face ID, câmeras, touch).'
     },
     {
       type: 'step',
@@ -52,7 +52,7 @@
       tab: 'pane-novo-orcamento',
       badge: 'Passo 4 de 5',
       title: 'Envio Oficial no WhatsApp',
-      text: 'Gere a mensagem formatada com link seguro para o cliente conferir e aprovar na hora.'
+      text: 'Gere a mensagem formatada com laudo técnico e link seguro para o cliente aprovar na hora.'
     },
     {
       type: 'step',
@@ -70,7 +70,7 @@
       text: 'Coloque a sua marca e comece a fechar serviços com orçamentos profissionais.',
       bullets: [
         'Sua logomarca no sistema e contratos',
-        'Modelos prontos para celulares',
+        'Modelos prontos para celulares (Apple, Samsung, Motorola, Xiaomi)',
         'Acesso imediato sem instalação'
       ],
       primaryCtaText: 'Ativar para Minha Assistência',
