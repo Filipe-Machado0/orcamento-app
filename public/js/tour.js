@@ -56,8 +56,8 @@
     },
     {
       type: 'step',
-      targetSelector: '#pane-contrato .contract-doc',
-      fallbackSelector: '#pane-contrato',
+      targetSelector: '#contract-pending-box',
+      fallbackSelector: '#pane-contrato .contract-doc',
       tab: 'pane-contrato',
       badge: 'Passo 5 de 5',
       title: 'Garantia e Assinatura na Tela',
@@ -81,6 +81,10 @@
   let currentStepIndex = 0;
   let isTourRunning = false;
   let backdropEl = null;
+  let paneTop = null;
+  let paneBottom = null;
+  let paneLeft = null;
+  let paneRight = null;
   let spotlightEl = null;
   let cardEl = null;
 
@@ -88,12 +92,29 @@
   function createTourElements() {
     if (backdropEl) return;
 
-    // Fundo
+    // Fundo inteligente com 4 painéis de desfoque (deixa o alvo 100% desborrado e nítido)
     backdropEl = document.createElement('div');
     backdropEl.className = 'tour-backdrop';
+
+    paneTop = document.createElement('div');
+    paneTop.className = 'tour-backdrop-pane pane-top';
+
+    paneBottom = document.createElement('div');
+    paneBottom.className = 'tour-backdrop-pane pane-bottom';
+
+    paneLeft = document.createElement('div');
+    paneLeft.className = 'tour-backdrop-pane pane-left';
+
+    paneRight = document.createElement('div');
+    paneRight.className = 'tour-backdrop-pane pane-right';
+
+    backdropEl.appendChild(paneTop);
+    backdropEl.appendChild(paneBottom);
+    backdropEl.appendChild(paneLeft);
+    backdropEl.appendChild(paneRight);
     document.body.appendChild(backdropEl);
 
-    // Holofote
+    // Holofote (borda iluminada contornando a área desborrada)
     spotlightEl = document.createElement('div');
     spotlightEl.className = 'tour-spotlight';
     document.body.appendChild(spotlightEl);
@@ -162,17 +183,30 @@
     });
 
     backdropEl.addEventListener('click', (e) => {
-      if (e.target === backdropEl) {
-        endTour(true);
+      if (e.target.classList.contains('tour-backdrop-pane') || e.target === backdropEl) {
+        const step = TOUR_STEPS[currentStepIndex];
+        if (step && step.type === 'step') {
+          nextStep();
+        }
       }
     });
 
-    // Redimensionamento de Tela
+    // Redimensionamento e rolagem da tela para manter o recorte alinhado
     window.addEventListener('resize', () => {
       if (isTourRunning) {
         positionStep(TOUR_STEPS[currentStepIndex]);
       }
     });
+
+    window.addEventListener('scroll', () => {
+      if (isTourRunning && TOUR_STEPS[currentStepIndex].type === 'step') {
+        const step = TOUR_STEPS[currentStepIndex];
+        const target = document.querySelector(step.targetSelector) || (step.fallbackSelector ? document.querySelector(step.fallbackSelector) : null);
+        if (target) {
+          setCutoutBlur(target.getBoundingClientRect());
+        }
+      }
+    }, { passive: true });
   }
 
   // Alterna a aba do sistema se necessário
@@ -184,6 +218,75 @@
     if (tabBtn) {
       tabBtn.click();
     }
+  }
+
+  // Desfoque Total (Intro e Outro)
+  function setFullBlur() {
+    spotlightEl.classList.remove('active');
+    if (!paneTop) return;
+
+    paneTop.style.top = '0px';
+    paneTop.style.left = '0px';
+    paneTop.style.width = '100vw';
+    paneTop.style.height = '100vh';
+
+    paneBottom.style.top = '100vh';
+    paneBottom.style.left = '0px';
+    paneBottom.style.width = '100vw';
+    paneBottom.style.height = '0px';
+
+    paneLeft.style.top = '0px';
+    paneLeft.style.left = '0px';
+    paneLeft.style.width = '0px';
+    paneLeft.style.height = '0px';
+
+    paneRight.style.top = '0px';
+    paneRight.style.left = '100vw';
+    paneRight.style.width = '0px';
+    paneRight.style.height = '0px';
+  }
+
+  // Desfoque com Janela Recortada 100% Desborrada (Nítida) sobre o Alvo
+  function setCutoutBlur(rect) {
+    if (!paneTop) return;
+    const padding = 6;
+    const holeTop = Math.max(0, rect.top - padding);
+    const holeLeft = Math.max(0, rect.left - padding);
+    const holeRight = Math.min(window.innerWidth, rect.right + padding);
+    const holeBottom = Math.min(window.innerHeight, rect.bottom + padding);
+    const holeWidth = Math.max(0, holeRight - holeLeft);
+    const holeHeight = Math.max(0, holeBottom - holeTop);
+
+    // Painel Superior (desfoca acima do alvo)
+    paneTop.style.top = '0px';
+    paneTop.style.left = '0px';
+    paneTop.style.width = '100vw';
+    paneTop.style.height = `${holeTop}px`;
+
+    // Painel Inferior (desfoca abaixo do alvo)
+    paneBottom.style.top = `${holeBottom}px`;
+    paneBottom.style.left = '0px';
+    paneBottom.style.width = '100vw';
+    paneBottom.style.height = `calc(100vh - ${holeBottom}px)`;
+
+    // Painel Esquerdo (desfoca à esquerda do alvo)
+    paneLeft.style.top = `${holeTop}px`;
+    paneLeft.style.left = '0px';
+    paneLeft.style.width = `${holeLeft}px`;
+    paneLeft.style.height = `${holeHeight}px`;
+
+    // Painel Direito (desfoca à direita do alvo)
+    paneRight.style.top = `${holeTop}px`;
+    paneRight.style.left = `${holeRight}px`;
+    paneRight.style.width = `calc(100vw - ${holeRight}px)`;
+    paneRight.style.height = `${holeHeight}px`;
+
+    // Borda iluminada no contorno da área desborrada
+    spotlightEl.style.top = `${holeTop}px`;
+    spotlightEl.style.left = `${holeLeft}px`;
+    spotlightEl.style.width = `${holeWidth}px`;
+    spotlightEl.style.height = `${holeHeight}px`;
+    spotlightEl.classList.add('active');
   }
 
   // Posiciona o holofote e o cartão com base no elemento alvo
@@ -198,7 +301,7 @@
     cardEl.style.transform = '';
 
     if (step.type === 'intro' || step.type === 'outro' || !step.targetSelector) {
-      spotlightEl.classList.remove('active');
+      setFullBlur();
       cardEl.classList.remove('pos-top', 'pos-bottom');
       cardEl.classList.add('pos-center');
       return;
@@ -210,7 +313,7 @@
     }
 
     if (!target) {
-      spotlightEl.classList.remove('active');
+      setFullBlur();
       cardEl.classList.remove('pos-top', 'pos-bottom');
       cardEl.classList.add('pos-center');
       return;
@@ -219,15 +322,9 @@
     target.classList.add('tour-highlighted-target');
     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-    setTimeout(() => {
+    const applyLayout = () => {
       const rect = target.getBoundingClientRect();
-      const padding = 6;
-
-      spotlightEl.style.top = `${Math.max(4, rect.top - padding)}px`;
-      spotlightEl.style.left = `${Math.max(4, rect.left - padding)}px`;
-      spotlightEl.style.width = `${Math.min(window.innerWidth - 8, rect.width + padding * 2)}px`;
-      spotlightEl.style.height = `${rect.height + padding * 2}px`;
-      spotlightEl.classList.add('active');
+      setCutoutBlur(rect);
 
       const windowHeight = window.innerHeight;
       const targetMidY = rect.top + rect.height / 2;
@@ -240,7 +337,11 @@
         cardEl.classList.remove('pos-bottom');
         cardEl.classList.add('pos-top');
       }
-    }, 180);
+    };
+
+    applyLayout();
+    setTimeout(applyLayout, 180);
+    setTimeout(applyLayout, 380);
   }
 
   // Renderiza o conteúdo do passo atual
