@@ -4,7 +4,7 @@
    ============================================================ */
 
 (() => {
-  const STORAGE_KEY = 'orcamento_tour_completed_v5';
+  const STORAGE_KEY = 'orcamento_tour_completed_v6';
 
   const TOUR_STEPS = [
     {

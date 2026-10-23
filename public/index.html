@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#0f172a">
+  <meta name="theme-color" content="#0a1224">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="mobile-web-app-capable" content="yes">
   <title>Sistema de Orçamentos e OS para Assistência Técnica de Celulares</title>
 
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230f172a%22/><path d=%22M30 50L45 65L75 35%22 stroke=%22white%22 stroke-width=%228%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 fill=%22none%22/></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%230a1224%22/><path d=%22M30 50L45 65L75 35%22 stroke=%22%2322d3ee%22 stroke-width=%228%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22 fill=%22none%22/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -34,7 +34,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 14px;
-      border-bottom: 2px solid var(--gray-800);
+      border-bottom: 2px solid #0a1224;
       padding-bottom: 14px;
       margin-bottom: 18px;
     }
@@ -49,7 +49,7 @@
     .contract-title-h1 {
       font-size: 1.05rem;
       font-weight: 800;
-      color: var(--gray-900);
+      color: #0a1224;
       text-transform: uppercase;
       letter-spacing: -0.01em;
       margin: 0;
@@ -67,7 +67,7 @@
     .clause-num-title {
       font-size: 0.78rem;
       font-weight: 700;
-      color: var(--gray-900);
+      color: #0a1224;
       text-transform: uppercase;
       letter-spacing: 0.03em;
       margin-bottom: 4px;
@@ -84,7 +84,7 @@
     /* Selo de Assinatura Corporativa */
     .corporate-seal-box {
       background: #f8fafc;
-      border: 1.5px solid #0f172a;
+      border: 1.5px solid #0a1224;
       border-radius: var(--radius-lg);
       padding: 16px;
       margin-top: 20px;
@@ -97,7 +97,7 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #0f172a;
+      color: #0a1224;
       border-bottom: 1px solid #cbd5e1;
       padding-bottom: 4px;
       margin-bottom: 8px;
@@ -140,11 +140,16 @@
     }
 
     .btn-corp-primary {
-      background: #0f172a;
+      background: #0a1224;
+      border: 1px solid rgba(6, 182, 212, 0.3);
       color: white;
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
+      box-shadow: 0 2px 8px rgba(10, 18, 36, 0.25);
     }
-    .btn-corp-primary:hover { background: #1e293b; }
+    .btn-corp-primary:hover {
+      background: #111f3c;
+      border-color: #22d3ee;
+      color: #22d3ee;
+    }
 
     .btn-corp-secondary {
       background: white;
@@ -160,14 +165,14 @@
     }
     .btn-corp-wa:hover { background: #15803d; }
 
-    /* Barra Superior Unificada & Abas em Pílula (Estética Dark Slate Executiva) */
+    /* Barra Superior Unificada (Estética Dark Blue & Cyan) */
     .app-top-header {
       position: sticky;
       top: 0;
       z-index: 950;
-      background: #0f172a;
-      border-bottom: 1px solid #1e293b;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+      background: #0a1224;
+      border-bottom: 1px solid rgba(6, 182, 212, 0.2);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
 
     .app-top-header .app-brand-bar {
@@ -185,11 +190,11 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(15, 23, 42, 0.96);
+      background: rgba(10, 18, 36, 0.96);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-top: 1px solid rgba(51, 65, 85, 0.7);
-      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+      border-top: 1px solid rgba(34, 211, 238, 0.25);
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.5);
       padding: 6px 12px max(10px, env(safe-area-inset-bottom, 12px));
       display: flex;
       align-items: center;
@@ -204,8 +209,8 @@
     @media (min-width: 601px) {
       .app-nav-bar {
         border-radius: 18px 18px 0 0;
-        border-left: 1px solid rgba(51, 65, 85, 0.7);
-        border-right: 1px solid rgba(51, 65, 85, 0.7);
+        border-left: 1px solid rgba(34, 211, 238, 0.25);
+        border-right: 1px solid rgba(34, 211, 238, 0.25);
       }
     }
 
@@ -246,7 +251,7 @@
     }
 
     .nav-tab-btn:hover {
-      background: rgba(30, 41, 59, 0.7);
+      background: rgba(20, 35, 71, 0.7);
       color: #f1f5f9;
     }
 
@@ -259,15 +264,15 @@
     }
 
     .nav-tab-btn.active {
-      background: rgba(2, 132, 199, 0.18);
-      color: #38bdf8;
-      border-color: rgba(56, 189, 248, 0.35);
+      background: rgba(6, 182, 212, 0.16);
+      color: #22d3ee;
+      border-color: rgba(34, 211, 238, 0.4);
       font-weight: 700;
-      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+      box-shadow: 0 0 14px rgba(6, 182, 212, 0.28);
     }
 
     .nav-tab-btn.active svg {
-      stroke: #38bdf8;
+      stroke: #22d3ee;
       transform: scale(1.1);
     }
 
@@ -281,7 +286,7 @@
     }
   </style>
 </head>
-<body class="single-page-body" style="background-color: #f8fafc;">
+<body class="single-page-body" style="background-color: #f1f5f9;">
 
   <!-- Toast Notifications Container -->
   <div id="toast-container" class="toast-container"></div>
@@ -290,8 +295,8 @@
   <header class="app-top-header">
     <div class="app-brand-bar">
       <div class="brand-bar-left">
-        <div class="brand-logo-slot" style="background: #1e293b; border-color: #334155; padding: 3px 10px; min-height: 36px; border-radius: 8px;">
-          <span class="brand-logo-text" style="color: #f1f5f9; font-size: 0.68rem;">SUA LOGO</span>
+        <div class="brand-logo-slot" style="background: #0f1c38; border-color: rgba(34, 211, 238, 0.3); padding: 3px 10px; min-height: 36px; border-radius: 8px;">
+          <span class="brand-logo-text" style="color: #22d3ee; font-weight: 800; font-size: 0.68rem;">SUA LOGO</span>
         </div>
         <div class="brand-bar-info">
           <div id="top-company-title">TechMobile OS • Bancada de Celulares</div>
@@ -338,22 +343,22 @@
     
     <!-- Painel de KPIs Corporativo -->
     <div class="kpi-grid" style="margin-top: 16px;">
-      <div class="kpi-card">
+      <div class="kpi-card" style="border-left: 3px solid #f97316;">
         <span class="kpi-label"><span class="status-dot pendente"></span>Pendentes</span>
-        <span id="kpi-pending-count" class="kpi-value">0</span>
+        <span id="kpi-pending-count" class="kpi-value" style="color: #ea580c;">0</span>
         <span id="kpi-pending-total" class="kpi-subtext">R$ 0,00</span>
       </div>
-      <div class="kpi-card" style="border-left: 3px solid #16a34a;">
+      <div class="kpi-card" style="border-left: 3px solid #10b981;">
         <span class="kpi-label"><span class="status-dot aprovado"></span>Aprovados</span>
-        <span id="kpi-approved-count" class="kpi-value" style="color: #166534;">0</span>
+        <span id="kpi-approved-count" class="kpi-value" style="color: #047857;">0</span>
         <span id="kpi-approved-total" class="kpi-subtext">R$ 0,00</span>
       </div>
-      <div class="kpi-card" style="border-left: 3px solid #0284c7;">
+      <div class="kpi-card" style="border-left: 3px solid #06b6d4;">
         <span class="kpi-label"><span class="status-dot em_andamento"></span>Em Execução</span>
-        <span id="kpi-progress-count" class="kpi-value" style="color: #075985;">0</span>
+        <span id="kpi-progress-count" class="kpi-value" style="color: #0891b2;">0</span>
         <span id="kpi-progress-total" class="kpi-subtext">R$ 0,00</span>
       </div>
-      <div class="kpi-card" style="border-left: 3px solid #475569;">
+      <div class="kpi-card" style="border-left: 3px solid #64748b;">
         <span class="kpi-label"><span class="status-dot concluido"></span>Concluídos</span>
         <span id="kpi-done-count" class="kpi-value">0</span>
         <span id="kpi-done-total" class="kpi-subtext">R$ 0,00</span>
@@ -417,10 +422,10 @@
     </div>
 
     <!-- Identificação do Dispositivo & Checklist de Entrada de Bancada -->
-    <div id="device-inspection-module" class="card device-check-card" style="margin-bottom: var(--space-4); padding: var(--space-4); border-left: 3px solid #0284c7;">
+    <div id="device-inspection-module" class="card device-check-card" style="margin-bottom: var(--space-4); padding: var(--space-4); border-left: 3px solid #06b6d4;">
       <div class="quick-section-title" style="margin-bottom: 10px;">
         <div style="display: flex; align-items: center; gap: 6px;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
             <line x1="12" y1="18" x2="12.01" y2="18"></line>
           </svg>
@@ -723,7 +728,7 @@
       <section id="cli-device-inspection-card" class="card device-inspection-summary">
         <div class="device-inspection-title">
           <span>Laudo Técnico & Vistoria de Bancada</span>
-          <span style="font-size: 0.68rem; color: #0284c7; font-weight: 700;">Entrada Oficial</span>
+          <span style="font-size: 0.68rem; color: #0891b2; font-weight: 700;">Entrada Oficial</span>
         </div>
         <div class="device-tags-row">
           <span id="cli-device-model" class="device-tag-chip">iPhone 14 Pro</span>
@@ -809,10 +814,10 @@
     <div class="modal-content" style="max-width: 440px;">
       <div class="modal-drag-handle"></div>
       <div class="modal-header" style="text-align: left;">
-        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 3px 10px; border-radius: 9999px; margin-bottom: 8px;">
+        <div style="display: inline-flex; align-items: center; gap: 6px; background: rgba(249, 115, 22, 0.12); color: #ea580c; border: 1px solid rgba(249, 115, 22, 0.3); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 3px 10px; border-radius: 9999px; margin-bottom: 8px;">
           Ativação Comercial
         </div>
-        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0f172a; margin-bottom: 4px;">Ative o Sistema na Sua Assistência</h3>
+        <h3 style="font-size: 1.15rem; font-weight: 800; color: #0a1224; margin-bottom: 4px;">Ative o Sistema na Sua Assistência</h3>
         <p style="font-size: 0.82rem; color: #64748b; line-height: 1.5; margin: 0;">Personalizamos a plataforma com seu nome, logotipo e catálogo de bancada para você começar a fechar serviços profissionais imediatamente.</p>
       </div>
 
@@ -820,15 +825,15 @@
         <div style="font-size: 0.75rem; font-weight: 700; color: #1e293b; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.04em;">Vantagens da Versão Oficial:</div>
         <div style="display: flex; flex-direction: column; gap: 8px; font-size: 0.82rem; color: #475569;">
           <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             <span>Identidade visual própria (sua logomarca oficial no sistema e nos contratos)</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             <span>Modelos cadastrados para celulares (Apple, Samsung, Motorola e Xiaomi)</span>
           </div>
           <div style="display: flex; align-items: center; gap: 8px;">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             <span>Acesso ilimitado e direto no balcão sem necessidade de instalação</span>
           </div>
         </div>
