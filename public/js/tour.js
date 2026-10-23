@@ -1,40 +1,40 @@
 /* ============================================================
    TOUR GUIADO / MANUAL DE APRESENTAÇÃO E CONVERSÃO INTERATIVO
-   Motor Mobile-First com Pitch de Valor, Roteiro Comercial e Ativação
+   Motor Mobile-First com Backdrop Blur, Textos Curtos e Dinâmicos
    ============================================================ */
 
 (() => {
-  const STORAGE_KEY = 'orcamento_tour_completed_v3';
+  const STORAGE_KEY = 'orcamento_tour_completed_v4';
 
   const TOUR_STEPS = [
     {
       type: 'intro',
-      badge: 'Apresentação • 1 Minuto',
-      title: 'Aumente as aprovações da sua assistência técnica',
-      text: 'Pare de enviar orçamentos informais no WhatsApp que o cliente visualiza e não responde. Veja em poucos passos como passar credibilidade imediata e fechar mais serviços com propostas estruturadas.',
+      badge: 'Tour Rápido • 1 Minuto',
+      title: 'Mais aprovações no seu WhatsApp',
+      text: 'Passe mais credibilidade e feche orçamentos de celular em poucos toques.',
       bullets: [
-        'Propostas detalhadas com peças em menos de 60 segundos',
-        'Link exclusivo de aprovação rápida e transparente para o cliente',
-        'Contratos com garantia legal de 90 dias e assinatura na tela'
+        'Propostas com peças e valores em 1 minuto',
+        'Link oficial de aprovação para o cliente',
+        'Termo de garantia com assinatura na tela'
       ],
-      primaryCtaText: 'Iniciar Apresentação (1 min)',
-      secondaryCtaText: 'Explorar o Painel Direto'
+      primaryCtaText: 'Ver Demonstração (1 min)',
+      secondaryCtaText: 'Pular e Explorar Direto'
     },
     {
       type: 'step',
       targetSelector: '.app-nav-bar',
       tab: 'pane-painel',
       badge: 'Passo 1 de 5',
-      title: 'Controle Comercial Completo',
-      text: 'Tudo integrado em 4 áreas ágeis: Painel operacional, Novo Orçamento no balcão, Contrato formal e a Visão Oficial que seu cliente acessa no celular.'
+      title: 'Gestão Comercial em 1 Toque',
+      text: 'Navegue com facilidade entre o Painel, Novo Orçamento, Contrato e a Visão do Cliente.'
     },
     {
       type: 'step',
       targetSelector: '.kpi-grid',
       tab: 'pane-painel',
       badge: 'Passo 2 de 5',
-      title: 'Visão Clara do Faturamento',
-      text: 'Acompanhe em tempo real valores e volumes em bancada: propostas pendentes, aprovadas, em execução e concluídas. Chega de esquecer orçamentos em aberto.'
+      title: 'Faturamento em Tempo Real',
+      text: 'Acompanhe valores e ordens em bancada: pendentes, aprovadas e concluídas.'
     },
     {
       type: 'step',
@@ -42,8 +42,8 @@
       fallbackSelector: '#pane-novo-orcamento',
       tab: 'pane-novo-orcamento',
       badge: 'Passo 3 de 5',
-      title: 'Agilidade de Balcão (Menos de 1 Min)',
-      text: 'Selecione o cliente e o aparelho. Adicione serviços e peças (troca de tela, bateria, conector) em poucos toques com valores e prazos predefinidos.'
+      title: 'Orçamento Rápido de Bancada',
+      text: 'Selecione o aparelho e insira peças (tela, bateria, conector) em poucos cliques.'
     },
     {
       type: 'step',
@@ -51,8 +51,8 @@
       fallbackSelector: '#pane-novo-orcamento',
       tab: 'pane-novo-orcamento',
       badge: 'Passo 4 de 5',
-      title: 'Apresentação que Passa Credibilidade',
-      text: 'Com 1 clique, envie a proposta pronta no WhatsApp do cliente com todos os itens discriminados e link de aprovação. O cliente percebe o profissionalismo na hora.'
+      title: 'Envio Oficial no WhatsApp',
+      text: 'Gere a mensagem formatada com link seguro para o cliente conferir e aprovar na hora.'
     },
     {
       type: 'step',
@@ -60,21 +60,21 @@
       fallbackSelector: '#pane-contrato',
       tab: 'pane-contrato',
       badge: 'Passo 5 de 5',
-      title: 'Blindagem Jurídica e Garantia',
-      text: 'Emita termos de serviço com garantia legal de 90 dias e colha a assinatura eletrônica do cliente diretamente na tela do celular. Segurança total para a sua assistência.'
+      title: 'Garantia e Assinatura na Tela',
+      text: 'Colha a assinatura eletrônica do cliente direto na tela do smartphone, sem papelada.'
     },
     {
       type: 'outro',
-      badge: 'Ativação Comercial',
-      title: 'Pronto para profissionalizar sua assistência técnica?',
-      text: 'Substitua anotações de papel e mensagens amadoras por um sistema completo com o seu logotipo e a sua marca. Passe mais confiança, cobre o preço justo e feche muito mais serviços.',
+      badge: 'Ativação Oficial',
+      title: 'Gostou da Demonstração?',
+      text: 'Coloque a sua marca e comece a fechar serviços com orçamentos profissionais.',
       bullets: [
-        'Identidade visual própria (sua logomarca oficial no sistema e contratos)',
-        'Modelos cadastrados para celulares (Apple, Samsung, Motorola e Xiaomi)',
-        'Suporte dedicado para implantação imediata'
+        'Sua logomarca no sistema e contratos',
+        'Modelos prontos para celulares',
+        'Acesso imediato sem instalação'
       ],
-      primaryCtaText: 'Quero Ativar para Minha Assistência',
-      secondaryCtaText: 'Continuar Explorando a Demonstração'
+      primaryCtaText: 'Ativar para Minha Assistência',
+      secondaryCtaText: 'Continuar no Painel'
     }
   ];
 
@@ -316,14 +316,29 @@
       }
     }
 
-    // Atualização dos Pontos de Progresso (apenas para os passos do meio)
+    // Atualização dos Pontos de Progresso (apenas para os 5 passos interativos do meio)
     const dotsContainer = document.getElementById('tour-dots');
     dotsContainer.innerHTML = '';
-    TOUR_STEPS.forEach((_, i) => {
-      const dot = document.createElement('div');
-      dot.className = `tour-dot ${i === index ? 'active' : (i < index ? 'completed' : '')}`;
-      dotsContainer.appendChild(dot);
-    });
+    
+    if (step.type === 'step') {
+      dotsContainer.style.display = 'flex';
+      const actualSteps = TOUR_STEPS.filter(s => s.type === 'step');
+      const stepIdx = index - 1; // pois index 0 é intro
+      actualSteps.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = `tour-dot ${i === stepIdx ? 'active' : (i < stepIdx ? 'completed' : '')}`;
+        dotsContainer.appendChild(dot);
+      });
+    } else {
+      dotsContainer.style.display = 'none';
+    }
+
+    // Feedback de animação dinâmica suave
+    if (cardEl) {
+      cardEl.classList.remove('anim-pop');
+      void cardEl.offsetWidth;
+      cardEl.classList.add('anim-pop');
+    }
 
     positionStep(step);
   }
