@@ -282,7 +282,7 @@ const NICHES_DATA = {
   celular: {
     key: 'celular',
     name: 'Assistência Técnica de Celulares & TI',
-    company_name: 'Silva Tech Assistência & Celulares',
+    company_name: 'Sua Logo • Assistência de Celulares',
     phone: '(11) 91234-5678',
     address: 'Rua da Tecnologia, 80 - Centro, São Paulo/SP',
     clients: [
@@ -451,7 +451,7 @@ const NICHES_DATA = {
       id: 'ctr-demo-01',
       contract_number: 'OS-TECH/2026-308',
       title: 'Termo de Ordem de Serviço, Vistoria e Reparo de Celular',
-      provider_name: 'Silva Tech Assistência de Celulares Ltda',
+      provider_name: 'Sua Logo • Assistência Técnica de Celulares Ltda',
       provider_cnpj: '33.123.456/0001-78',
       provider_phone: '(11) 91234-5678',
       provider_address: 'Rua da Tecnologia, 80 - Centro, São Paulo/SP',
@@ -1045,7 +1045,7 @@ window.generateWhatsAppLink = function(phone, budgetNumber, total, validUntil, t
   const approvalUrl = `${baseUrl}?token=${token}&tab=pane-cliente`;
   
   const mock = window.AppStore ? window.AppStore.getMock() : null;
-  const companyName = mock?.profile?.company_name || 'Silva Tech Assistência de Celulares';
+  const companyName = mock?.profile?.company_name || 'Sua Logo • Assistência de Celulares';
   const formattedTotal = Number(total).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   
   let deviceSection = '';

@@ -4,7 +4,7 @@
    ============================================================ */
 
 (() => {
-  const STORAGE_KEY = 'orcamento_tour_completed_v6';
+  const STORAGE_KEY = 'orcamento_tour_completed_v7';
 
   const TOUR_STEPS = [
     {
@@ -56,8 +56,8 @@
     },
     {
       type: 'step',
-      targetSelector: '#contract-pending-box',
-      fallbackSelector: '#pane-contrato .contract-doc',
+      targetSelector: '#btn-open-sign-modal',
+      fallbackSelector: '#contract-pending-box, #contract-signed-box, #pane-contrato .contract-doc',
       tab: 'pane-contrato',
       badge: 'Passo 5 de 5',
       title: 'Garantia e Assinatura na Tela',
@@ -246,16 +246,44 @@
     paneRight.style.height = '0px';
   }
 
+  // Localiza o elemento alvo que esteja realmente visível na tela
+  function getVisibleTarget(step) {
+    if (!step || !step.targetSelector) return null;
+    const selectors = [step.targetSelector, step.fallbackSelector].filter(Boolean);
+    for (const selGroup of selectors) {
+      const parts = selGroup.split(',').map(s => s.trim());
+      for (const s of parts) {
+        const el = document.querySelector(s);
+        if (el) {
+          const style = window.getComputedStyle(el);
+          if (style.display !== 'none' && style.visibility !== 'hidden' && !el.classList.contains('hidden')) {
+            return el;
+          }
+        }
+      }
+    }
+    return document.querySelector(step.targetSelector) || (step.fallbackSelector ? document.querySelector(step.fallbackSelector) : null);
+  }
+
   // Desfoque com Janela Recortada 100% Desborrada (Nítida) sobre o Alvo
   function setCutoutBlur(rect) {
     if (!paneTop) return;
+    const vWidth = window.innerWidth;
+    const vHeight = window.innerHeight;
+
     const padding = 6;
-    const holeTop = Math.max(0, rect.top - padding);
-    const holeLeft = Math.max(0, rect.left - padding);
-    const holeRight = Math.min(window.innerWidth, rect.right + padding);
-    const holeBottom = Math.min(window.innerHeight, rect.bottom + padding);
+    const holeTop = Math.max(0, Math.min(vHeight - 10, rect.top - padding));
+    const holeLeft = Math.max(0, Math.min(vWidth - 10, rect.left - padding));
+    const holeRight = Math.min(vWidth, Math.max(10, rect.right + padding));
+    const holeBottom = Math.min(vHeight, Math.max(10, rect.bottom + padding));
     const holeWidth = Math.max(0, holeRight - holeLeft);
     const holeHeight = Math.max(0, holeBottom - holeTop);
+
+    // Se a altura ou largura recortada for insignificante, evita cobrir a tela inteira com o painel superior
+    if (holeWidth <= 4 || holeHeight <= 4) {
+      setFullBlur();
+      return;
+    }
 
     // Painel Superior (desfoca acima do alvo)
     paneTop.style.top = '0px';
@@ -267,7 +295,7 @@
     paneBottom.style.top = `${holeBottom}px`;
     paneBottom.style.left = '0px';
     paneBottom.style.width = '100vw';
-    paneBottom.style.height = `calc(100vh - ${holeBottom}px)`;
+    paneBottom.style.height = `${Math.max(0, vHeight - holeBottom)}px`;
 
     // Painel Esquerdo (desfoca à esquerda do alvo)
     paneLeft.style.top = `${holeTop}px`;
@@ -278,7 +306,7 @@
     // Painel Direito (desfoca à direita do alvo)
     paneRight.style.top = `${holeTop}px`;
     paneRight.style.left = `${holeRight}px`;
-    paneRight.style.width = `calc(100vw - ${holeRight}px)`;
+    paneRight.style.width = `${Math.max(0, vWidth - holeRight)}px`;
     paneRight.style.height = `${holeHeight}px`;
 
     // Borda iluminada no contorno da área desborrada
@@ -307,11 +335,7 @@
       return;
     }
 
-    let target = document.querySelector(step.targetSelector);
-    if (!target && step.fallbackSelector) {
-      target = document.querySelector(step.fallbackSelector);
-    }
-
+    let target = getVisibleTarget(step);
     if (!target) {
       setFullBlur();
       cardEl.classList.remove('pos-top', 'pos-bottom');
@@ -321,19 +345,31 @@
 
     target.classList.add('tour-highlighted-target');
     const isFixed = window.getComputedStyle(target).position === 'fixed';
-    if (!isFixed) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+
+    const scrollTargetIntoPlace = () => {
+      if (!isFixed) {
+        // Rolagem imediata para evitar conflito com animações do Safari Mobile
+        target.scrollIntoView({ behavior: 'auto', block: 'center' });
+      }
+    };
+
+    scrollTargetIntoPlace();
 
     const applyLayout = () => {
-      const rect = target.getBoundingClientRect();
+      let rect = target.getBoundingClientRect();
+      const vHeight = window.innerHeight;
+
+      // Se o elemento alvo estiver fora da área visível (ex: após transição de abas), força a rolagem
+      if (!isFixed && (rect.top > vHeight - 30 || rect.bottom < 30 || (rect.width === 0 && rect.height === 0))) {
+        target.scrollIntoView({ behavior: 'auto', block: 'center' });
+        rect = target.getBoundingClientRect();
+      }
+
       setCutoutBlur(rect);
 
-      const windowHeight = window.innerHeight;
       const targetMidY = rect.top + rect.height / 2;
-
       cardEl.classList.remove('pos-center');
-      if (targetMidY < windowHeight * 0.45) {
+      if (targetMidY < vHeight * 0.45) {
         cardEl.classList.remove('pos-top');
         cardEl.classList.add('pos-bottom');
       } else {
@@ -343,8 +379,10 @@
     };
 
     applyLayout();
+    setTimeout(applyLayout, 60);
     setTimeout(applyLayout, 180);
     setTimeout(applyLayout, 380);
+    setTimeout(applyLayout, 650);
   }
 
   // Renderiza o conteúdo do passo atual
@@ -476,6 +514,7 @@
   function startTour(force = false) {
     createTourElements();
     isTourRunning = true;
+    window.isTourRunning = true;
 
     if (!force) {
       registerVisit();
@@ -510,6 +549,7 @@
   function endTour(isCompleted = true) {
     if (!isTourRunning) return;
     isTourRunning = false;
+    window.isTourRunning = false;
 
     document.querySelectorAll('.tour-highlighted-target').forEach(el => el.classList.remove('tour-highlighted-target'));
 

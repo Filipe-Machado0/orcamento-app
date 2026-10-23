@@ -50,7 +50,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     panes.forEach(pane => {
       pane.classList.toggle('active', pane.id === targetPaneId);
     });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!window.isTourRunning) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     // Recarregar dados específicos ao entrar na aba
     if (targetPaneId === 'pane-painel') {
